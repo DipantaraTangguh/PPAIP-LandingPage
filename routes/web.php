@@ -18,6 +18,10 @@ Route::get('/internship-program', function () {
     return Inertia::render('InternshipProgram');
 });
 
+Route::get('/praktisi-mengajar', function () {
+    return Inertia::render('PraktisiMengajar');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

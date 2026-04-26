@@ -12,7 +12,7 @@ export const PROGRAMS = [
   {
     name: "Praktisi Mengajar",
     image: "/assets/praktisi-mengajar.png",
-    link: "#",
+    link: "/praktisi-mengajar",
   },
   {
     name: "MBKM",
