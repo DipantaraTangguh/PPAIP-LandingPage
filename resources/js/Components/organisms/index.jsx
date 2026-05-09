@@ -3,13 +3,122 @@ import { NavLink, CarouselDot, SectionWrapper } from '../atoms';
 import { ProgramCard, FaqItem, ProdiStatCard, YearFilterPill, DonutChart, InternshipProdiCard } from '../molecules';
 
 // ============================================================
+// Organism: GoogleTranslateSwitch
+// Custom EN/ID pill toggle that drives Google Translate under the hood.
+// pageLanguage is 'id' because the source code content is in Indonesian.
+// Clicking EN → translates to English.  Clicking ID → restores original.
+// ============================================================
+function GoogleTranslateSwitch() {
+  const [activeLang, setActiveLang] = useState(() => {
+    // Detect from cookie on initial render
+    if (typeof document !== 'undefined') {
+      const match = document.cookie.match(/googtrans=\/[^/]+\/(\w+)/);
+      if (match && match[1] === 'en') return 'en';
+    }
+    return 'id';
+  });
+
+  // Load the Google Translate script and init the hidden widget
+  useEffect(() => {
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: 'id',
+          includedLanguages: 'en',
+          autoDisplay: false,
+        },
+        'google_translate_element_hidden'
+      );
+    };
+
+    if (!document.getElementById('google-translate-script')) {
+      const script = document.createElement('script');
+      script.id = 'google-translate-script';
+      script.src =
+        'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  const switchTo = (lang) => {
+    if (lang === activeLang) return;
+
+    if (lang === 'en') {
+      // Translate to English: find the hidden <select> and trigger it
+      const combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        combo.value = 'en';
+        combo.dispatchEvent(new Event('change'));
+        setActiveLang('en');
+        window.dispatchEvent(new CustomEvent('googleTranslateChange', { detail: 'en' }));
+      }
+    } else {
+      // Restore to Indonesian (original): clear the cookie and reload
+      document.cookie = 'googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      document.cookie = `googtrans=;path=/;domain=${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      document.cookie = `googtrans=;path=/;domain=.${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      setActiveLang('id');
+      window.dispatchEvent(new CustomEvent('googleTranslateChange', { detail: 'id' }));
+      window.location.reload();
+    }
+  };
+
+  return (
+    <>
+      {/* Hidden Google Translate element — positioned off-screen, not display:none */}
+      <div id="google_translate_element_hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} />
+
+      {/* Custom EN / ID pill switch */}
+      <div className="flex items-center gap-1.5 ml-3 px-1 py-1 rounded-full bg-white/15 select-none notranslate">
+        <button
+          onClick={() => switchTo('id')}
+          className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
+            activeLang === 'id' ? 'bg-white text-[#6B1B1B]' : 'text-white/70 hover:text-white'
+          }`}
+        >
+          ID
+        </button>
+        <button
+          onClick={() => switchTo('en')}
+          className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
+            activeLang === 'en' ? 'bg-white text-[#6B1B1B]' : 'text-white/70 hover:text-white'
+          }`}
+        >
+          EN
+        </button>
+      </div>
+    </>
+  );
+}
+
+// ============================================================
 // Organism: Navbar
 // ============================================================
 export function Navbar({ links }) {
+  const [lang, setLang] = useState('en');
+
+  useEffect(() => {
+    // Check initial language from cookie
+    const checkLang = () => {
+      if (typeof document !== 'undefined') {
+        const match = document.cookie.match(/googtrans=\/[^/]+\/(\w+)/);
+        if (match && match[1] === 'en') setLang('en');
+        else setLang('id');
+      }
+    };
+    checkLang();
+
+    // Listen for custom change events
+    const handleLang = (e) => setLang(e.detail);
+    window.addEventListener('googleTranslateChange', handleLang);
+    return () => window.removeEventListener('googleTranslateChange', handleLang);
+  }, []);
+
   return (
     <nav className="bg-[#6B1B1B]">
       <SectionWrapper className="flex items-stretch justify-between min-h-[56px]">
-        <div className="flex items-center gap-3 py-3">
+        <a href="/" className="flex items-center gap-3 py-3 hover:opacity-90 transition-opacity">
           <img
             src="/assets/logo-bakrie.png"
             alt="Universitas Bakrie Logo"
@@ -18,7 +127,7 @@ export function Navbar({ links }) {
           <span className="text-white text-sm font-medium tracking-wide hidden sm:inline">
             PPAIP Universitas Bakrie
           </span>
-        </div>
+        </a>
 
         <div className="flex items-stretch gap-1">
           {links.map((link) => (
@@ -26,6 +135,9 @@ export function Navbar({ links }) {
               {link.label}
             </NavLink>
           ))}
+          <div className="flex items-center">
+            <GoogleTranslateSwitch />
+          </div>
         </div>
       </SectionWrapper>
     </nav>
@@ -47,7 +159,7 @@ export function HeroBanner() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-full">
         <div className="pb-24">
           <h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold italic text-white leading-[1.1] tracking-tight"
+            className="notranslate text-5xl md:text-6xl lg:text-7xl font-bold italic text-white leading-[1.1] tracking-tight"
             style={{
               textShadow:
                 '0 0 30px rgba(255,255,255,0.15), 0 0 60px rgba(255,255,255,0.08)',
@@ -79,7 +191,7 @@ export function AboutCard({ description }) {
             </div>
 
             <div className="md:w-3/5">
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed text-justify">
                 {description}
               </p>
             </div>
@@ -303,7 +415,7 @@ export function ProdiStatsGrid({ stats }) {
           {totalPages > 1 && (
             <button
               onClick={prevPage}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-[#6B1B1B] hover:bg-gray-50 hover:scale-110 transition-all focus:outline-none"
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-[#6B1B1B] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
               aria-label="Previous page"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,7 +454,7 @@ export function ProdiStatsGrid({ stats }) {
           {totalPages > 1 && (
             <button
               onClick={nextPage}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-[#6B1B1B] hover:bg-gray-50 hover:scale-110 transition-all focus:outline-none"
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-[#6B1B1B] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
               aria-label="Next page"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -384,7 +496,7 @@ export function InfoCard({ title, description }) {
               </h2>
             </div>
             <div className="md:w-3/5">
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed text-justify">
                 {description}
               </p>
             </div>

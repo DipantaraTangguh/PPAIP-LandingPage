@@ -29,7 +29,7 @@ export default function PraktisiMengajar() {
 
         <PageHeroBanner
           title="Praktisi Mengajar"
-          subtitle="menampilkan data statistik praktisi yang mengajar di tiap program studi"
+          subtitle="Menampilkan data statistik praktisi yang mengajar di tiap program studi"
           backgroundImage="/assets/praktisi-mengajar.png"
         />
 

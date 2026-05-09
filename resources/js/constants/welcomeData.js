@@ -4,57 +4,61 @@
  */
 
 export const PROGRAMS = [
-  {
-    name: "Internship Program",
-    image: "/assets/internship-program.png",
-    link: "/internship-program",
-  },
-  {
-    name: "Praktisi Mengajar",
-    image: "/assets/praktisi-mengajar.png",
-    link: "/praktisi-mengajar",
-  },
-  {
-    name: "MBKM",
-    image: "/assets/internship-mandiri.png",
-    link: "#",
-  },
-  {
-    name: "KUB Talk",
-    image: "/assets/bakrie-banner.jpg",
-    link: "#",
-  },
+    {
+        name: "Internship Program",
+        image: "/assets/internship-program.png",
+        link: "/internship-program",
+    },
+    {
+        name: "Praktisi Mengajar",
+        image: "/assets/praktisi-mengajar.png",
+        link: "/praktisi-mengajar",
+    },
+    {
+        name: "Sertifikasi Mahasiswa",
+        image: "/assets/internship-mandiri.png",
+        link: "#",
+    },
+    {
+        name: "KUB Talk",
+        image: "/assets/kub-talk-1.jpg",
+        link: "/kub-talk",
+    },
 ];
 
 export const FAQ_ITEMS = [
-  {
-    question: "Keterangan tentang program singkat PPAIP disini",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    question: "Keterangan tentang program singkat PPAIP disini",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    question: "Keterangan tentang program singkat PPAIP disini",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
+    {
+        question: "Keterangan tentang program singkat PPAIP disini",
+        answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+        question: "Keterangan tentang program singkat PPAIP disini",
+        answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+        question: "Keterangan tentang program singkat PPAIP disini",
+        answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
 ];
 
 export const FOOTER_LINKS = [
-  { items: ["Admission", "Contact", "Information"] },
-  { items: ["FAQ", "Connect With Us", "Career", "Research"] },
-  { items: ["News", "Privacy & Policy", "About Students", "About Lecture"] },
+    { items: ["Penerimaan", "Kontak", "Informasi"] },
+    { items: ["FAQ", "Hubungi Kami", "Karir", "Riset"] },
+    {
+        items: [
+            "Berita",
+            "Kebijakan Privasi",
+            "Tentang Mahasiswa",
+            "Tentang Dosen",
+        ],
+    },
 ];
 
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Menu", href: "#" },
-  { label: "About Us", href: "#" },
+    { label: "Beranda", href: "/" },
+    { label: "SIPMAG", href: "#" },
+    { label: "Tentang Kami", href: "#" },
 ];
 
 export const ABOUT_DESCRIPTION =
-  "Bakrie University (UBakrie) is a private university with Unggul (Excellent) accreditation managed by the Bakrie Education Foundation. Founded in 2009, UBakrie is committed to providing quality higher education with national and international recognition. UBakrie's hallmark is its Experiential Learning method, which is based on real-world experiences in business and industry. Students learn directly from professionals, including CEOs of companies within the Bakrie Group, through real-life cases, practicals, industry visits, and real-life projects.";
+    "Universitas Bakrie (UBakrie) adalah universitas swasta dengan akreditasi Unggul yang dikelola oleh Yayasan Pendidikan Bakrie. Didirikan pada tahun 2009, UBakrie berkomitmen untuk menyediakan pendidikan tinggi berkualitas dengan pengakuan nasional dan internasional. Ciri khas UBakrie adalah metode Experiential Learning, yang didasarkan pada pengalaman dunia nyata di dunia usaha dan industri. Mahasiswa belajar langsung dari para profesional, termasuk para CEO perusahaan di Grup Bakrie, melalui kasus nyata, praktikum, kunjungan industri, dan proyek nyata.";
