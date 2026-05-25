@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import React, { useState, useMemo } from 'react';
+import { Head, usePage } from '@inertiajs/react';
 
-// Organisms
 import {
   Navbar,
   PageHeroBanner,
@@ -9,28 +8,25 @@ import {
   DonutSummarySection,
   InternshipProdiGrid,
   Footer,
-} from '@/Components/organisms';
+} from '@/Components/Layouts';
 
-// Data
-import { NAV_LINKS, FOOTER_LINKS } from '@/constants/welcomeData';
-import { YEARS, INTERNSHIP_DATA } from '@/constants/internshipData';
+export default function InternshipProgramPage({ years = [], internshipData = {} }) {
+  const { navLinks = [], footerLinks = [] } = usePage().props;
 
-/**
- * Page: Internship Program
- *
- * Displays KUB/Non-KUB internship statistics with year filtering,
- * a donut chart summary, and per-prodi stacked bar breakdowns.
- */
-export default function InternshipProgramPage() {
-  const [activeYear, setActiveYear] = useState("2025");
-  const currentData = INTERNSHIP_DATA[activeYear];
+  const defaultYear = useMemo(() => {
+    if (years.length === 0) return null;
+    return years.includes('2025') ? '2025' : years[years.length - 1];
+  }, [years]);
+
+  const [activeYear, setActiveYear] = useState(defaultYear);
+  const currentData = activeYear ? internshipData[activeYear] : null;
 
   return (
     <>
       <Head title="Internship Program - PPAIP Universitas Bakrie" />
 
       <div className="min-h-screen bg-gray-50 font-sans antialiased">
-        <Navbar links={NAV_LINKS} />
+        <Navbar links={navLinks} />
 
         <PageHeroBanner
           title="Internship Program"
@@ -38,24 +34,30 @@ export default function InternshipProgramPage() {
           backgroundImage="/assets/internship-program.png"
         />
 
-        <YearFilter
-          years={YEARS}
-          activeYear={activeYear}
-          onYearChange={setActiveYear}
-        />
+        {years.length > 0 && (
+          <YearFilter
+            years={years}
+            activeYear={activeYear}
+            onYearChange={setActiveYear}
+          />
+        )}
 
-        <DonutSummarySection
-          key={activeYear}
-          kub={currentData.summary.kub}
-          nonKub={currentData.summary.nonKub}
-        />
+        {currentData && (
+          <>
+            <DonutSummarySection
+              key={activeYear}
+              kub={currentData.summary.kub}
+              nonKub={currentData.summary.nonKub}
+            />
 
-        <InternshipProdiGrid
-          key={activeYear + "-grid"}
-          prodiList={currentData.prodi}
-        />
+            <InternshipProdiGrid
+              key={activeYear + '-grid'}
+              prodiList={currentData.prodi}
+            />
+          </>
+        )}
 
-        <Footer linkColumns={FOOTER_LINKS} />
+        <Footer linkColumns={footerLinks} />
       </div>
     </>
   );

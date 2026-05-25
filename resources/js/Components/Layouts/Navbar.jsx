@@ -1,0 +1,217 @@
+import React, { useState, useEffect } from "react";
+import { NavLink, SectionWrapper } from "../Elements";
+
+// ============================================================
+// Internal: GoogleTranslateSwitch
+// Custom EN/ID pill toggle that drives Google Translate under the hood.
+// pageLanguage is 'id' because the source code content is in Indonesian.
+// Clicking EN → translates to English.  Clicking ID → restores original.
+// ============================================================
+function GoogleTranslateSwitch() {
+    const [activeLang, setActiveLang] = useState(() => {
+        // Detect from cookie on initial render
+        if (typeof document !== "undefined") {
+            const match = document.cookie.match(/googtrans=\/[^/]+\/(\w+)/);
+            if (match && match[1] === "en") return "en";
+        }
+        return "id";
+    });
+
+    // Load the Google Translate script and init the hidden widget
+    useEffect(() => {
+        window.googleTranslateElementInit = () => {
+            new window.google.translate.TranslateElement(
+                {
+                    pageLanguage: "id",
+                    includedLanguages: "en",
+                    autoDisplay: false,
+                },
+                "google_translate_element_hidden",
+            );
+        };
+
+        if (!document.getElementById("google-translate-script")) {
+            const script = document.createElement("script");
+            script.id = "google-translate-script";
+            script.src =
+                "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            script.async = true;
+            document.body.appendChild(script);
+        }
+    }, []);
+
+    const switchTo = (lang) => {
+        if (lang === activeLang) return;
+
+        if (lang === "en") {
+            // Translate to English: find the hidden <select> and trigger it
+            const combo = document.querySelector(".goog-te-combo");
+            if (combo) {
+                combo.value = "en";
+                combo.dispatchEvent(new Event("change"));
+                setActiveLang("en");
+                window.dispatchEvent(
+                    new CustomEvent("googleTranslateChange", { detail: "en" }),
+                );
+            }
+        } else {
+            // Restore to Indonesian (original): clear the cookie and reload
+            document.cookie =
+                "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            document.cookie = `googtrans=;path=/;domain=${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+            document.cookie = `googtrans=;path=/;domain=.${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+            setActiveLang("id");
+            window.dispatchEvent(
+                new CustomEvent("googleTranslateChange", { detail: "id" }),
+            );
+            window.location.reload();
+        }
+    };
+
+    return (
+        <>
+            {/* Hidden Google Translate element — positioned off-screen, not display:none */}
+            <div
+                id="google_translate_element_hidden"
+                style={{
+                    position: "absolute",
+                    top: "-9999px",
+                    left: "-9999px",
+                }}
+            />
+
+            {/* Custom EN / ID pill switch */}
+            <div className="flex items-center gap-1.5 ml-3 px-1 py-1 rounded-full bg-white/15 select-none notranslate">
+                <button
+                    onClick={() => switchTo("id")}
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
+                        activeLang === "id"
+                            ? "bg-white text-[#802324]"
+                            : "text-white/70 hover:text-white"
+                    }`}
+                >
+                    ID
+                </button>
+                <button
+                    onClick={() => switchTo("en")}
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
+                        activeLang === "en"
+                            ? "bg-white text-[#802324]"
+                            : "text-white/70 hover:text-white"
+                    }`}
+                >
+                    EN
+                </button>
+            </div>
+        </>
+    );
+}
+
+// ============================================================
+// Organism: Navbar
+// ============================================================
+export function Navbar({ links }) {
+    const [mobileOpen, setMobileOpen] = useState(false);
+
+    // Close menu on route change (hash/path change in Inertia visits)
+    useEffect(() => {
+        const close = () => setMobileOpen(false);
+        window.addEventListener("popstate", close);
+        return () => window.removeEventListener("popstate", close);
+    }, []);
+
+    // Lock body scroll while mobile menu is open
+    useEffect(() => {
+        if (mobileOpen) {
+            const prev = document.body.style.overflow;
+            document.body.style.overflow = "hidden";
+            return () => {
+                document.body.style.overflow = prev;
+            };
+        }
+    }, [mobileOpen]);
+
+    return (
+        <nav className="bg-[#6B1B1B] relative">
+            <SectionWrapper className="flex items-stretch justify-between min-h-14">
+                <a
+                    href="/"
+                    className="flex items-center gap-3 py-3 hover:opacity-90 transition-opacity"
+                >
+                    <img
+                        src="/assets/logo-bakrie.png"
+                        alt="Universitas Bakrie Logo"
+                        className="h-9 w-auto"
+                    />
+                    <span className="text-white text-sm font-medium tracking-wide hidden sm:inline">
+                        PPAIP Universitas Bakrie
+                    </span>
+                </a>
+
+                {/* Desktop links */}
+                <div className="hidden md:flex items-stretch gap-1">
+                    {links.map((link) => (
+                        <NavLink key={link.label} href={link.href}>
+                            {link.label}
+                        </NavLink>
+                    ))}
+                    <div className="flex items-center">
+                        <GoogleTranslateSwitch />
+                    </div>
+                </div>
+
+                {/* Mobile hamburger */}
+                <button
+                    type="button"
+                    onClick={() => setMobileOpen((v) => !v)}
+                    className="md:hidden flex items-center justify-center w-11 h-11 my-auto rounded-lg text-white hover:bg-black/20 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623]"
+                    aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
+                    aria-expanded={mobileOpen}
+                >
+                    <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                    >
+                        {mobileOpen ? (
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        ) : (
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M4 7h16M4 12h16M4 17h16"
+                            />
+                        )}
+                    </svg>
+                </button>
+            </SectionWrapper>
+
+            {/* Mobile menu drawer */}
+            {mobileOpen && (
+                <div className="md:hidden absolute left-0 right-0 top-full z-40 bg-[#6B1B1B] border-t border-white/10 shadow-lg">
+                    <div className="px-4 py-3 flex flex-col">
+                        {links.map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                onClick={() => setMobileOpen(false)}
+                                className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-[#F5A623] transition-colors duration-200"
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                        <div className="mt-2 pt-3 border-t border-white/10 flex justify-start">
+                            <GoogleTranslateSwitch />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </nav>
+    );
+}

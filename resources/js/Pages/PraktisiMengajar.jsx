@@ -1,31 +1,29 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
-// Organisms
 import {
   Navbar,
   PageHeroBanner,
   ProdiStatsGrid,
   InfoCard,
   Footer,
-} from '@/Components/organisms';
+} from '@/Components/Layouts';
 
-// Data
-import { NAV_LINKS, FOOTER_LINKS } from '@/constants/welcomeData';
-import { PRODI_STATS, ABOUT_DESCRIPTION } from '@/constants/praktisiMengajarData';
+export default function PraktisiMengajar({ prodiStats = [], aboutDescription = '' }) {
+  const { navLinks = [], footerLinks = [] } = usePage().props;
 
-/**
- * Page: Praktisi Mengajar
- *
- * Displays statistics of practitioner lecturers per program studi.
- */
-export default function PraktisiMengajar() {
+  const stats = prodiStats.map((s) => ({
+    name: s.name,
+    count: s.count,
+    href: `/praktisi-mengajar/${s.slug}`,
+  }));
+
   return (
     <>
       <Head title="Praktisi Mengajar - PPAIP Universitas Bakrie" />
 
       <div className="min-h-screen bg-white font-sans antialiased">
-        <Navbar links={NAV_LINKS} />
+        <Navbar links={navLinks} />
 
         <PageHeroBanner
           title="Praktisi Mengajar"
@@ -33,14 +31,14 @@ export default function PraktisiMengajar() {
           backgroundImage="/assets/praktisi-mengajar.png"
         />
 
-        <ProdiStatsGrid stats={PRODI_STATS} />
+        <ProdiStatsGrid stats={stats} />
 
         <InfoCard
           title="Keterangan lainnya"
-          description={ABOUT_DESCRIPTION}
+          description={aboutDescription}
         />
 
-        <Footer linkColumns={FOOTER_LINKS} />
+        <Footer linkColumns={footerLinks} />
       </div>
     </>
   );

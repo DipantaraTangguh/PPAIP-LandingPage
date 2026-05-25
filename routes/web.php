@@ -1,30 +1,18 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/internship-program', function () {
-    return Inertia::render('InternshipProgram');
-});
-
-Route::get('/praktisi-mengajar', function () {
-    return Inertia::render('PraktisiMengajar');
-});
-
-Route::get('/kub-talk', function () {
-    return Inertia::render('KubTalk');
-});
+Route::get('/', [LandingController::class, 'welcome']);
+Route::get('/internship-program', [LandingController::class, 'internshipProgram']);
+Route::get('/praktisi-mengajar', [LandingController::class, 'praktisiMengajar']);
+Route::get('/praktisi-mengajar/{slug}', [LandingController::class, 'praktisiMengajarProdi'])
+    ->where('slug', '[a-z0-9-]+');
+Route::get('/kub-talk', [LandingController::class, 'kubTalk']);
+Route::get('/sertifikasi-mahasiswa', [LandingController::class, 'sertifikasi']);
+Route::get('/tentang-kami', [LandingController::class, 'tentangKami']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

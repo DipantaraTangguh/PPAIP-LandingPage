@@ -1,7 +1,6 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
-// Organisms
 import {
   Navbar,
   HeroBanner,
@@ -9,35 +8,22 @@ import {
   ProgramCarousel,
   FaqSection,
   Footer,
-} from '@/Components/organisms';
+} from '@/Components/Layouts';
 
-// Data
-import {
-  NAV_LINKS,
-  PROGRAMS,
-  FAQ_ITEMS,
-  FOOTER_LINKS,
-  ABOUT_DESCRIPTION,
-} from '@/constants/welcomeData';
+export default function Welcome({ programs = [], faqItems = [], aboutDescription = '' }) {
+  const { navLinks = [], footerLinks = [] } = usePage().props;
 
-/**
- * Page: Welcome (Landing Page)
- *
- * Composes organisms with static data to form the full landing page.
- * Contains zero business logic — all state lives inside the organisms.
- */
-export default function Welcome() {
   return (
     <>
       <Head title="PPAIP Universitas Bakrie - Experience The Real Things" />
 
       <div className="min-h-screen bg-white font-sans antialiased">
-        <Navbar links={NAV_LINKS} />
+        <Navbar links={navLinks} />
         <HeroBanner />
-        <AboutCard description={ABOUT_DESCRIPTION} />
-        <ProgramCarousel programs={PROGRAMS} />
-        <FaqSection items={FAQ_ITEMS} />
-        <Footer linkColumns={FOOTER_LINKS} />
+        <AboutCard description={aboutDescription} />
+        <ProgramCarousel programs={programs} />
+        <FaqSection items={faqItems} />
+        <Footer linkColumns={footerLinks} />
       </div>
     </>
   );
