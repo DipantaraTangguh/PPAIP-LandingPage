@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('PPAIP Landing Page CMS')
             ->colors([
                 'primary' => Color::Amber,
             ])
