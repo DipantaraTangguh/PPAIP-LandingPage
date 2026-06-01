@@ -16,7 +16,7 @@ class NavLinkForm
                     ->required()
                     ->default('#')
                     ->maxLength(255)
-                    ->helperText('Path like /tentang-kami or full URL.'),
+                    ->helperText('Path like /about or full URL.'),
                 TextInput::make('sort_order')->numeric()->default(0)->required(),
             ]);
     }

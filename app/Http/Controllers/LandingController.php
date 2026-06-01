@@ -59,6 +59,7 @@ class LandingController extends Controller
         return Inertia::render('InternshipProgram', [
             'years' => $years->pluck('year')->all(),
             'internshipData' => $internshipData,
+            'bannerImage' => $this->asset(PageContent::get('internship_program.banner_image', '/assets/internship-program.png')),
         ]);
     }
 
@@ -73,6 +74,7 @@ class LandingController extends Controller
                 'count' => $prodi->semesters->flatMap->courses->where('is_practitioner', true)->count(),
             ])->all(),
             'aboutDescription' => PageContent::get('praktisi_mengajar.about_description'),
+            'bannerImage' => $this->asset(PageContent::get('praktisi_mengajar.banner_image', '/assets/praktisi-mengajar.png')),
         ]);
     }
 
@@ -114,6 +116,7 @@ class LandingController extends Controller
             'slug' => $slug,
             'detail' => $detail,
             'aboutDescription' => PageContent::get('praktisi_mengajar.about_description'),
+            'bannerImage' => $this->asset(PageContent::get('praktisi_mengajar.banner_image', '/assets/praktisi-mengajar.png')),
         ]);
     }
 
@@ -143,6 +146,7 @@ class LandingController extends Controller
                 ])->all(),
             ])->all(),
             'aboutDescription' => PageContent::get('sertifikasi.about_description'),
+            'bannerImage' => $this->asset(PageContent::get('sertifikasi.banner_image', '/assets/internship-mandiri.png')),
         ]);
     }
 

@@ -5,9 +5,11 @@ namespace App\Filament\Admin\Pages;
 use App\Models\PageContent;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -31,6 +33,7 @@ class SertifikasiContent extends Page
     {
         $this->form->fill([
             'about_description' => PageContent::get('sertifikasi.about_description'),
+            'banner_image' => PageContent::get('sertifikasi.banner_image') ?: null,
         ]);
     }
 
@@ -38,10 +41,25 @@ class SertifikasiContent extends Page
     {
         return $schema
             ->components([
-                Textarea::make('about_description')
-                    ->label('Deskripsi Halaman Sertifikasi')
-                    ->rows(8)
-                    ->columnSpanFull(),
+                Section::make('Banner Halaman')
+                    ->schema([
+                        FileUpload::make('banner_image')
+                            ->label('Gambar Banner')
+                            ->image()
+                            ->disk('public')
+                            ->directory('banners')
+                            ->imageEditor()
+                            ->maxSize(8192)
+                            ->helperText('Banner di bagian atas halaman Sertifikasi Mahasiswa. Kosongkan untuk memakai gambar bawaan.')
+                            ->columnSpanFull(),
+                    ]),
+                Section::make('Deskripsi')
+                    ->schema([
+                        Textarea::make('about_description')
+                            ->label('Deskripsi Halaman Sertifikasi')
+                            ->rows(8)
+                            ->columnSpanFull(),
+                    ]),
             ])
             ->statePath('data');
     }
@@ -57,6 +75,7 @@ class SertifikasiContent extends Page
     {
         $data = $this->form->getState();
         PageContent::put('sertifikasi.about_description', $data['about_description'] ?? null);
+        PageContent::put('sertifikasi.banner_image', $data['banner_image'] ?? null);
 
         Notification::make()->title('Konten sertifikasi tersimpan')->success()->send();
     }

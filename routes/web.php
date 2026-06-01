@@ -7,12 +7,12 @@ use Inertia\Inertia;
 
 Route::get('/', [LandingController::class, 'welcome']);
 Route::get('/internship-program', [LandingController::class, 'internshipProgram']);
-Route::get('/praktisi-mengajar', [LandingController::class, 'praktisiMengajar']);
-Route::get('/praktisi-mengajar/{slug}', [LandingController::class, 'praktisiMengajarProdi'])
+Route::get('/practitioner-teaching', [LandingController::class, 'praktisiMengajar']);
+Route::get('/practitioner-teaching/{slug}', [LandingController::class, 'praktisiMengajarProdi'])
     ->where('slug', '[a-z0-9-]+');
 Route::get('/kub-talk', [LandingController::class, 'kubTalk']);
-Route::get('/sertifikasi-mahasiswa', [LandingController::class, 'sertifikasi']);
-Route::get('/tentang-kami', [LandingController::class, 'tentangKami']);
+Route::get('/student-certification', [LandingController::class, 'sertifikasi']);
+Route::get('/about', [LandingController::class, 'tentangKami']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

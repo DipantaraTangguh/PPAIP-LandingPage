@@ -6,24 +6,23 @@ use App\Models\PageContent;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
-class PraktisiMengajarContent extends Page
+class InternshipContent extends Page
 {
-    protected string $view = 'filament.admin.pages.praktisi-mengajar-content';
+    protected string $view = 'filament.admin.pages.internship-content';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
-    protected static ?string $title = 'Konten Praktisi Mengajar';
+    protected static ?string $title = 'Konten Internship Program';
 
     protected static ?string $navigationLabel = 'Konten Halaman';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Praktisi Mengajar';
+    protected static string|\UnitEnum|null $navigationGroup = 'Internship Program';
 
     protected static ?int $navigationSort = 0;
 
@@ -32,8 +31,7 @@ class PraktisiMengajarContent extends Page
     public function mount(): void
     {
         $this->form->fill([
-            'about_description' => PageContent::get('praktisi_mengajar.about_description'),
-            'banner_image' => PageContent::get('praktisi_mengajar.banner_image') ?: null,
+            'banner_image' => PageContent::get('internship_program.banner_image') ?: null,
         ]);
     }
 
@@ -50,14 +48,7 @@ class PraktisiMengajarContent extends Page
                             ->directory('banners')
                             ->imageEditor()
                             ->maxSize(8192)
-                            ->helperText('Banner di bagian atas halaman Praktisi Mengajar. Kosongkan untuk memakai gambar bawaan.')
-                            ->columnSpanFull(),
-                    ]),
-                Section::make('Deskripsi')
-                    ->schema([
-                        Textarea::make('about_description')
-                            ->label('Deskripsi Halaman Praktisi Mengajar')
-                            ->rows(8)
+                            ->helperText('Banner di bagian atas halaman Internship Program. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
                     ]),
             ])
@@ -74,9 +65,8 @@ class PraktisiMengajarContent extends Page
     public function save(): void
     {
         $data = $this->form->getState();
-        PageContent::put('praktisi_mengajar.about_description', $data['about_description'] ?? null);
-        PageContent::put('praktisi_mengajar.banner_image', $data['banner_image'] ?? null);
+        PageContent::put('internship_program.banner_image', $data['banner_image'] ?? null);
 
-        Notification::make()->title('Konten praktisi mengajar tersimpan')->success()->send();
+        Notification::make()->title('Konten internship program tersimpan')->success()->send();
     }
 }

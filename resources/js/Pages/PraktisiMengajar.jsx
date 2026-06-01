@@ -9,13 +9,13 @@ import {
   Footer,
 } from '@/Components/Layouts';
 
-export default function PraktisiMengajar({ prodiStats = [], aboutDescription = '' }) {
+export default function PraktisiMengajar({ prodiStats = [], aboutDescription = '', bannerImage = '/assets/praktisi-mengajar.png' }) {
   const { navLinks = [], footerLinks = [] } = usePage().props;
 
   const stats = prodiStats.map((s) => ({
     name: s.name,
     count: s.count,
-    href: `/praktisi-mengajar/${s.slug}`,
+    href: `/practitioner-teaching/${s.slug}`,
   }));
 
   return (
@@ -28,7 +28,7 @@ export default function PraktisiMengajar({ prodiStats = [], aboutDescription = '
         <PageHeroBanner
           title="Praktisi Mengajar"
           subtitle="Menampilkan data statistik praktisi yang mengajar di tiap program studi"
-          backgroundImage="/assets/praktisi-mengajar.png"
+          backgroundImage={bannerImage}
         />
 
         <ProdiStatsGrid stats={stats} />

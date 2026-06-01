@@ -10,6 +10,8 @@ import {
     Layers,
     Shield,
     FlaskConical,
+    MoveRight,
+    X,
 } from "lucide-react";
 import { Navbar, PageHeroBanner, InfoCard, Footer } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
@@ -82,7 +84,7 @@ function CertificationRow({ cert, index }) {
                         style={{ background: "linear-gradient(135deg,#802324,#ea580c)" }}
                     >
                         Daftar
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5-5 5M6 12h12"/></svg>
+                        <MoveRight className="w-3.5 h-3.5" strokeWidth={2.5} />
                     </a>
                 ) : (
                     <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-50 text-amber-700 text-sm font-semibold border border-amber-100">⏳ Segera Hadir</span>
@@ -132,7 +134,7 @@ function Modal({ prodi, onClose }) {
                         className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 cursor-pointer"
                         style={{ background: "rgba(0,0,0,0.2)" }}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/></svg>
+                        <X className="w-5 h-5" strokeWidth={2.5} />
                     </button>
                 </div>
 
@@ -151,7 +153,7 @@ function Modal({ prodi, onClose }) {
     );
 }
 
-export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDescription = "" }) {
+export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDescription = "", bannerImage = "/assets/internship-mandiri.png" }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;
     const [selected, setSelected] = useState(null);
 
@@ -172,7 +174,7 @@ export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDe
                 <PageHeroBanner
                     title="Sertifikasi Mahasiswa"
                     subtitle="Temukan dan ikuti program sertifikasi profesional sesuai program studi Anda."
-                    backgroundImage="/assets/internship-mandiri.png"
+                    backgroundImage={bannerImage}
                 />
 
                 <section className="relative z-10 -mt-10 mb-16 px-4">

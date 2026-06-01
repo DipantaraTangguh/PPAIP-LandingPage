@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CarouselDot, SectionWrapper } from "../Elements";
 import { ProdiStatCard } from "../Fragments";
 
@@ -42,19 +43,7 @@ export function ProdiStatsGrid({ stats }) {
                             className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-[#802324] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
                             aria-label="Previous page"
                         >
-                            <svg
-                                className="w-6 h-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2.5}
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
+                            <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
                         </button>
                     )}
 
@@ -94,19 +83,7 @@ export function ProdiStatsGrid({ stats }) {
                             className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-[#802324] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
                             aria-label="Next page"
                         >
-                            <svg
-                                className="w-6 h-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2.5}
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
+                            <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
                         </button>
                     )}
                 </div>

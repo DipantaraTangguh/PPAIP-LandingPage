@@ -10,7 +10,7 @@ import {
 } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
 
-export default function PraktisiMengajarProdi({ slug, detail, aboutDescription = "" }) {
+export default function PraktisiMengajarProdi({ slug, detail, aboutDescription = "", bannerImage = "/assets/praktisi-mengajar.png" }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;
 
     if (!detail) {
@@ -29,12 +29,12 @@ export default function PraktisiMengajarProdi({ slug, detail, aboutDescription =
                 <PageHeroBanner
                     title={name}
                     subtitle="Menampilkan data dan statistik praktisi yang mengajar di tiap program studi"
-                    backgroundImage="/assets/praktisi-mengajar.png"
+                    backgroundImage={bannerImage}
                 />
 
                 <SectionWrapper className="pt-6">
                     <Link
-                        href="/praktisi-mengajar"
+                        href="/practitioner-teaching"
                         className="inline-flex items-center gap-2 text-sm font-medium text-[#802324] hover:text-[#5d1111] transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -149,7 +149,7 @@ function ProdiNotFound({ slug, navLinks, footerLinks }) {
                             tidak terdaftar.
                         </p>
                         <Link
-                            href="/praktisi-mengajar"
+                            href="/practitioner-teaching"
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#802324] text-white text-sm font-semibold hover:bg-[#5d1111] transition-colors"
                         >
                             <ArrowLeft className="w-4 h-4" />

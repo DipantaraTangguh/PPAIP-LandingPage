@@ -44,7 +44,7 @@ class CmsContentSeeder extends Seeder
         $links = [
             ['label' => 'Beranda', 'href' => '/'],
             ['label' => 'SIPMAG', 'href' => '#'],
-            ['label' => 'Tentang Kami', 'href' => '/tentang-kami'],
+            ['label' => 'Tentang Kami', 'href' => '/about'],
         ];
         foreach ($links as $i => $link) {
             NavLink::updateOrCreate(
@@ -75,8 +75,8 @@ class CmsContentSeeder extends Seeder
     {
         $programs = [
             ['name' => 'Internship Program', 'image' => '/assets/internship-program.png', 'link' => '/internship-program'],
-            ['name' => 'Praktisi Mengajar', 'image' => '/assets/praktisi-mengajar.png', 'link' => '/praktisi-mengajar'],
-            ['name' => 'Sertifikasi Mahasiswa', 'image' => '/assets/internship-mandiri.png', 'link' => '/sertifikasi-mahasiswa'],
+            ['name' => 'Praktisi Mengajar', 'image' => '/assets/praktisi-mengajar.png', 'link' => '/practitioner-teaching'],
+            ['name' => 'Sertifikasi Mahasiswa', 'image' => '/assets/internship-mandiri.png', 'link' => '/student-certification'],
             ['name' => 'KUB Talk', 'image' => '/assets/kub-talk-1.jpg', 'link' => '/kub-talk'],
         ];
         foreach ($programs as $i => $p) {

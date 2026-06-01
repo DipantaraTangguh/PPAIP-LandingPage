@@ -10,7 +10,7 @@ import {
   Footer,
 } from '@/Components/Layouts';
 
-export default function InternshipProgramPage({ years = [], internshipData = {} }) {
+export default function InternshipProgramPage({ years = [], internshipData = {}, bannerImage = '/assets/internship-program.png' }) {
   const { navLinks = [], footerLinks = [] } = usePage().props;
 
   const defaultYear = useMemo(() => {
@@ -31,7 +31,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {} 
         <PageHeroBanner
           title="Internship Program"
           subtitle="Persentase sebaran tempat mahasiswa magang"
-          backgroundImage="/assets/internship-program.png"
+          backgroundImage={bannerImage}
         />
 
         {years.length > 0 && (
