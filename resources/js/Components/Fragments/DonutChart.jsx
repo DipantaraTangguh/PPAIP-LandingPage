@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 export function DonutChart({ kub, nonKub, bumn }) {
+    const [activeKey, setActiveKey] = useState(null);
     const segments = [
         { key: "kub", label: "KUB", value: kub, color: "#E8952E" },
         { key: "nonKub", label: "Non-KUB", value: nonKub, color: "#F5C57A" },
@@ -40,6 +41,11 @@ export function DonutChart({ kub, nonKub, bumn }) {
         };
     };
 
+    const popOut = (angle, distance = 7) => ({
+        x: distance * Math.cos(toRad(angle)),
+        y: distance * Math.sin(toRad(angle)),
+    });
+
     let cursor = -90;
     const chartSegments = segments.map((segment) => {
         const pct = total > 0 ? (segment.value / total) * 100 : 0;
@@ -53,51 +59,119 @@ export function DonutChart({ kub, nonKub, bumn }) {
             pct: Math.round(pct),
             startAngle,
             endAngle,
+            midAngle: (startAngle + endAngle) / 2,
             labelPosition: labelPos(startAngle, endAngle, 0.55),
         };
     });
+    const activeSegment =
+        chartSegments.find((segment) => segment.key === activeKey) ||
+        chartSegments[0];
 
     return (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
+        <div
+            className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+            onMouseLeave={() => setActiveKey(null)}
+        >
             <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="shrink-0" style={{ width: size, height: size }}>
+                <div
+                    className="relative shrink-0"
+                    style={{ width: size, height: size }}
+                >
                     <svg
                         width={size}
                         height={size}
                         viewBox={`0 0 ${size} ${size}`}
+                        className="drop-shadow-sm"
                     >
-                        {chartSegments.map((segment) => (
-                            <path
-                                key={segment.key}
-                                d={describeArc(segment.startAngle, segment.endAngle)}
-                                fill={segment.color}
-                                className="transition-all duration-700"
-                            />
-                        ))}
+                        {chartSegments.map((segment) => {
+                            const isActive = activeKey === segment.key;
+                            const offset = isActive
+                                ? popOut(segment.midAngle)
+                                : { x: 0, y: 0 };
+
+                            return (
+                                <path
+                                    key={segment.key}
+                                    d={describeArc(segment.startAngle, segment.endAngle)}
+                                    fill={segment.color}
+                                    tabIndex={0}
+                                    role="button"
+                                    aria-label={`${segment.label}: ${segment.value} (${segment.pct}%)`}
+                                    transform={`translate(${offset.x} ${offset.y})`}
+                                    onMouseEnter={() => setActiveKey(segment.key)}
+                                    onFocus={() => setActiveKey(segment.key)}
+                                    onBlur={() => setActiveKey(null)}
+                                    className={`cursor-pointer outline-none transition-all duration-300 ease-out ${
+                                        activeKey && !isActive
+                                            ? "opacity-45"
+                                            : "opacity-100"
+                                    }`}
+                                    style={{
+                                        filter: isActive
+                                            ? "drop-shadow(0 10px 14px rgba(15, 23, 42, 0.22))"
+                                            : "drop-shadow(0 2px 4px rgba(15, 23, 42, 0.08))",
+                                    }}
+                                />
+                            );
+                        })}
                         {chartSegments
                             .filter((segment) => segment.pct >= 8)
-                            .map((segment) => (
-                                <text
-                                    key={`${segment.key}-label`}
-                                    x={segment.labelPosition.x}
-                                    y={segment.labelPosition.y}
-                                    textAnchor="middle"
-                                    dominantBaseline="central"
-                                    fill="white"
-                                    fontSize={segment.label.length > 4 ? "12" : "16"}
-                                    fontWeight="600"
-                                >
-                                    {segment.label}
-                                </text>
-                            ))}
+                            .map((segment) => {
+                                const isActive = activeKey === segment.key;
+                                const offset = isActive
+                                    ? popOut(segment.midAngle)
+                                    : { x: 0, y: 0 };
+
+                                return (
+                                    <text
+                                        key={`${segment.key}-label`}
+                                        x={segment.labelPosition.x + offset.x}
+                                        y={segment.labelPosition.y + offset.y}
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                        fill="white"
+                                        fontSize={segment.label.length > 4 ? "12" : "16"}
+                                        fontWeight="600"
+                                        pointerEvents="none"
+                                        className="transition-all duration-300 ease-out"
+                                    >
+                                        {segment.label}
+                                    </text>
+                                );
+                            })}
                     </svg>
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                        <div className="flex h-20 w-20 flex-col items-center justify-center rounded-full bg-white/90 text-center shadow-sm ring-1 ring-black/5 backdrop-blur">
+                            <span className="text-[11px] font-bold uppercase tracking-wide text-gray-400">
+                                {activeSegment.label}
+                            </span>
+                            <span className="text-xl font-extrabold text-gray-900">
+                                {activeSegment.pct}%
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex-1 space-y-4">
                     {chartSegments.map((segment, index) => (
                         <React.Fragment key={segment.key}>
                             {index > 0 && <div className="border-t border-gray-100" />}
-                            <div className="flex items-center gap-4">
+                            <button
+                                type="button"
+                                onMouseEnter={() => setActiveKey(segment.key)}
+                                onFocus={() => setActiveKey(segment.key)}
+                                onBlur={() => setActiveKey(null)}
+                                onClick={() =>
+                                    setActiveKey((current) =>
+                                        current === segment.key ? null : segment.key,
+                                    )
+                                }
+                                className={`flex w-full items-center gap-4 rounded-lg px-2 py-1.5 text-left transition-all duration-300 ${
+                                    activeKey === segment.key
+                                        ? "bg-gray-50 shadow-sm"
+                                        : "hover:bg-gray-50"
+                                }`}
+                            >
                                 <div
                                     className="w-5 h-5 rounded shrink-0"
                                     style={{ backgroundColor: segment.color }}
@@ -111,7 +185,7 @@ export function DonutChart({ kub, nonKub, bumn }) {
                                 <span className="text-[#2E7D32] font-semibold text-base ml-auto">
                                     {segment.pct}%
                                 </span>
-                            </div>
+                            </button>
                         </React.Fragment>
                     ))}
                 </div>
