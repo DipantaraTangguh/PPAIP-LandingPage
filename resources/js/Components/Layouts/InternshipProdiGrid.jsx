@@ -1,10 +1,6 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
 import { InternshipProdiCard } from "../Fragments";
-
-// ============================================================
-// Organism: InternshipProdiGrid
-// ============================================================
 export function InternshipProdiGrid({ prodiList }) {
     return (
         <section className="py-8">

@@ -1,10 +1,5 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
-
-/**
- * Atom: ChevronIcon
- * An animated chevron/arrow icon for accordions.
- */
 export function ChevronIcon({ isOpen }) {
     return (
         <ChevronDown

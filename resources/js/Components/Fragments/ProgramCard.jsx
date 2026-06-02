@@ -1,14 +1,8 @@
 import React from "react";
-
-/**
- * Molecule: ProgramCard
- * A single program card with image, decorative corners, title, and details link.
- */
 export function ProgramCard({ name, image, link }) {
     return (
         <a href={link} className="group shrink-0 px-3 block">
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
-                {/* Image with decorative corners */}
                 <div className="relative mx-4 mt-4 rounded-lg overflow-hidden">
                     <img
                         src={image}
@@ -30,8 +24,6 @@ export function ProgramCard({ name, image, link }) {
                         }}
                     />
                 </div>
-
-                {/* Footer */}
                 <div className="px-4 py-4 flex items-center justify-between">
                     <h3 className="text-base font-semibold text-gray-800">
                         {name}

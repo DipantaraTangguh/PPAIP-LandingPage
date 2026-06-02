@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { SectionWrapper } from "../Elements";
 import { FaqItem } from "../Fragments";
-
-// ============================================================
-// Organism: FaqSection
-// ============================================================
 export function FaqSection({ items }) {
     const [openIndex, setOpenIndex] = useState(null);
 

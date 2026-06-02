@@ -1,12 +1,6 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import { GraduationCap } from "lucide-react";
-
-/**
- * Molecule: ProdiStatCard
- * Displays a program studi name with a graduation cap icon and practitioner count badge.
- * Clickable when an `href` is provided — navigates to the prodi detail page.
- */
 export function ProdiStatCard({ name, count, variant = "orange", href }) {
     const badgeColors =
         variant === "orange"
@@ -19,20 +13,15 @@ export function ProdiStatCard({ name, count, variant = "orange", href }) {
     const content = (
         <>
             <div className="flex items-center gap-4">
-                {/* Graduation Cap Icon */}
                 <div
                     className={`w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center ${iconColors}`}
                 >
                     <GraduationCap className="w-7 h-7" />
                 </div>
-
-                {/* Program Name */}
                 <span className="text-sm md:text-base font-medium text-gray-800">
                     {name}
                 </span>
             </div>
-
-            {/* Count Badge */}
             <div
                 className={`flex flex-col items-center justify-center rounded-lg px-4 py-2 min-w-15 ${badgeColors}`}
             >

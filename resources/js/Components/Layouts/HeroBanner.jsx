@@ -1,8 +1,4 @@
 import React from "react";
-
-// ============================================================
-// Organism: HeroBanner
-// ============================================================
 export function HeroBanner() {
     return (
         <section className="relative h-105 md:h-120 overflow-hidden">

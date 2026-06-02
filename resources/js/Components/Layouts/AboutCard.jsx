@@ -1,9 +1,5 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
-
-// ============================================================
-// Organism: AboutCard
-// ============================================================
 export function AboutCard({ description }) {
     return (
         <section className="relative z-20 -mt-20 sm:-mt-24 md:-mt-24 pb-12">

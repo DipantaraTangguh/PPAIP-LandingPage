@@ -1,9 +1,5 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
-
-// ============================================================
-// Organism: InfoCard (Keterangan Lainnya)
-// ============================================================
 export function InfoCard({ title, description }) {
     return (
         <section className="pb-16">

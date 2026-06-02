@@ -1,9 +1,4 @@
 import React from "react";
-
-/**
- * Molecule: YearFilterPill
- * A single year pill button for filtering data.
- */
 export function YearFilterPill({ year, isActive, onClick }) {
     return (
         <button

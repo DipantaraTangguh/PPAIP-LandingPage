@@ -3,12 +3,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CarouselDot, SectionWrapper } from "../Elements";
 import { ProgramCard } from "../Fragments";
 
-// ============================================================
-// Organism: ProgramCarousel
-// ============================================================
 const AUTO_SLIDE_INTERVAL = 3000;
 
-// Responsive visible-card count: 1 (mobile) / 2 (sm) / 3 (md+)
 function useVisibleCards() {
     const [count, setCount] = useState(() => {
         if (typeof window === "undefined") return 3;
@@ -38,7 +34,7 @@ export function ProgramCarousel({ programs }) {
 
     const maxSlide = Math.max(0, programs.length - visibleCards);
 
-    // Clamp currentSlide if visibleCards grows past current position
+    // Resize bisa bikin slide aktif kelewat batas, jadi posisinya dirapihin lagi.
     useEffect(() => {
         setCurrentSlide((prev) => Math.min(prev, maxSlide));
     }, [maxSlide]);
@@ -67,9 +63,7 @@ export function ProgramCarousel({ programs }) {
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                 >
-                    {/* Track + floating arrows (relative scope = card row only) */}
                     <div className="relative">
-                        {/* Carousel Track */}
                         <div className="overflow-hidden">
                             <div
                                 className="flex transition-transform duration-500 ease-in-out"
@@ -95,7 +89,6 @@ export function ProgramCarousel({ programs }) {
                             </div>
                         </div>
 
-                        {/* Prev / Next floating arrows */}
                         {maxSlide > 0 && (
                             <>
                                 <button
@@ -124,7 +117,6 @@ export function ProgramCarousel({ programs }) {
                         )}
                     </div>
 
-                    {/* Dots */}
                     <div className="flex items-center justify-center gap-2 mt-8">
                         {Array.from({ length: maxSlide + 1 }).map((_, i) => (
                             <CarouselDot

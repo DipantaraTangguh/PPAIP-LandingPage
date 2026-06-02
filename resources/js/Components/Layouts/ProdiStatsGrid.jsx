@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CarouselDot, SectionWrapper } from "../Elements";
 import { ProdiStatCard } from "../Fragments";
-
-// ============================================================
-// Organism: ProdiStatsGrid
-// ============================================================
 const CARDS_PER_PAGE = 6;
 
 export function ProdiStatsGrid({ stats }) {
@@ -20,7 +16,7 @@ export function ProdiStatsGrid({ stats }) {
         setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
     };
 
-    // Chunk stats into pages of 6
+    // Grid dibagi per 6 item supaya carousel tetap rapi di desktop.
     const pages = [];
     for (let i = 0; i < stats.length; i += CARDS_PER_PAGE) {
         pages.push(stats.slice(i, i + CARDS_PER_PAGE));
@@ -36,7 +32,6 @@ export function ProdiStatsGrid({ stats }) {
                 </h2>
 
                 <div className="relative">
-                    {/* Left Arrow */}
                     {totalPages > 1 && (
                         <button
                             onClick={prevPage}
@@ -46,8 +41,6 @@ export function ProdiStatsGrid({ stats }) {
                             <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
                         </button>
                     )}
-
-                    {/* Carousel Track */}
                     <div className="overflow-hidden">
                         <div
                             className="flex transition-transform duration-500 ease-in-out"
@@ -75,8 +68,6 @@ export function ProdiStatsGrid({ stats }) {
                             ))}
                         </div>
                     </div>
-
-                    {/* Right Arrow */}
                     {totalPages > 1 && (
                         <button
                             onClick={nextPage}
@@ -87,8 +78,6 @@ export function ProdiStatsGrid({ stats }) {
                         </button>
                     )}
                 </div>
-
-                {/* Pagination Dots */}
                 {totalPages > 1 && (
                     <div className="flex items-center justify-center gap-2 mt-8">
                         {Array.from({ length: totalPages }).map((_, i) => (

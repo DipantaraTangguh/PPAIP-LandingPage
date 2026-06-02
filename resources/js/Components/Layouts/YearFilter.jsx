@@ -1,10 +1,6 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
 import { YearFilterPill } from "../Fragments";
-
-// ============================================================
-// Organism: YearFilter
-// ============================================================
 export function YearFilter({ years, activeYear, onYearChange }) {
     return (
         <section className="pt-6 pb-4">

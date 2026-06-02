@@ -1,15 +1,9 @@
 import React from "react";
 import { usePage } from "@inertiajs/react";
 
-/**
- * Atom: NavLink
- * A single navigation link with hover effects and active state for the navbar.
- * Active link uses gold (#F5A623) text + underline from the design system.
- */
 export function NavLink({ href, children }) {
     const { url } = usePage();
-    // Active when the current URL starts with the href,
-    // but "/" only matches exactly to avoid marking all pages as home.
+    // Home harus exact match, kalau pakai startsWith semua page ikut aktif.
     const isActive =
         href !== "/" && href !== "#" ? url.startsWith(href) : url === href;
 

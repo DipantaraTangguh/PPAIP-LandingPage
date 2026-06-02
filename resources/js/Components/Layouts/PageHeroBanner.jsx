@@ -1,8 +1,4 @@
 import React from "react";
-
-// ============================================================
-// Organism: PageHeroBanner (Reusable for sub-pages)
-// ============================================================
 export function PageHeroBanner({ title, subtitle, backgroundImage }) {
     return (
         <section className="relative min-h-70 sm:min-h-85 md:min-h-100 py-12 overflow-hidden">
@@ -10,7 +6,6 @@ export function PageHeroBanner({ title, subtitle, backgroundImage }) {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url('${backgroundImage}')` }}
             />
-            {/* Dark gradient overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-black/30" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center min-h-64 sm:min-h-79 md:min-h-94 text-center">

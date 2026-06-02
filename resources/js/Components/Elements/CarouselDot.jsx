@@ -1,9 +1,4 @@
 import React from "react";
-
-/**
- * Atom: CarouselDot
- * A clickable pagination dot for carousels.
- */
 export function CarouselDot({ isActive, onClick }) {
     return (
         <button

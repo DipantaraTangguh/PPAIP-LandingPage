@@ -2,15 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { NavLink, SectionWrapper } from "../Elements";
 
-// ============================================================
-// Internal: GoogleTranslateSwitch
-// Custom EN/ID pill toggle that drives Google Translate under the hood.
-// pageLanguage is 'id' because the source code content is in Indonesian.
-// Clicking EN → translates to English.  Clicking ID → restores original.
-// ============================================================
 function GoogleTranslateSwitch() {
     const [activeLang, setActiveLang] = useState(() => {
-        // Detect from cookie on initial render
+        // Google simpan bahasa di cookie, jadi toggle harus ikut state terakhir user.
         if (typeof document !== "undefined") {
             const match = document.cookie.match(/googtrans=\/[^/]+\/(\w+)/);
             if (match && match[1] === "en") return "en";
@@ -18,7 +12,7 @@ function GoogleTranslateSwitch() {
         return "id";
     });
 
-    // Load the Google Translate script and init the hidden widget
+    // Widget Google tetap dipasang hidden karena API translate-nya numpang dari situ.
     useEffect(() => {
         window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
@@ -45,7 +39,7 @@ function GoogleTranslateSwitch() {
         if (lang === activeLang) return;
 
         if (lang === "en") {
-            // Translate to English: find the hidden <select> and trigger it
+            // Google Translate cuma expose select native, jadi kita trigger manual.
             const combo = document.querySelector(".goog-te-combo");
             if (combo) {
                 combo.value = "en";
@@ -56,7 +50,7 @@ function GoogleTranslateSwitch() {
                 );
             }
         } else {
-            // Restore to Indonesian (original): clear the cookie and reload
+            // Balik ID paling stabil dengan bersihin cookie lalu reload source page.
             document.cookie =
                 "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             document.cookie = `googtrans=;path=/;domain=${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
@@ -71,7 +65,7 @@ function GoogleTranslateSwitch() {
 
     return (
         <>
-            {/* Hidden Google Translate element — positioned off-screen, not display:none */}
+            {/* Jangan display:none, select Google masih perlu kebaca script. */}
             <div
                 id="google_translate_element_hidden"
                 style={{
@@ -81,7 +75,6 @@ function GoogleTranslateSwitch() {
                 }}
             />
 
-            {/* Custom EN / ID pill switch */}
             <div className="flex items-center gap-1.5 ml-3 px-1 py-1 rounded-full bg-white/15 select-none notranslate">
                 <button
                     onClick={() => switchTo("id")}
@@ -108,20 +101,17 @@ function GoogleTranslateSwitch() {
     );
 }
 
-// ============================================================
-// Organism: Navbar
-// ============================================================
 export function Navbar({ links }) {
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    // Close menu on route change (hash/path change in Inertia visits)
+    // Route berubah, drawer mobile ikut ditutup biar gak nyangkut di page baru.
     useEffect(() => {
         const close = () => setMobileOpen(false);
         window.addEventListener("popstate", close);
         return () => window.removeEventListener("popstate", close);
     }, []);
 
-    // Lock body scroll while mobile menu is open
+    // Drawer mobile pakai body lock supaya konten belakang gak ikut geser.
     useEffect(() => {
         if (mobileOpen) {
             const prev = document.body.style.overflow;
@@ -149,7 +139,6 @@ export function Navbar({ links }) {
                     </span>
                 </a>
 
-                {/* Desktop links */}
                 <div className="hidden md:flex items-stretch gap-1">
                     {links.map((link) => (
                         <NavLink key={link.label} href={link.href}>
@@ -161,7 +150,6 @@ export function Navbar({ links }) {
                     </div>
                 </div>
 
-                {/* Mobile hamburger */}
                 <button
                     type="button"
                     onClick={() => setMobileOpen((v) => !v)}
@@ -177,7 +165,6 @@ export function Navbar({ links }) {
                 </button>
             </SectionWrapper>
 
-            {/* Mobile menu drawer */}
             {mobileOpen && (
                 <div className="md:hidden absolute left-0 right-0 top-full z-40 bg-[#6B1B1B] border-t border-white/10 shadow-lg">
                     <div className="px-4 py-3 flex flex-col">

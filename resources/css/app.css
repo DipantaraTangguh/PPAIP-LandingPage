@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-/* ===== Google Translate — Hide default UI ===== */
-
-/* Hide the Google Translate top banner/frame that shifts the page */
+/* Google Translate injects a top frame, jadi kita tahan layout biar gak lompat. */
 body {
   top: 0 !important;
 }
@@ -11,8 +9,7 @@ body {
   display: none !important;
 }
 
-/* The hidden widget container is positioned off-screen via inline styles,
-   but we also need to ensure the combo box inside it stays accessible to JS */
+/* Widget-nya disembunyikan, tapi select bawaan Google tetap perlu bisa di-trigger JS. */
 #google_translate_element_hidden {
   overflow: hidden;
   height: 0;

@@ -1,27 +1,9 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
 
-// ============================================================
-// Organism: Footer
-// ============================================================
-
-/**
- * Layered SVG wave with parallax floating effect.
- *
- * Seamless infinite loop via mathematical tiling:
- *   • Path wavelength = 176 units (two control segments × 88).
- *   • Each layer renders THREE side-by-side copies of the path
- *     (positions x, x+176, x+352) so the wave always overlaps the
- *     viewport's left and right edges across the entire animation cycle.
- *   • Animation translates by exactly one wavelength (-176px) — every
- *     copy slides into the previous copy's position with pixel-identical
- *     state, so the loop reset is visually undetectable.
- *
- * GPU-accelerated: translate3d() + will-change + backface-visibility.
- */
 function FooterWave() {
     const WAVELENGTH = 176;
-    const BASE_X = -176; // start one wavelength to the left of the visible area
+    const BASE_X = -176; // Offset satu wave biar loop animasi gak kelihatan putus.
 
     const layers = [
         { className: "layer-back", y: 0, fill: "rgba(245,166,35,0.3)" },
@@ -69,7 +51,7 @@ function FooterWave() {
                         key={className}
                         className={`footer-wave-parallax ${className}`}
                     >
-                        {/* Three tiles: pre-buffer, visible, post-buffer */}
+                        {/* Tiga tile bikin wave tetap nyambung pas animasi jalan. */}
                         <use
                             xlinkHref="#footer-wave-path"
                             x={BASE_X}
@@ -98,10 +80,8 @@ function FooterWave() {
 export function Footer({ linkColumns }) {
     return (
         <footer className="relative">
-            {/* Flowing ribbon wave decoration */}
             <FooterWave />
 
-            {/* Main footer content */}
             <div className="bg-[#5d1111]">
                 <SectionWrapper className="py-10 md:py-14">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center sm:text-left">

@@ -1,10 +1,5 @@
 import React from "react";
 import { ChevronIcon } from "../Elements";
-
-/**
- * Molecule: FaqItem
- * A single expandable FAQ accordion item.
- */
 export function FaqItem({ question, answer, isOpen, onToggle }) {
     return (
         <div className="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300">
