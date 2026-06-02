@@ -24,7 +24,7 @@ function GalleryCard({ image, title, desc }) {
     );
 }
 
-export default function KubTalk({ gallery = [] }) {
+export default function KubTalk({ gallery = [], bannerImage = "/assets/kub-talk-1.jpg" }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;
     const [lightbox, setLightbox] = useState(null);
 
@@ -38,7 +38,7 @@ export default function KubTalk({ gallery = [] }) {
                 <PageHeroBanner
                     title="KUB Talk"
                     subtitle="Serangkaian talk inspiratif yang menghubungkan mahasiswa dengan pemimpin industri"
-                    backgroundImage="/assets/kub-talk-1.jpg"
+                    backgroundImage={bannerImage}
                 />
 
                 <section className="py-12 md:py-16">

@@ -126,6 +126,7 @@ class LandingController extends Controller
     public function kubTalk(): Response
     {
         return Inertia::render('KubTalk', [
+            'bannerImage' => $this->asset(PageContent::get('kub_talk.banner_image', '/assets/kub-talk-1.jpg')),
             'gallery' => KubTalk::ordered()->get()->map(fn (KubTalk $k) => [
                 'image' => $this->asset($k->image),
                 'title' => $k->title,

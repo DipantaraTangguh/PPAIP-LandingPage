@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Filament\Admin\Pages;
+
+use App\Models\PageContent;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+
+class KubTalkContent extends Page
+{
+    protected string $view = 'filament.admin.pages.kub-talk-content';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static ?string $title = 'Konten KUB Talk';
+
+    protected static ?string $navigationLabel = 'Konten Halaman';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'KUB Talk';
+
+    protected static ?int $navigationSort = 0;
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill([
+            'banner_image' => PageContent::get('kub_talk.banner_image') ?: null,
+        ]);
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make('Banner Halaman')
+                    ->schema([
+                        FileUpload::make('banner_image')
+                            ->label('Gambar Banner')
+                            ->image()
+                            ->disk('public')
+                            ->directory('banners')
+                            ->imageEditor()
+                            ->maxSize(8192)
+                            ->helperText('Banner di bagian atas halaman KUB Talk. Kosongkan untuk memakai gambar bawaan.')
+                            ->columnSpanFull(),
+                    ]),
+            ])
+            ->statePath('data');
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            Action::make('save')->label('Simpan')->submit('save'),
+        ];
+    }
+
+    public function save(): void
+    {
+        $data = $this->form->getState();
+        PageContent::put('kub_talk.banner_image', $data['banner_image'] ?? null);
+
+        Notification::make()->title('Konten KUB Talk tersimpan')->success()->send();
+    }
+}

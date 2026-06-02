@@ -15,7 +15,7 @@ export function FaqItem({ question, answer, isOpen, onToggle }) {
 
             <div
                 className={`overflow-hidden transition-all duration-300 ${
-                    isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                    isOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0"
                 }`}
             >
                 <div className="px-6 pb-4 text-sm text-gray-500 leading-relaxed">

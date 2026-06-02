@@ -88,16 +88,20 @@ class CmsContentSeeder extends Seeder
     {
         $faqs = [
             [
-                'question' => 'Apa itu UPT PPAIP?',
-                'answer' => 'Universitas Bakrie yang berfokus pada pengembangan akademik dan inovasi pembelajaran, mencakup pengelolaan program magang mahasiswa, sertifikasi, serta kegiatan pengembangan kompetensi dosen.',
+                'question' => 'Bagaimana program Unviersitas Bakrie dapat terhubung dengan industri?',
+                'answer' => 'Program PPAIP dirancang supaya mahasiswa tidak hanya belajar konsep di kelas, tapi juga ketemu langsung dengan kebutuhan industri lewat internship, sertifikasi, praktisi mengajar, dan forum KUB Talk.',
             ],
             [
-                'question' => 'Apa saja yang difasilitasi UPT PPAIP?',
-                'answer' => 'UPT PPAIP memfasilitasi berbagai program — mulai dari administrasi magang mahasiswa, penyelenggaraan sertifikasi, hingga forum dan kegiatan pengembangan profesional bagi dosen Universitas Bakrie.',
+                'question' => 'Apa hubungan program ini dengan “Experience The Real Thing”?',
+                'answer' => 'Jargon “Experience The Real Thing” diterjemahkan lewat pengalaman nyata: mahasiswa magang di perusahaan, belajar dari praktisi, mengenal standar profesional lewat sertifikasi, dan melihat langsung cara industri bekerja.',
             ],
             [
-                'question' => 'Apa komitmen UPT PPAIP?',
-                'answer' => 'Mendorong ekosistem akademik yang berkualitas melalui sistem yang transparan dan efisien, baik untuk mahasiswa dalam proses magangnya, maupun untuk dosen dalam pengembangan kompetensi dan inovasi pembelajarannya.',
+                'question' => 'Program apa saja yang paling dekat dengan dunia kerja?',
+                'answer' => 'Internship Program, Praktisi Mengajar, Sertifikasi Mahasiswa, dan KUB Talk menjadi jalur utama untuk menghubungkan mahasiswa dengan industri, termasuk jejaring Kelompok Usaha Bakrie, BUMN, dan mitra eksternal.',
+            ],
+            [
+                'question' => 'Kenapa mahasiswa perlu ikut program-program ini?',
+                'answer' => 'Karena pengalaman industri membantu mahasiswa memahami ekspektasi dunia kerja lebih awal, membangun portofolio, memperluas networking, dan menyiapkan skill yang lebih relevan sebelum lulus.',
             ],
         ];
         foreach ($faqs as $i => $f) {
@@ -133,6 +137,7 @@ class CmsContentSeeder extends Seeder
             'tentang_kami.group_photo_caption',
             'Tim PPAIP Universitas Bakrie — berkomitmen mendukung mahasiswa, dosen, dan mitra industri dalam ekosistem pembelajaran yang berkualitas.'
         );
+        PageContent::put('kub_talk.banner_image', '/assets/kub-talk-1.jpg');
     }
 
     private function seedInternship(): void
