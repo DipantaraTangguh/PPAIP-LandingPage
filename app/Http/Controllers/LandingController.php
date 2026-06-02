@@ -47,11 +47,13 @@ class LandingController extends Controller
                 'summary' => [
                     'kub' => (int) $year->summary_kub,
                     'nonKub' => (int) $year->summary_non_kub,
+                    'bumn' => (int) $year->summary_bumn,
                 ],
                 'prodi' => $year->prodiStats->map(fn ($p) => [
                     'name' => $p->name,
                     'kub' => (int) $p->kub,
                     'nonKub' => (int) $p->non_kub,
+                    'bumn' => (int) $p->bumn,
                 ])->all(),
             ];
         }
@@ -91,6 +93,7 @@ class LandingController extends Controller
                     'name' => $c->name,
                     'praktisi' => (bool) $c->is_practitioner,
                 ])->values()->all();
+
                 return [
                     'title' => $sem->title,
                     'praktisiCount' => collect($courses)->where('praktisi', true)->count(),
@@ -195,6 +198,7 @@ class LandingController extends Controller
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/')) {
             return $path;
         }
+
         return Storage::disk('public')->url($path);
     }
 }

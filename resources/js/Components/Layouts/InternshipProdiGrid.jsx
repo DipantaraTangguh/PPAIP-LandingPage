@@ -15,6 +15,7 @@ export function InternshipProdiGrid({ prodiList }) {
                             name={prodi.name}
                             kub={prodi.kub}
                             nonKub={prodi.nonKub}
+                            bumn={prodi.bumn}
                         />
                     ))}
                 </div>

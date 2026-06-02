@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('year', 8)->unique();
             $table->unsignedInteger('summary_kub')->default(0);
             $table->unsignedInteger('summary_non_kub')->default(0);
+            $table->unsignedInteger('summary_bumn')->default(0);
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedInteger('kub')->default(0);
             $table->unsignedInteger('non_kub')->default(0);
+            $table->unsignedInteger('bumn')->default(0);
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ class InternshipYearsTable
                 TextColumn::make('year')->searchable()->sortable(),
                 TextColumn::make('summary_kub')->label('KUB')->sortable(),
                 TextColumn::make('summary_non_kub')->label('Non-KUB')->sortable(),
+                TextColumn::make('summary_bumn')->label('BUMN')->sortable(),
                 TextColumn::make('prodi_stats_count')->counts('prodiStats')->label('# Prodi'),
             ])
             ->recordActions([EditAction::make(), DeleteAction::make()])

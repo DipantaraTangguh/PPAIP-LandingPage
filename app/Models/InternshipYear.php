@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InternshipYear extends Model
 {
-    protected $fillable = ['year', 'summary_kub', 'summary_non_kub', 'sort_order'];
+    protected $fillable = ['year', 'summary_kub', 'summary_non_kub', 'summary_bumn', 'sort_order'];
 
     public function prodiStats(): HasMany
     {

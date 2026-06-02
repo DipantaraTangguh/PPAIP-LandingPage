@@ -9,7 +9,7 @@ class InternshipProdiStat extends Model
 {
     protected $table = 'internship_major_stats';
 
-    protected $fillable = ['internship_year_id', 'name', 'kub', 'non_kub', 'sort_order'];
+    protected $fillable = ['internship_year_id', 'name', 'kub', 'non_kub', 'bumn', 'sort_order'];
 
     public function year(): BelongsTo
     {

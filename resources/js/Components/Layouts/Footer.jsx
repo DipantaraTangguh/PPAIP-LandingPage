@@ -79,7 +79,7 @@ function FooterWave() {
 
 export function Footer({ linkColumns }) {
     return (
-        <footer className="relative">
+        <footer className="relative mt-16 md:mt-24">
             <FooterWave />
 
             <div className="bg-[#5d1111]">

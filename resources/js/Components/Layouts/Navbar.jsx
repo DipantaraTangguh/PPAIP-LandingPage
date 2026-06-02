@@ -134,9 +134,6 @@ export function Navbar({ links }) {
                         alt="Universitas Bakrie Logo"
                         className="h-9 w-auto"
                     />
-                    <span className="text-white text-sm font-medium tracking-wide hidden sm:inline">
-                        PPAIP Universitas Bakrie
-                    </span>
                 </a>
 
                 <div className="hidden md:flex items-stretch gap-1">

@@ -1,11 +1,11 @@
 import React from "react";
 import { SectionWrapper } from "../Elements";
 import { DonutChart } from "../Fragments";
-export function DonutSummarySection({ kub, nonKub }) {
+export function DonutSummarySection({ kub, nonKub, bumn }) {
     return (
         <section className="py-4">
             <SectionWrapper>
-                <DonutChart kub={kub} nonKub={nonKub} />
+                <DonutChart kub={kub} nonKub={nonKub} bumn={bumn} />
             </SectionWrapper>
         </section>
     );

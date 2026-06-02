@@ -48,6 +48,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
               key={activeYear}
               kub={currentData.summary.kub}
               nonKub={currentData.summary.nonKub}
+              bumn={currentData.summary.bumn}
             />
 
             <InternshipProdiGrid
