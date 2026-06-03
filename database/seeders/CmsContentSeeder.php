@@ -43,7 +43,7 @@ class CmsContentSeeder extends Seeder
     {
         $links = [
             ['label' => 'Beranda', 'href' => '/'],
-            ['label' => 'SIPMAG', 'href' => '#'],
+            ['label' => 'Portal Magang', 'href' => '#'],
             ['label' => 'Tentang Kami', 'href' => '/about'],
         ];
         foreach ($links as $i => $link) {

@@ -15,7 +15,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
 
   const defaultYear = useMemo(() => {
     if (years.length === 0) return null;
-    return years.includes('2025') ? '2025' : years[years.length - 1];
+    return [...years].sort((a, b) => Number(b) - Number(a))[0] || years[years.length - 1];
   }, [years]);
 
   const [activeYear, setActiveYear] = useState(defaultYear);
