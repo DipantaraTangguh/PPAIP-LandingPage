@@ -46,7 +46,7 @@ function PartnerMarquee({ gallery }) {
     );
 
     return (
-        <section className="py-10 bg-white border-b border-gray-100 overflow-hidden">
+        <section className="py-8 bg-white border-b border-gray-100 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
                 <p className="text-center text-sm md:text-base font-bold uppercase tracking-widest text-gray-400">
                     Didukung oleh Mitra Industri
@@ -71,7 +71,7 @@ function StatsBar({ stats }) {
     ];
 
     return (
-        <section className="relative z-10 -mt-10 mb-16 px-4">
+        <section className="relative z-10 -mt-10 mb-8 px-4">
             <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm">
                 <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
                     {items.map(({ value, label, color }) => (
@@ -312,9 +312,9 @@ export default function KubTalk({
                 <PartnerMarquee gallery={gallery} />
 
                 {/* Main Gallery Grid */}
-                <section className="py-16 md:py-20">
+                <section className="py-12 md:py-16">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-14">
+                        <div className="text-center mb-10">
                             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-[#6B1B1B] bg-[#6B1B1B]/10 mb-5">
                                 Dokumentasi
                             </span>
