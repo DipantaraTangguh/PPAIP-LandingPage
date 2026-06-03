@@ -2,9 +2,11 @@
 
 namespace App\Filament\Admin\Resources\KubTalks\Schemas;
 
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class KubTalkForm
@@ -14,6 +16,7 @@ class KubTalkForm
         return $schema
             ->components([
                 FileUpload::make('image')
+                    ->label('Foto Event')
                     ->image()
                     ->disk('public')
                     ->directory('kub-talks')
@@ -22,6 +25,44 @@ class KubTalkForm
                     ->columnSpanFull(),
                 TextInput::make('title')->required()->maxLength(255)->columnSpanFull(),
                 Textarea::make('description')->rows(4)->columnSpanFull(),
+
+                Section::make('Identitas Perusahaan')
+                    ->description('Informasi perusahaan mitra yang tampil di halaman publik.')
+                    ->schema([
+                        TextInput::make('company_name')
+                            ->label('Nama Perusahaan')
+                            ->required()
+                            ->maxLength(255)
+                            ->placeholder('contoh: PT Telkom Indonesia'),
+                        FileUpload::make('company_logo')
+                            ->label('Logo Perusahaan')
+                            ->required()
+                            ->image()
+                            ->disk('public')
+                            ->directory('kub-talks/logos')
+                            ->imageEditor()
+                            ->maxSize(2048)
+                            ->helperText('Wajib diisi. Ukuran ideal: 200x80px, format PNG transparan.'),
+                    ])
+                    ->columns(2)
+                    ->collapsible(),
+
+                Section::make('Pembicara')
+                    ->schema([
+                        TextInput::make('speaker_name')
+                            ->label('Nama Pembicara')
+                            ->maxLength(255)
+                            ->placeholder('contoh: Andi Budiman'),
+                        TextInput::make('speaker_title')
+                            ->label('Jabatan Pembicara')
+                            ->maxLength(255)
+                            ->placeholder('contoh: VP of Engineering'),
+                        DatePicker::make('event_date')
+                            ->label('Tanggal Event'),
+                    ])
+                    ->columns(3)
+                    ->collapsible(),
+
                 TextInput::make('sort_order')->numeric()->default(0)->required(),
             ]);
     }

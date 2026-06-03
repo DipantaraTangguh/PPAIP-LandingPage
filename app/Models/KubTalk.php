@@ -7,7 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class KubTalk extends Model
 {
-    protected $fillable = ['image', 'title', 'description', 'sort_order'];
+    protected $fillable = [
+        'image',
+        'title',
+        'description',
+        'company_name',
+        'company_logo',
+        'speaker_name',
+        'speaker_title',
+        'event_date',
+        'sort_order',
+    ];
+
+    protected $casts = [
+        'event_date' => 'date',
+    ];
 
     public function scopeOrdered(Builder $query): Builder
     {

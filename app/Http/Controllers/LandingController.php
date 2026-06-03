@@ -125,13 +125,25 @@ class LandingController extends Controller
 
     public function kubTalk(): Response
     {
+        $talks = KubTalk::ordered()->get();
+
         return Inertia::render('KubTalk', [
             'bannerImage' => $this->asset(PageContent::get('kub_talk.banner_image', '/assets/kub-talk-1.jpg')),
-            'gallery' => KubTalk::ordered()->get()->map(fn (KubTalk $k) => [
+            'gallery' => $talks->map(fn (KubTalk $k) => [
                 'image' => $this->asset($k->image),
                 'title' => $k->title,
                 'desc' => $k->description,
+                'companyName' => $k->company_name,
+                'companyLogo' => $this->asset($k->company_logo),
+                'speakerName' => $k->speaker_name,
+                'speakerTitle' => $k->speaker_title,
+                'eventDate' => $k->event_date?->format('d M Y'),
             ])->all(),
+            'stats' => [
+                'totalSessions' => $talks->count(),
+                'totalCompanies' => $talks->pluck('company_name')->filter()->unique()->count(),
+                'totalStudents' => PageContent::get('kub_talk.total_students', '500+'),
+            ],
         ]);
     }
 

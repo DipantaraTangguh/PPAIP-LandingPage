@@ -20,7 +20,24 @@ class KubTalksTable
             ->columns([
                 ImageColumn::make('image')->disk('public')->square(),
                 TextColumn::make('title')->searchable()->wrap()->limit(60),
-                TextColumn::make('description')->limit(60)->wrap()->toggleable(),
+                TextColumn::make('company_name')
+                    ->label('Perusahaan')
+                    ->searchable()
+                    ->placeholder('—'),
+                ImageColumn::make('company_logo')
+                    ->label('Logo')
+                    ->disk('public')
+                    ->square()
+                    ->toggleable(),
+                TextColumn::make('speaker_name')
+                    ->label('Pembicara')
+                    ->placeholder('—')
+                    ->toggleable(),
+                TextColumn::make('event_date')
+                    ->label('Tanggal')
+                    ->date('d M Y')
+                    ->placeholder('—')
+                    ->toggleable(),
                 TextColumn::make('sort_order')->sortable(),
             ])
             ->recordActions([EditAction::make(), DeleteAction::make()])
