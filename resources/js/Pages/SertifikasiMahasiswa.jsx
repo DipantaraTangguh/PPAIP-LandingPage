@@ -11,6 +11,7 @@ import {
     Shield,
     FlaskConical,
     MoveRight,
+    Clock3,
     X,
 } from "lucide-react";
 import { Navbar, PageHeroBanner, InfoCard, Footer } from "@/Components/Layouts";
@@ -37,20 +38,19 @@ function ProdiCard({ prodi, onClick }) {
         <button
             type="button"
             onClick={onClick}
-            className="group w-full text-left bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-[#802324]/30 hover:-translate-y-0.5 transition-all duration-200 flex flex-col p-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]/40"
+            className="group w-full cursor-pointer text-left bg-white rounded-xl border border-gray-200 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:border-[#802324]/35 hover:shadow-md transition-all duration-200 flex flex-col p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]/30"
         >
-            <Icon className="w-8 h-8 mb-5 text-[#802324]" strokeWidth={2} aria-hidden="true" />
+            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-[#802324]/8 text-[#802324] transition-colors duration-200 group-hover:bg-[#802324] group-hover:text-white">
+                <Icon className="w-6 h-6" strokeWidth={2} aria-hidden="true" />
+            </div>
 
-            <h3 className="text-[22px] font-bold leading-tight text-gray-900 mb-5">
+            <h3 className="text-xl font-bold leading-tight text-gray-900 mb-5">
                 {prodi.name}
             </h3>
 
             <div className="mt-auto flex items-center gap-3 flex-wrap">
                 {available > 0 && (
-                    <span
-                        className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
-                        style={{ backgroundColor: "#d1fae5", color: "#065f46" }}
-                    >
+                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
                         {available} Tersedia
                     </span>
                 )}
@@ -63,14 +63,14 @@ function ProdiCard({ prodi, onClick }) {
 function CertificationRow({ cert, index }) {
     return (
         <div
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-[#802324]/25 hover:shadow-sm"
             style={{ animation: `slideUp 0.4s ease ${index * 60}ms both` }}
         >
-            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 shrink-0">{index + 1}</div>
+            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 shrink-0">{index + 1}</div>
             <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900 break-words">{cert.title}</p>
                 {cert.issuer && (
-                    <span className="mt-1 inline-block text-[11px] font-bold uppercase tracking-wider text-gray-400 bg-gray-100 px-2 py-0.5 rounded">{cert.issuer}</span>
+                    <span className="mt-1.5 inline-block rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-gray-500">{cert.issuer}</span>
                 )}
             </div>
             <div className="shrink-0 sm:pl-4">
@@ -80,14 +80,16 @@ function CertificationRow({ cert, index }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-white text-sm font-bold hover:opacity-90 hover:shadow-md transition-all duration-200"
-                        style={{ background: "linear-gradient(135deg,#802324,#ea580c)" }}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-[#802324] px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:bg-[#5d1111] hover:shadow-sm"
                     >
                         Daftar
                         <MoveRight className="w-3.5 h-3.5" strokeWidth={2.5} />
                     </a>
                 ) : (
-                    <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-50 text-amber-700 text-sm font-semibold border border-amber-100">⏳ Segera Hadir</span>
+                    <span className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-700">
+                        <Clock3 className="h-4 w-4" strokeWidth={2} />
+                        Segera Hadir
+                    </span>
                 )}
             </div>
         </div>
@@ -113,39 +115,38 @@ function Modal({ prodi, onClose }) {
             onClick={onClose}
         >
             <div
-                className="relative w-full bg-[#F7F7F8] rounded-3xl overflow-hidden flex flex-col"
-                style={{ maxWidth: 660, maxHeight: "88vh", boxShadow: "0 24px 64px rgba(0,0,0,0.3)", animation: "popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)" }}
+                className="relative w-full overflow-hidden rounded-2xl bg-[#f7f4f1] flex flex-col"
+                style={{ maxWidth: 660, maxHeight: "88vh", boxShadow: "0 22px 60px rgba(15,23,42,0.28)", animation: "popIn 0.28s ease-out" }}
                 onClick={e => e.stopPropagation()}
             >
-                <div className="relative shrink-0 px-5 sm:px-8 py-6 sm:py-9 text-white overflow-hidden" style={{ background: "linear-gradient(135deg,#802324 0%,#a83a26 55%,#ea580c 100%)" }}>
-                    <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }} />
-                    <p className="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-1.5">Program Studi</p>
-                    <h2 className="text-2xl sm:text-3xl font-black break-words pr-12">{prodi.name}</h2>
+                <div className="relative shrink-0 overflow-hidden border-b border-[#5d1111]/10 bg-[#802324] px-5 py-6 text-white sm:px-8 sm:py-8">
+                    <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-white/60">Program Studi</p>
+                    <h2 className="pr-12 text-2xl font-extrabold leading-tight break-words sm:text-3xl">{prodi.name}</h2>
                     <div className="flex flex-wrap gap-2.5 mt-4">
-                        <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(255,255,255,0.15)" }}>{prodi.certifications.length} Total</span>
+                        <span className="rounded-md bg-white/12 px-3 py-1 text-xs font-semibold ring-1 ring-white/15">{prodi.certifications.length} Total</span>
                         {available > 0 && (
-                            <span className="px-3 py-1 rounded-full text-xs font-bold text-emerald-200" style={{ background: "rgba(16,185,129,0.2)" }}>
-                                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />{available} Tersedia
+                            <span className="rounded-md bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-100 ring-1 ring-emerald-200/15">
+                                <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-300" />{available} Tersedia
                             </span>
                         )}
                     </div>
                     <button
                         onClick={onClose}
-                        className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 cursor-pointer"
-                        style={{ background: "rgba(0,0,0,0.2)" }}
+                        className="absolute top-5 right-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-black/20 text-white transition-all duration-200 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                        aria-label="Tutup modal"
                     >
                         <X className="w-5 h-5" strokeWidth={2.5} />
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-3">
+                <div className="flex-1 overflow-y-auto px-5 py-5 flex flex-col gap-3 sm:px-6">
                     {prodi.certifications.length > 0
                         ? prodi.certifications.map((cert, i) => <CertificationRow key={i} cert={cert} index={i} />)
-                        : <div className="py-16 text-center text-gray-400"><p className="text-5xl mb-3">📋</p><p className="font-semibold">Belum ada sertifikasi</p></div>
+                        : <div className="py-16 text-center text-gray-400"><p className="font-semibold">Belum ada sertifikasi</p></div>
                     }
                 </div>
 
-                <div className="shrink-0 px-6 py-3.5 bg-white border-t border-gray-200 text-center text-xs text-gray-400">
+                <div className="shrink-0 border-t border-gray-200 bg-white px-6 py-3.5 text-center text-xs text-gray-500">
                     Klik <strong className="text-[#802324]">Daftar</strong> untuk mendaftar sertifikasi yang tersedia
                 </div>
             </div>
@@ -179,7 +180,7 @@ export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDe
 
                 <section className="relative z-10 -mt-10 mb-16 px-4">
                     <SectionWrapper>
-                        <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm">
+                        <div className="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm">
                             <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
                                 {[
                                     { val: prodiCertifications.length, label: "Program Studi" },
@@ -187,8 +188,8 @@ export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDe
                                     { val: availableCerts, label: "Tersedia Saat Ini", green: true },
                                 ].map(({ val, label, green }) => (
                                     <div key={label} className="flex-1 flex flex-col items-center py-7 px-4">
-                                        <span className="text-4xl font-black" style={{ color: green ? "#16a34a" : "#802324" }}>{val}</span>
-                                        <span className="mt-1.5 text-xs font-bold uppercase tracking-widest text-gray-400">{label}</span>
+                                        <span className="text-4xl font-extrabold" style={{ color: green ? "#15803d" : "#802324" }}>{val}</span>
+                                        <span className="mt-1.5 text-xs font-semibold uppercase tracking-widest text-gray-500">{label}</span>
                                     </div>
                                 ))}
                             </div>
@@ -199,7 +200,7 @@ export default function SertifikasiMahasiswa({ prodiCertifications = [], aboutDe
                 <section className="pb-24">
                     <SectionWrapper>
                         <div className="text-center mb-12">
-                            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-widest text-[#802324] bg-gray-100 border border-gray-200 mb-6">
+                            <span className="inline-block rounded-md border border-gray-200 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#802324] shadow-sm mb-6">
                                 Sertifikasi Mahasiswa
                             </span>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
