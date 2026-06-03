@@ -48,8 +48,8 @@ class CmsContentSeeder extends Seeder
         ];
         foreach ($links as $i => $link) {
             NavLink::updateOrCreate(
-                ['label' => $link['label']],
-                ['href' => $link['href'], 'sort_order' => $i],
+                ['sort_order' => $i],
+                ['label' => $link['label'], 'href' => $link['href']],
             );
         }
     }
