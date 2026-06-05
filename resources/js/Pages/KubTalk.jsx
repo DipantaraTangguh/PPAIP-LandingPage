@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+    ArrowUpRight,
+    Building2,
+    CalendarDays,
+    Camera,
+    ChevronLeft,
+    ChevronRight,
+    Quote,
+    Sparkles,
+    X,
+} from "lucide-react";
 import { Navbar, PageHeroBanner, Footer } from "@/Components/Layouts";
 
 /* ─────────────────────────────────────────────────────────
@@ -21,13 +31,13 @@ function PartnerMarquee({ gallery }) {
 
     if (companies.length === 0) return null;
 
-    // Ensure enough items to comfortably fill the viewport
+    // Biar marquee tetap penuh walau logo mitranya masih sedikit.
     const MIN_ITEMS = 10;
     const repeatCount = Math.max(1, Math.ceil(MIN_ITEMS / companies.length));
     const logoSet = Array.from({ length: repeatCount }, () => companies).flat();
     const duration = logoSet.length * 3;
 
-    // Render one "track" of logos
+    // Track digandakan supaya loop-nya mulus.
     const Track = () => (
         <div
             className="flex shrink-0 items-center gap-16 animate-marquee"
@@ -108,42 +118,59 @@ function TalkCard({ item, onClick }) {
     return (
         <div
             onClick={onClick}
-            className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
+            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-[#f4d8b8] bg-white shadow-[0_18px_60px_rgba(107,27,27,0.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#f6b756] hover:shadow-[0_28px_90px_rgba(107,27,27,0.18)]"
         >
-            {/* Image Slider */}
-            <div className="relative overflow-hidden h-56 bg-gray-50 flex items-center justify-center">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#6B1B1B] via-[#F5A623] to-[#C4571A]" />
+            <div className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-[#F5A623]/20 blur-3xl transition-opacity duration-500 group-hover:opacity-90" />
+
+            <div className="relative flex h-60 items-center justify-center overflow-hidden bg-[#210b0b]">
                 <img
                     src={currentImage}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                
-                {images.length > 1 && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                )}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#190606]/75 via-[#190606]/8 to-[#190606]/35" />
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(circle at 25% 10%, rgba(245,166,35,.28), transparent 32%)" }} />
+
+                <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
+                    <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
+                    Industry Session
+                </div>
 
                 {item.eventDate && (
-                    <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-[11px] font-bold z-10">
+                    <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur-sm">
+                        <CalendarDays className="h-3.5 w-3.5 text-[#F5A623]" />
                         {item.eventDate}
                     </span>
                 )}
+
+                <div className="absolute bottom-4 left-4 right-4 z-10 flex items-end justify-between gap-3">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/92 px-3 py-1.5 text-xs font-bold text-[#6B1B1B] shadow-lg backdrop-blur">
+                        <Camera className="h-3.5 w-3.5" />
+                        {images.length || 1} Foto
+                    </div>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5A623] text-[#3a0d0d] shadow-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+                        <ArrowUpRight className="h-5 w-5" strokeWidth={2.6} />
+                    </span>
+                </div>
 
                 {images.length > 1 && (
                     <>
                         <button
                             onClick={handlePrev}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-gray-800 flex items-center justify-center shadow-md transition-all opacity-0 group-hover:opacity-100 duration-300 z-10 hover:scale-105"
+                            className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
                         </button>
                         <button
                             onClick={handleNext}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-gray-800 flex items-center justify-center shadow-md transition-all opacity-0 group-hover:opacity-100 duration-300 z-10 hover:scale-105"
+                            className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
                         </button>
 
-                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                        <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
                             {images.map((_, idx) => (
                                 <button
                                     key={idx}
@@ -161,9 +188,7 @@ function TalkCard({ item, onClick }) {
                 )}
             </div>
 
-            {/* Body */}
-            <div className="p-5 flex flex-col flex-1">
-                {/* Company Identity — the star of each card */}
+            <div className="relative p-5 flex flex-col flex-1">
                 {item.companyName && (
                     <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                         {item.companyLogo ? (
@@ -177,19 +202,16 @@ function TalkCard({ item, onClick }) {
                     </div>
                 )}
 
-                {/* Title */}
                 <h3 className="text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-[#6B1B1B] transition-colors">
                     {item.title}
                 </h3>
 
-                {/* Description */}
                 {item.desc && (
                     <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2 flex-1">
                         {item.desc}
                     </p>
                 )}
 
-                {/* Speaker */}
                 {item.speakerName && (
                     <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-100">
                         <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
@@ -243,15 +265,37 @@ function CTABanner() {
    LIGHTBOX MODAL (refreshed)
 ───────────────────────────────────────────────────────── */
 function Lightbox({ gallery, index, onClose }) {
-    if (index === null || !gallery[index]) return null;
-    const item = gallery[index];
-    const images = item.images || [];
-
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const item = index === null ? null : gallery[index];
+    const images = item?.images || [];
 
-    React.useEffect(() => {
+    useEffect(() => {
         setCurrentImageIndex(0);
     }, [index]);
+
+    useEffect(() => {
+        if (!item) return;
+
+        const handleKeyDown = (event) => {
+            if (event.key === "Escape") onClose();
+            if (event.key === "ArrowLeft" && images.length > 1) {
+                setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+            }
+            if (event.key === "ArrowRight" && images.length > 1) {
+                setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+            }
+        };
+
+        document.body.style.overflow = "hidden";
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = "";
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [images.length, item, onClose]);
+
+    if (!item) return null;
 
     const handlePrev = (e) => {
         e.stopPropagation();
@@ -264,89 +308,164 @@ function Lightbox({ gallery, index, onClose }) {
     };
 
     const currentImage = images[currentImageIndex] || "/assets/kub-talk-1.jpg";
+    const imageProgress = images.length > 0 ? ((currentImageIndex + 1) / images.length) * 100 : 100;
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-4"
-            style={{ zIndex: 9999, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", animation: "fadeIn 0.2s ease" }}
+            className="fixed inset-0 flex items-center justify-center p-3 md:p-6"
+            style={{
+                zIndex: 9999,
+                background: "radial-gradient(circle at 20% 12%, rgba(245,166,35,.22), transparent 28%), radial-gradient(circle at 78% 0%, rgba(196,87,26,.2), transparent 26%), rgba(18, 5, 5, 0.78)",
+                backdropFilter: "blur(16px)",
+                animation: "fadeIn 0.22s ease",
+            }}
             onClick={onClose}
         >
             <div
-                className="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col"
-                style={{ maxHeight: "90vh", animation: "popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)" }}
+                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-[#120505] shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden"
+                style={{ maxHeight: "92vh", animation: "kubModalRise 0.45s cubic-bezier(0.16,1,0.3,1)" }}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="relative bg-gray-900 w-full h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden">
-                    <img 
-                        src={currentImage} 
-                        alt={item.title} 
-                        className="max-w-full max-h-full object-contain" 
+                <div className="pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full bg-[#F5A623]/25 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-28 right-10 h-80 w-80 rounded-full bg-[#C4571A]/20 blur-3xl" />
+                <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10" />
+
+                <div className="relative flex min-h-[42vh] items-center justify-center overflow-hidden bg-[#210b0b] md:min-h-[76vh]">
+                    <img
+                        key={currentImage}
+                        src={currentImage}
+                        alt={item.title}
+                        className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh]"
+                        style={{ animation: "kubPhotoReveal 0.55s ease both" }}
                     />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#120505]/70 via-transparent to-[#120505]/30" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#120505] to-transparent" />
+
+                    <div className="absolute left-5 top-5 z-20 flex flex-wrap items-center gap-2">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#F5A623]/35 bg-[#F5A623]/18 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#ffe1a3] shadow-lg backdrop-blur-md">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            KUB Talk Showcase
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/12 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-md">
+                            <Camera className="h-3.5 w-3.5 text-[#F5A623]" />
+                            {currentImageIndex + 1} / {images.length || 1}
+                        </span>
+                    </div>
 
                     {images.length > 1 && (
                         <>
                             <button
                                 onClick={handlePrev}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center cursor-pointer transition-colors z-10"
+                                className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
+                                aria-label="Foto sebelumnya"
                             >
                                 <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
                             </button>
                             <button
                                 onClick={handleNext}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center cursor-pointer transition-colors z-10"
+                                className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
+                                aria-label="Foto berikutnya"
                             >
                                 <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
                             </button>
 
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full text-white text-[11px] font-bold z-10 flex items-center gap-1">
-                                <span>{currentImageIndex + 1}</span>
-                                <span className="opacity-50">/</span>
-                                <span>{images.length}</span>
+                            <div className="absolute bottom-6 left-6 right-6 z-20">
+                                <div className="h-1.5 overflow-hidden rounded-full bg-white/14">
+                                    <div
+                                        className="h-full rounded-full bg-gradient-to-r from-[#F5A623] to-[#fff0b8] transition-all duration-500"
+                                        style={{ width: `${imageProgress}%` }}
+                                    />
+                                </div>
                             </div>
                         </>
                     )}
                 </div>
 
-                <div className="p-6">
-                    {/* Company row */}
+                <div className="relative flex min-h-0 flex-col overflow-y-auto bg-[linear-gradient(160deg,#fff8ee_0%,#ffffff_46%,#fff4de_100%)] p-5 md:p-7">
+                    <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-[#F5A623]/20" />
+                    <div className="mb-5 flex items-start justify-between gap-4">
+                        <div>
+                            <p className="inline-flex items-center gap-2 rounded-full bg-[#6B1B1B] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
+                                <Quote className="h-3.5 w-3.5" />
+                                Industry Insight
+                            </p>
+                            {item.eventDate && (
+                                <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#7a4030]">
+                                    <CalendarDays className="h-4 w-4 text-[#C4571A]" />
+                                    {item.eventDate}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
                     {item.companyName && (
-                        <div className="flex items-center gap-3 mb-3">
+                        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-[#f0d6b2] bg-white/80 p-3 shadow-sm backdrop-blur">
                             {item.companyLogo ? (
-                                <img src={item.companyLogo} alt={item.companyName} className="h-6 w-auto object-contain" />
+                                <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+                                    <img src={item.companyLogo} alt={item.companyName} className="max-h-8 w-auto object-contain" />
+                                </div>
                             ) : (
-                                <div className="w-7 h-7 rounded-md bg-[#6B1B1B]/10 flex items-center justify-center">
-                                    <span className="text-[#6B1B1B] text-xs font-black">{item.companyName.charAt(0)}</span>
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#6B1B1B]/10">
+                                    <Building2 className="h-5 w-5 text-[#6B1B1B]" />
                                 </div>
                             )}
-                            <span className="text-sm font-bold text-gray-600">{item.companyName}</span>
-                            {item.eventDate && (
-                                <span className="ml-auto text-xs text-gray-400">{item.eventDate}</span>
-                            )}
+                            <div className="min-w-0">
+                                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#C4571A]">Mitra Industri</p>
+                                <p className="truncate text-base font-black text-[#301010]">{item.companyName}</p>
+                            </div>
                         </div>
                     )}
 
-                    <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-                    {item.desc && <p className="mt-2 text-sm text-gray-500 leading-relaxed">{item.desc}</p>}
+                    <h3 className="text-2xl font-black leading-tight text-[#240b0b] md:text-3xl">{item.title}</h3>
+                    {item.desc && <p className="mt-3 text-sm leading-7 text-[#6f554d]">{item.desc}</p>}
 
                     {item.speakerName && (
-                        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                <span className="text-xs font-bold text-gray-500">
+                        <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#240b0b] p-4 text-white shadow-[0_18px_40px_rgba(36,11,11,0.18)]">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5A623]">
+                                <span className="text-sm font-black text-[#3a0d0d]">
                                     {item.speakerName.split(" ").map(w => w[0]).join("").slice(0, 2)}
                                 </span>
                             </div>
-                            <div>
-                                <p className="text-sm font-semibold text-gray-800">{item.speakerName}</p>
-                                {item.speakerTitle && <p className="text-[11px] text-gray-400">{item.speakerTitle}</p>}
+                            <div className="min-w-0">
+                                <p className="truncate text-sm font-black">{item.speakerName}</p>
+                                {item.speakerTitle && <p className="truncate text-xs text-white/58">{item.speakerTitle}</p>}
+                            </div>
+                        </div>
+                    )}
+
+                    {images.length > 1 && (
+                        <div className="mt-5 min-h-0">
+                            <div className="mb-3 flex items-center justify-between">
+                                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#7a4030]">Photo Highlights</p>
+                                <p className="text-xs font-bold text-[#C4571A]">{images.length} dokumentasi</p>
+                            </div>
+                            <div className="flex max-h-24 gap-2 overflow-x-auto pb-1 pr-1">
+                                {images.map((image, idx) => (
+                                    <button
+                                        key={`${image}-${idx}`}
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setCurrentImageIndex(idx);
+                                        }}
+                                        className={`relative h-20 w-24 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300 ${
+                                            idx === currentImageIndex
+                                                ? "border-[#F5A623] shadow-[0_10px_28px_rgba(245,166,35,.28)]"
+                                                : "border-white opacity-70 hover:opacity-100"
+                                        }`}
+                                        aria-label={`Lihat foto ${idx + 1}`}
+                                    >
+                                        <img src={image} alt={`${item.title} ${idx + 1}`} className="h-full w-full object-cover" />
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* Close */}
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center cursor-pointer transition-colors"
+                    className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
                     aria-label="Close"
                 >
                     <X className="w-5 h-5" strokeWidth={2} />
@@ -373,6 +492,8 @@ export default function KubTalk({
             <style>{`
                 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
                 @keyframes popIn { from{opacity:0;transform:scale(0.93) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
+                @keyframes kubModalRise { from{opacity:0;transform:translateY(24px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+                @keyframes kubPhotoReveal { from{opacity:0;transform:scale(1.04);filter:saturate(.82) contrast(.95)} to{opacity:1;transform:scale(1);filter:saturate(1) contrast(1)} }
                 @keyframes marquee { 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-100%,0,0)} }
                 .animate-marquee { animation: marquee 30s linear infinite; will-change:transform; }
                 .animate-marquee:hover, .relative:hover .animate-marquee { animation-play-state: paused; }
