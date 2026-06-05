@@ -276,6 +276,7 @@ class CmsContentSeeder extends Seeder
         $items = [
             [
                 'image' => '/assets/kub-talk-1.jpg',
+                'images' => ['/assets/kub-talk-1.jpg', '/assets/kub-talk-2.jpg'],
                 'title' => 'KUB Talk with PT VKTR Teknologi Mobilitas',
                 'description' => 'Sesi luar biasa ini dibawakan langsung oleh Bapak R. Ariyo Putro, selaku Direktur di PT VKTR Teknologi Mobilitas, yang membahas masa depan kendaraan listrik di Indonesia.',
                 'company_name' => 'PT VKTR Teknologi Mobilitas',
@@ -285,6 +286,7 @@ class CmsContentSeeder extends Seeder
             ],
             [
                 'image' => '/assets/kub-talk-2.jpg',
+                'images' => ['/assets/kub-talk-2.jpg', '/assets/kub-talk-1.jpg'],
                 'title' => 'KUB Talk with PT Kutai Bara Nusantara',
                 'description' => 'Belajar langsung dari ahlinya tentang dunia IT di industri profesional bersama Pak Adi Alam, S.Kom., M.M.S.I., membahas arsitektur cloud dan keamanan data.',
                 'company_name' => 'PT Kutai Bara Nusantara',

@@ -18,7 +18,12 @@ class KubTalksTable
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->columns([
-                ImageColumn::make('image')->disk('public')->square(),
+                ImageColumn::make('images')
+                    ->label('Foto Event')
+                    ->disk('public')
+                    ->square()
+                    ->stacked()
+                    ->limit(3),
                 TextColumn::make('title')->searchable()->wrap()->limit(60),
                 TextColumn::make('company_name')
                     ->label('Perusahaan')

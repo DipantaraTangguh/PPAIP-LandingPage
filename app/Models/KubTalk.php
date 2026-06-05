@@ -9,6 +9,7 @@ class KubTalk extends Model
 {
     protected $fillable = [
         'image',
+        'images',
         'title',
         'description',
         'company_name',
@@ -21,6 +22,7 @@ class KubTalk extends Model
 
     protected $casts = [
         'event_date' => 'date',
+        'images' => 'array',
     ];
 
     public function scopeOrdered(Builder $query): Builder

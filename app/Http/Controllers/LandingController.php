@@ -131,7 +131,7 @@ class LandingController extends Controller
         return Inertia::render('KubTalk', [
             'bannerImage' => $this->asset(PageContent::get('kub_talk.banner_image', '/assets/kub-talk-1.jpg')),
             'gallery' => $talks->map(fn (KubTalk $k) => [
-                'image' => $this->asset($k->image),
+                'images' => is_array($k->images) ? array_map(fn($img) => $this->asset($img), $k->images) : ($k->image ? [$this->asset($k->image)] : []),
                 'title' => $k->title,
                 'desc' => $k->description,
                 'companyName' => $k->company_name,

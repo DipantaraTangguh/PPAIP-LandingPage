@@ -15,9 +15,11 @@ class KubTalkForm
     {
         return $schema
             ->components([
-                FileUpload::make('image')
+                FileUpload::make('images')
                     ->label('Foto Event')
                     ->image()
+                    ->multiple()
+                    ->reorderable()
                     ->disk('public')
                     ->directory('kub-talks')
                     ->imageEditor()
