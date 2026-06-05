@@ -62,6 +62,7 @@ class LandingController extends Controller
             'years' => $years->pluck('year')->all(),
             'internshipData' => $internshipData,
             'bannerImage' => $this->asset(PageContent::get('internship_program.banner_image', '/assets/internship-program.png')),
+            'catalogUrl' => '/storage/student-catalog/Repository Magang 2025 UBakrie.pdf',
         ]);
     }
 

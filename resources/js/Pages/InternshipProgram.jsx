@@ -10,7 +10,7 @@ import {
   Footer,
 } from '@/Components/Layouts';
 
-export default function InternshipProgramPage({ years = [], internshipData = {}, bannerImage = '/assets/internship-program.png' }) {
+export default function InternshipProgramPage({ years = [], internshipData = {}, bannerImage = '/assets/internship-program.png', catalogUrl }) {
   const { navLinks = [], footerLinks = [] } = usePage().props;
 
   const defaultYear = useMemo(() => {
@@ -54,6 +54,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
             <InternshipProdiGrid
               key={activeYear + '-grid'}
               prodiList={currentData.prodi}
+              catalogUrl={catalogUrl}
             />
           </>
         )}
