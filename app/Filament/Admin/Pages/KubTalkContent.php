@@ -49,6 +49,7 @@ class KubTalkContent extends Page
                             ->disk('public')
                             ->directory('banners')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman KUB Talk. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
@@ -58,6 +59,9 @@ class KubTalkContent extends Page
                         TextInput::make('total_students')
                             ->label('Jumlah Mahasiswa Terlibat')
                             ->placeholder('contoh: 500+')
+                            ->required()
+                            ->maxLength(20)
+                            ->rules(['regex:/^[0-9][0-9.,]*\+?$/'])
                             ->helperText('Angka yang ditampilkan di bagian statistik halaman KUB Talk.'),
                     ]),
             ])

@@ -47,6 +47,7 @@ class InternshipContent extends Page
                             ->disk('public')
                             ->directory('banners')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman Internship Program. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),

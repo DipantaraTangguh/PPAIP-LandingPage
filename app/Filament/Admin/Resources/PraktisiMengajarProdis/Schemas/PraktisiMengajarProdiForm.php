@@ -28,8 +28,10 @@ class PraktisiMengajarProdiForm
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(150)
+                            ->rules(['alpha_dash'])
+                            ->unique(ignoreRecord: true)
                             ->helperText('URL-safe identifier. Auto-generated from name.'),
-                        TextInput::make('sort_order')->numeric()->default(0)->required(),
+                        TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
                     ]),
                 Section::make('Semester & Mata Kuliah')
                     ->schema([

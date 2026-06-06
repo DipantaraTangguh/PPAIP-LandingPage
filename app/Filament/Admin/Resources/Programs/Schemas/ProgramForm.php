@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Programs\Schemas;
 
+use App\Rules\SafeLink;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -18,13 +19,16 @@ class ProgramForm
                     ->disk('public')
                     ->directory('programs')
                     ->imageEditor()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(4096),
                 TextInput::make('link')
                     ->placeholder('/internship-program')
                     ->helperText('Internal path (e.g. /kub-talk) or full URL.')
+                    ->rules([new SafeLink])
                     ->maxLength(255),
                 TextInput::make('sort_order')
-                    ->numeric()
+                    ->integer()
+                    ->minValue(0)
                     ->default(0)
                     ->required(),
             ]);

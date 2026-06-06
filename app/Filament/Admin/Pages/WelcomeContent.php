@@ -41,6 +41,7 @@ class WelcomeContent extends Page
                 Textarea::make('about_description')
                     ->label('Deskripsi Tentang Universitas Bakrie')
                     ->rows(8)
+                    ->maxLength(10000)
                     ->columnSpanFull(),
             ])
             ->statePath('data');

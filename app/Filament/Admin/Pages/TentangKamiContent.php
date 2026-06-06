@@ -50,10 +50,12 @@ class TentangKamiContent extends Page
                         Textarea::make('about_intro')
                             ->label('Intro Tentang Kami')
                             ->rows(6)
+                            ->maxLength(10000)
                             ->columnSpanFull(),
                         Textarea::make('vision')
                             ->label('Visi')
                             ->rows(4)
+                            ->maxLength(5000)
                             ->columnSpanFull(),
                     ]),
                 Section::make('Foto Tim (Group Photo)')
@@ -64,6 +66,7 @@ class TentangKamiContent extends Page
                             ->disk('public')
                             ->directory('tentang-kami')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),
                         FileUpload::make('group_photo_fallback')
@@ -71,6 +74,7 @@ class TentangKamiContent extends Page
                             ->image()
                             ->disk('public')
                             ->directory('tentang-kami')
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),
                         TextInput::make('group_photo_caption')

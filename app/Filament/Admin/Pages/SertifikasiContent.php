@@ -49,6 +49,7 @@ class SertifikasiContent extends Page
                             ->disk('public')
                             ->directory('banners')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman Sertifikasi Mahasiswa. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
@@ -58,6 +59,7 @@ class SertifikasiContent extends Page
                         Textarea::make('about_description')
                             ->label('Deskripsi Halaman Sertifikasi')
                             ->rows(8)
+                            ->maxLength(10000)
                             ->columnSpanFull(),
                     ]),
             ])

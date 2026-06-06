@@ -12,8 +12,8 @@ class MissionForm
     {
         return $schema
             ->components([
-                Textarea::make('statement')->required()->rows(4)->columnSpanFull(),
-                TextInput::make('sort_order')->numeric()->default(0)->required(),
+                Textarea::make('statement')->required()->rows(4)->maxLength(3000)->columnSpanFull(),
+                TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
             ]);
     }
 }

@@ -23,10 +23,12 @@ class KubTalkForm
                     ->disk('public')
                     ->directory('kub-talks')
                     ->imageEditor()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxFiles(30)
                     ->maxSize(8192)
                     ->columnSpanFull(),
                 TextInput::make('title')->required()->maxLength(255)->columnSpanFull(),
-                Textarea::make('description')->rows(4)->columnSpanFull(),
+                Textarea::make('description')->rows(4)->maxLength(5000)->columnSpanFull(),
 
                 Section::make('Identitas Perusahaan')
                     ->description('Informasi perusahaan mitra yang tampil di halaman publik.')
@@ -43,6 +45,7 @@ class KubTalkForm
                             ->disk('public')
                             ->directory('kub-talks/logos')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(2048)
                             ->helperText('Wajib diisi. Ukuran ideal: 200x80px, format PNG transparan.'),
                     ])
@@ -65,7 +68,7 @@ class KubTalkForm
                     ->columns(3)
                     ->collapsible(),
 
-                TextInput::make('sort_order')->numeric()->default(0)->required(),
+                TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
             ]);
     }
 }

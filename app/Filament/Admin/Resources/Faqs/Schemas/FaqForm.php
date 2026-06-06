@@ -13,8 +13,8 @@ class FaqForm
         return $schema
             ->components([
                 TextInput::make('question')->required()->maxLength(255)->columnSpanFull(),
-                Textarea::make('answer')->required()->rows(5)->columnSpanFull(),
-                TextInput::make('sort_order')->numeric()->default(0)->required(),
+                Textarea::make('answer')->required()->rows(5)->maxLength(5000)->columnSpanFull(),
+                TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
             ]);
     }
 }

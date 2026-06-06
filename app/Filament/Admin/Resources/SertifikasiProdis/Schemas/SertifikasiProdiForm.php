@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\SertifikasiProdis\Schemas;
 
+use App\Rules\SafeLink;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -17,8 +18,11 @@ class SertifikasiProdiForm
                 Section::make('Prodi')
                     ->columns(2)
                     ->schema([
-                        TextInput::make('name')->required()->maxLength(150),
-                        TextInput::make('sort_order')->numeric()->default(0)->required(),
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(150)
+                            ->unique(ignoreRecord: true),
+                        TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
                     ]),
                 Section::make('Daftar Sertifikasi')
                     ->schema([
@@ -38,6 +42,7 @@ class SertifikasiProdiForm
                                 TextInput::make('register_url')
                                     ->label('URL Pendaftaran')
                                     ->maxLength(255)
+                                    ->rules([new SafeLink])
                                     ->columnSpan(4)
                                     ->helperText('Hanya diperlukan jika sertifikasi tersedia.'),
                             ]),

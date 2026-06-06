@@ -25,9 +25,10 @@ class TeamMemberForm
                     ->disk('public')
                     ->directory('team')
                     ->imageEditor()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(4096),
-                Textarea::make('bio')->rows(3)->columnSpanFull(),
-                TextInput::make('sort_order')->numeric()->default(0)->required(),
+                Textarea::make('bio')->rows(3)->maxLength(3000)->columnSpanFull(),
+                TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
             ]);
     }
 }

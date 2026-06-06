@@ -32,8 +32,8 @@ class ProgramKerjaForm
                     ])
                     ->helperText('Nama ikon dari lucide-react.'),
                 TextInput::make('title')->required()->maxLength(150),
-                Textarea::make('description')->rows(3)->columnSpanFull(),
-                TextInput::make('sort_order')->numeric()->default(0)->required(),
+                Textarea::make('description')->rows(3)->maxLength(3000)->columnSpanFull(),
+                TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
             ]);
     }
 }

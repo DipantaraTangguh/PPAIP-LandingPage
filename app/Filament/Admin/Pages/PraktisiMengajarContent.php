@@ -49,6 +49,7 @@ class PraktisiMengajarContent extends Page
                             ->disk('public')
                             ->directory('banners')
                             ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman Praktisi Mengajar. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
@@ -58,6 +59,7 @@ class PraktisiMengajarContent extends Page
                         Textarea::make('about_description')
                             ->label('Deskripsi Halaman Praktisi Mengajar')
                             ->rows(8)
+                            ->maxLength(10000)
                             ->columnSpanFull(),
                     ]),
             ])
