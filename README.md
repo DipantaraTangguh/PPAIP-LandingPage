@@ -1,58 +1,334 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PPAIP Universitas Bakrie
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website dan CMS PPAIP Universitas Bakrie untuk mengelola program internship, KUB Talk, praktisi mengajar, sertifikasi mahasiswa, FAQ, serta konten profil unit.
 
-## About Laravel
+## Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.3+
+- Laravel 13
+- Filament 4
+- Inertia.js 2
+- React 18
+- Tailwind CSS 4
+- Vite 8
+- MySQL atau SQLite
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Pastikan server atau komputer lokal memiliki:
 
-## Learning Laravel
+- PHP 8.3 atau lebih baru beserta extension Laravel yang dibutuhkan.
+- Composer 2.
+- Node.js 22 atau lebih baru dan npm.
+- MySQL 8+ untuk production. SQLite cukup untuk development dan testing.
+- Web server dengan document root mengarah ke folder `public`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Local Setup
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Install dependency dan buat environment file.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Konfigurasi database di `.env`.
 
-## Contributing
+Contoh MySQL:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ppaip
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Code of Conduct
+Untuk SQLite:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+touch database/database.sqlite
+```
 
-## Security Vulnerabilities
+```dotenv
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database/database.sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. Konfigurasi administrator awal.
 
-## License
+```dotenv
+ADMIN_NAME="PPAIP Admin"
+ADMIN_EMAIL="admin@example.com"
+ADMIN_PASSWORD="use-a-strong-password"
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+`ADMIN_PASSWORD` minimal 12 karakter. Jangan gunakan kredensial contoh di production.
+
+4. Siapkan database, data awal, dan public storage.
+
+```bash
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+```
+
+Seeder hanya membuat administrator jika `ADMIN_EMAIL` dan `ADMIN_PASSWORD` sudah diisi. Menjalankan seeder kembali akan memperbarui administrator dengan email yang sama.
+
+5. Jalankan development server.
+
+```bash
+composer dev
+```
+
+Website tersedia di `http://127.0.0.1:8000`. Filament CMS tersedia di `/admin`.
+
+## Common Commands
+
+```bash
+# Menjalankan semua test
+composer test
+
+# Memeriksa format PHP
+vendor/bin/pint --test
+
+# Memperbaiki format PHP
+vendor/bin/pint
+
+# Membuat production frontend assets
+npm run build
+
+# Menampilkan route aplikasi
+php artisan route:list
+```
+
+Sebelum merge atau deploy, minimal jalankan:
+
+```bash
+composer test
+vendor/bin/pint --test
+npm run build
+```
+
+## Content and Uploads
+
+Media yang diunggah melalui Filament disimpan di:
+
+```text
+storage/app/public
+```
+
+Folder tersebut tidak disimpan di Git. Deployment baru wajib:
+
+1. Menjalankan `php artisan storage:link`.
+2. Memindahkan atau restore isi `storage/app/public` dari server sebelumnya.
+3. Memberikan permission tulis kepada process PHP untuk `storage` dan `bootstrap/cache`.
+
+Katalog internship saat ini diharapkan tersedia pada:
+
+```text
+storage/app/public/student-catalog/Repository Magang 2025 UBakrie.pdf
+```
+
+Jika nama atau lokasi file diubah, sesuaikan `catalogUrl` pada `LandingController`.
+
+## Production Environment
+
+Gunakan konfigurasi production berikut sebagai baseline:
+
+```dotenv
+APP_NAME="PPAIP Universitas Bakrie"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.example
+
+LOG_LEVEL=error
+SESSION_ENCRYPT=true
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ppaip
+DB_USERNAME=ppaip_user
+DB_PASSWORD=strong-database-password
+
+FILESYSTEM_DISK=local
+CACHE_STORE=database
+SESSION_DRIVER=database
+QUEUE_CONNECTION=database
+```
+
+Gunakan HTTPS dan jangan menyimpan `.env`, database dump, atau kredensial di repository.
+Simpan `APP_KEY` production dengan aman dan jangan menjalankan `key:generate` ulang setelah aplikasi memiliki data terenkripsi atau session aktif.
+
+## Production Deployment
+
+Contoh deployment manual menggunakan maintenance mode:
+
+```bash
+php artisan down --retry=60
+
+git pull --ff-only
+composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+npm ci
+npm run build
+
+php artisan migrate --force
+php artisan storage:link
+php artisan optimize
+php artisan queue:restart
+
+php artisan up
+```
+
+Catatan:
+
+- Jalankan backup database dan media sebelum migration.
+- Jangan menjalankan `db:seed` pada setiap deploy. Gunakan hanya saat setup awal atau ketika memang ingin memperbarui seed content.
+- Jika frontend assets dibangun di CI, server tidak perlu menjalankan `npm ci` dan `npm run build`; upload folder `public/build` hasil CI.
+- Pastikan document root web server adalah `/path/to/project/public`, bukan root project.
+
+## Web Server
+
+### Nginx
+
+Contoh konfigurasi inti:
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.example;
+    root /var/www/ppaip/public;
+
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+```
+
+Sesuaikan socket PHP-FPM dan aktifkan HTTPS melalui konfigurasi hosting.
+
+## Queue
+
+Environment default menggunakan database queue. Jika aplikasi mulai mengirim email atau menjalankan background job, aktifkan worker:
+
+```bash
+php artisan queue:work --sleep=3 --tries=3 --timeout=90
+```
+
+Di production, jalankan worker menggunakan Supervisor, systemd, atau process manager dari platform hosting.
+
+## Backup
+
+Backup minimal harus mencakup:
+
+- Database production.
+- Seluruh folder `storage/app/public`.
+- `.env` production yang disimpan di secret manager atau lokasi aman.
+
+Contoh MySQL:
+
+```bash
+mysqldump -u ppaip_user -p ppaip > ppaip-$(date +%F).sql
+tar -czf ppaip-media-$(date +%F).tar.gz storage/app/public
+```
+
+Backup belum dianggap aman sampai proses restore pernah diuji.
+
+## Restore
+
+```bash
+mysql -u ppaip_user -p ppaip < ppaip-YYYY-MM-DD.sql
+tar -xzf ppaip-media-YYYY-MM-DD.tar.gz
+php artisan storage:link
+php artisan optimize:clear
+```
+
+Pastikan ownership dan permission folder storage sesuai dengan user PHP-FPM.
+
+## Troubleshooting
+
+### Gambar upload tidak tampil
+
+```bash
+php artisan storage:link
+```
+
+Pastikan `APP_URL` sesuai domain aktif dan `public/storage` mengarah ke `storage/app/public`.
+
+### Error permission pada storage
+
+Pastikan web server memiliki akses tulis ke:
+
+```text
+storage
+bootstrap/cache
+```
+
+### Perubahan `.env` tidak terbaca
+
+```bash
+php artisan optimize:clear
+php artisan optimize
+```
+
+### Halaman error setelah deployment
+
+```bash
+php artisan migrate:status
+php artisan about
+tail -n 100 storage/logs/laravel.log
+```
+
+Jangan mengaktifkan `APP_DEBUG=true` di production.
+
+### Admin tidak bisa login
+
+Pastikan user memiliki `is_admin = true`. Cek dan perbaiki status user melalui Tinker:
+
+```bash
+php artisan tinker
+```
+
+```php
+$user = App\Models\User::where('email', 'admin@example.com')->firstOrFail();
+$user->update(['is_admin' => true]);
+```
+
+Gunakan alur lupa password untuk mengganti password admin. Hindari menjalankan `DatabaseSeeder` untuk perbaikan akun di production karena seeder tersebut juga mengisi ulang konten CMS awal.
+
+## Release Checklist
+
+- `composer test` lulus.
+- `vendor/bin/pint --test` lulus.
+- `npm run build` lulus.
+- Database dan media sudah dibackup.
+- Environment production menggunakan `APP_DEBUG=false`.
+- Migration sudah dijalankan.
+- `storage:link` tersedia.
+- Homepage dan halaman program bisa dibuka.
+- Login dan akses Filament admin sudah dicek.
+- Upload gambar dari Filament sudah diuji.
+
+## Security
+
+- Registrasi publik dinonaktifkan.
+- Hanya user dengan `is_admin = true` yang dapat mengakses Filament.
+- Jangan membagikan akun admin antar pengguna.
+- Gunakan password unik dan password manager.
+- Rotasi kredensial database, email, dan admin saat ada pergantian pengelola.
