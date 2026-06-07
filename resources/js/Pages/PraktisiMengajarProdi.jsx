@@ -1,6 +1,7 @@
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { BookOpen, Users, Percent, ArrowLeft } from "lucide-react";
 
+import Seo from "@/Components/Seo";
 import {
     Navbar,
     PageHeroBanner,
@@ -20,7 +21,11 @@ export default function PraktisiMengajarProdi({ slug, detail, aboutDescription =
 
     return (
         <>
-            <Head title={`${name} — Praktisi Mengajar | PPAIP Universitas Bakrie`} />
+            <Seo
+                title={`${name} - Praktisi Mengajar`}
+                description={`Lihat mata kuliah dan keterlibatan praktisi industri pada program studi ${name} Universitas Bakrie.`}
+                image={bannerImage}
+            />
 
             <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased">
                 <Navbar links={navLinks} />
@@ -132,7 +137,11 @@ function CoursePill({ course }) {
 function ProdiNotFound({ slug, navLinks, footerLinks }) {
     return (
         <>
-            <Head title="Program Studi tidak ditemukan | PPAIP Universitas Bakrie" />
+            <Seo
+                title="Program Studi tidak ditemukan"
+                description="Program studi yang diminta tidak tersedia."
+                noIndex
+            />
             <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased flex flex-col">
                 <Navbar links={navLinks} />
                 <div className="flex-1 flex items-center justify-center px-4 py-24">

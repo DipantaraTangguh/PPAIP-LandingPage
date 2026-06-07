@@ -1,5 +1,6 @@
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
+import Seo from '@/Components/Seo';
 import {
   Navbar,
   PageHeroBanner,
@@ -19,7 +20,11 @@ export default function PraktisiMengajar({ prodiStats = [], aboutDescription = '
 
   return (
     <>
-      <Head title="Praktisi Mengajar - PPAIP Universitas Bakrie" />
+      <Seo
+        title="Praktisi Mengajar"
+        description="Jelajahi program Praktisi Mengajar Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas."
+        image={bannerImage}
+      />
 
       <div className="min-h-screen bg-white font-sans antialiased">
         <Navbar links={navLinks} />

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
+import Seo from '@/Components/Seo';
 import {
   Navbar,
   PageHeroBanner,
@@ -23,7 +24,11 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
 
   return (
     <>
-      <Head title="Internship Program - PPAIP Universitas Bakrie" />
+      <Seo
+        title="Internship Program"
+        description="Lihat sebaran program magang mahasiswa Universitas Bakrie di perusahaan KUB, Non-KUB, dan BUMN berdasarkan tahun dan program studi."
+        image={bannerImage}
+      />
 
       <div className="min-h-screen bg-gray-50 font-sans antialiased">
         <Navbar links={navLinks} />

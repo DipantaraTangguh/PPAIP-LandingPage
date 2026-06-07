@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     Briefcase,
     Monitor,
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Navbar, PageHeroBanner, InfoCard, Footer } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
+import Seo from "@/Components/Seo";
 
 const PRODI_ICONS = {
     Manajemen: Briefcase,
@@ -209,7 +210,11 @@ export default function SertifikasiMahasiswa({
 
     return (
         <>
-            <Head title="Sertifikasi Mahasiswa - PPAIP Universitas Bakrie" />
+            <Seo
+                title="Sertifikasi Mahasiswa"
+                description="Temukan program sertifikasi profesional untuk mahasiswa Universitas Bakrie berdasarkan program studi dan ketersediaan pendaftaran."
+                image={bannerImage}
+            />
             <style>{`
                 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
                 @keyframes popIn { from{opacity:0;transform:scale(0.93) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }

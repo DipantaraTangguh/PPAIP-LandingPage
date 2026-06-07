@@ -18,10 +18,19 @@ class HandleInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
+        $pageSeo = config('seo.pages', [])[$request->route()?->getName()]
+            ?? config('seo.default');
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'seo' => [
+                'siteName' => config('app.name'),
+                'siteUrl' => rtrim(config('app.url'), '/'),
+                'defaultImage' => config('seo.default.image'),
+                ...$pageSeo,
             ],
             'navLinks' => fn () => NavLink::ordered()
                 ->get(['label', 'href'])

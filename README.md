@@ -341,3 +341,10 @@ Gunakan alur lupa password untuk mengganti password admin. Hindari menjalankan `
 - Jangan membagikan akun admin antar pengguna.
 - Gunakan password unik dan password manager.
 - Rotasi kredensial database, email, dan admin saat ada pergantian pengelola.
+
+## SEO
+
+- Metadata halaman publik dikelola melalui `config/seo.php`.
+- Pastikan `APP_URL` berisi domain production agar canonical URL, Open Graph image, robots, dan sitemap tidak menunjuk ke localhost.
+- Sitemap tersedia di `/sitemap.xml` dan robots policy tersedia di `/robots.txt`.
+- Setelah domain aktif, daftarkan `/sitemap.xml` ke Google Search Console.

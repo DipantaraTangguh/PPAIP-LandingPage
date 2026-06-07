@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     Briefcase,
     GraduationCap,
@@ -24,6 +24,7 @@ import {
     Footer,
 } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
+import Seo from "@/Components/Seo";
 
 const ICON_MAP = {
     Briefcase,
@@ -52,7 +53,11 @@ export default function TentangKami({
 
     return (
         <>
-            <Head title="Tentang Kami — PPAIP Universitas Bakrie" />
+            <Seo
+                title="Tentang Kami"
+                description="Kenali visi, misi, tim, dan program kerja UPT PPAIP Universitas Bakrie dalam menghubungkan pembelajaran dengan dunia industri."
+                image={groupPhoto?.src || "/assets/bakrie-banner.jpg"}
+            />
 
             <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased">
                 <Navbar links={navLinks} />

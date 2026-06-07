@@ -32,7 +32,11 @@ class LandingController extends Controller
         string $slug,
         PractitionerTeachingPageData $data,
     ): Response {
-        return Inertia::render('PraktisiMengajarProdi', $data->detail($slug));
+        $payload = $data->detail($slug);
+
+        abort_if($payload['detail'] === null, 404);
+
+        return Inertia::render('PraktisiMengajarProdi', $payload);
     }
 
     public function kubTalk(KubTalkPageData $data): Response

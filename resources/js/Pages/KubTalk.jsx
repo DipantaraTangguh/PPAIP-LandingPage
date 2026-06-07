@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Head, usePage } from "@inertiajs/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { usePage } from "@inertiajs/react";
 import {
     ArrowUpRight,
     Building2,
@@ -12,6 +12,7 @@ import {
     X,
 } from "lucide-react";
 import { Navbar, PageHeroBanner, Footer } from "@/Components/Layouts";
+import Seo from "@/Components/Seo";
 
 function MarqueeTrack({ duration, logoSet }) {
     return (
@@ -118,9 +119,15 @@ function TalkCard({ item, onClick }) {
 
     return (
         <div
-            onClick={onClick}
-            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-[#f4d8b8] bg-white shadow-[0_18px_60px_rgba(107,27,27,0.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#f6b756] hover:shadow-[0_28px_90px_rgba(107,27,27,0.18)]"
+            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-[#f4d8b8] bg-white shadow-[0_18px_60px_rgba(107,27,27,0.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#f6b756] hover:shadow-[0_28px_90px_rgba(107,27,27,0.18)] focus-within:ring-4 focus-within:ring-[#F5A623]/60"
         >
+            <button
+                type="button"
+                onClick={onClick}
+                aria-haspopup="dialog"
+                aria-label={`Buka detail ${item.title}`}
+                className="absolute inset-0 z-10 rounded-[1.75rem] focus:outline-none"
+            />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#6B1B1B] via-[#F5A623] to-[#C4571A]" />
             <div className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-[#F5A623]/20 blur-3xl transition-opacity duration-500 group-hover:opacity-90" />
 
@@ -159,13 +166,17 @@ function TalkCard({ item, onClick }) {
                 {images.length > 1 && (
                     <>
                         <button
+                            type="button"
                             onClick={handlePrev}
+                            aria-label={`Foto sebelumnya untuk ${item.title}`}
                             className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
                         </button>
                         <button
+                            type="button"
                             onClick={handleNext}
+                            aria-label={`Foto berikutnya untuk ${item.title}`}
                             className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
@@ -175,10 +186,13 @@ function TalkCard({ item, onClick }) {
                             {images.map((_, idx) => (
                                 <button
                                     key={idx}
+                                    type="button"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setCurrentImageIndex(idx);
                                     }}
+                                    aria-label={`Tampilkan foto ${idx + 1} dari ${item.title}`}
+                                    aria-pressed={idx === currentImageIndex}
                                     className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                                         idx === currentImageIndex ? "bg-white scale-125 w-3" : "bg-white/50 hover:bg-white/80"
                                     }`}
@@ -319,6 +333,9 @@ function Lightbox({ gallery, index, onClose }) {
             onClick={onClose}
         >
             <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="kub-talk-dialog-title"
                 className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-[#120505] shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden"
                 style={{ maxHeight: "92vh", animation: "kubModalRise 0.45s cubic-bezier(0.16,1,0.3,1)" }}
                 onClick={(e) => e.stopPropagation()}
@@ -352,6 +369,7 @@ function Lightbox({ gallery, index, onClose }) {
                     {images.length > 1 && (
                         <>
                             <button
+                                type="button"
                                 onClick={handlePrev}
                                 className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
                                 aria-label="Foto sebelumnya"
@@ -359,6 +377,7 @@ function Lightbox({ gallery, index, onClose }) {
                                 <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
                             </button>
                             <button
+                                type="button"
                                 onClick={handleNext}
                                 className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
                                 aria-label="Foto berikutnya"
@@ -369,6 +388,11 @@ function Lightbox({ gallery, index, onClose }) {
                             <div className="absolute bottom-6 left-6 right-6 z-20">
                                 <div className="h-1.5 overflow-hidden rounded-full bg-white/14">
                                     <div
+                                        role="progressbar"
+                                        aria-label="Posisi foto"
+                                        aria-valuemin={1}
+                                        aria-valuemax={images.length}
+                                        aria-valuenow={currentImageIndex + 1}
                                         className="h-full rounded-full bg-gradient-to-r from-[#F5A623] to-[#fff0b8] transition-all duration-500"
                                         style={{ width: `${imageProgress}%` }}
                                     />
@@ -413,7 +437,12 @@ function Lightbox({ gallery, index, onClose }) {
                         </div>
                     )}
 
-                    <h3 className="text-2xl font-black leading-tight text-[#240b0b] md:text-3xl">{item.title}</h3>
+                    <h3
+                        id="kub-talk-dialog-title"
+                        className="text-2xl font-black leading-tight text-[#240b0b] md:text-3xl"
+                    >
+                        {item.title}
+                    </h3>
                     {item.desc && <p className="mt-3 text-sm leading-7 text-[#6f554d]">{item.desc}</p>}
 
                     {item.speakerName && (
@@ -461,9 +490,11 @@ function Lightbox({ gallery, index, onClose }) {
                 </div>
 
                 <button
+                    type="button"
                     onClick={onClose}
+                    autoFocus
                     className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
-                    aria-label="Close"
+                    aria-label="Tutup detail KUB Talk"
                 >
                     <X className="w-5 h-5" strokeWidth={2} />
                 </button>
@@ -482,10 +513,25 @@ export default function KubTalk({
 }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;
     const [lightbox, setLightbox] = useState(null);
+    const lightboxTriggerRef = useRef(null);
+
+    const openLightbox = useCallback((index, event) => {
+        lightboxTriggerRef.current = event.currentTarget;
+        setLightbox(index);
+    }, []);
+
+    const closeLightbox = useCallback(() => {
+        setLightbox(null);
+        window.requestAnimationFrame(() => lightboxTriggerRef.current?.focus());
+    }, []);
 
     return (
         <>
-            <Head title="KUB Talk - PPAIP Universitas Bakrie" />
+            <Seo
+                title="KUB Talk"
+                description="Ikuti dokumentasi KUB Talk Universitas Bakrie, forum yang mempertemukan mahasiswa dengan pemimpin dan praktisi industri."
+                image={bannerImage}
+            />
             <style>{`
                 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
                 @keyframes popIn { from{opacity:0;transform:scale(0.93) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
@@ -532,7 +578,7 @@ export default function KubTalk({
                                     <TalkCard
                                         key={index}
                                         item={item}
-                                        onClick={() => setLightbox(index)}
+                                        onClick={(event) => openLightbox(index, event)}
                                     />
                                 ))}
                             </div>
@@ -555,7 +601,7 @@ export default function KubTalk({
                 key={lightbox ?? "closed"}
                 gallery={gallery}
                 index={lightbox}
-                onClose={() => setLightbox(null)}
+                onClose={closeLightbox}
             />
         </>
     );
