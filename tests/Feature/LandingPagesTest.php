@@ -6,12 +6,15 @@ use App\Models\Certification;
 use App\Models\Faq;
 use App\Models\InternshipYear;
 use App\Models\KubTalk;
+use App\Models\Mission;
 use App\Models\PageContent;
 use App\Models\PraktisiMengajarCourse;
 use App\Models\PraktisiMengajarProdi;
 use App\Models\PraktisiMengajarSemester;
 use App\Models\Program;
+use App\Models\ProgramKerja;
 use App\Models\SertifikasiProdi;
+use App\Models\TeamMember;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -217,6 +220,59 @@ class LandingPagesTest extends TestCase
                 ->where('detail.stats.praktisiPct', 50)
                 ->where('detail.semesters.0.title', 'Semester 5')
                 ->where('detail.semesters.0.courses.0.praktisi', true)
+            );
+    }
+
+    public function test_about_page_exposes_profile_programs_and_team_content(): void
+    {
+        PageContent::put('tentang_kami.about_intro', 'PPAIP menghubungkan pembelajaran dengan industri.');
+        PageContent::put('tentang_kami.vision', 'Menjadi pusat pembelajaran berbasis pengalaman.');
+        PageContent::put('tentang_kami.group_photo_src', 'tentang-kami/team.jpg');
+        PageContent::put('tentang_kami.group_photo_caption', 'Tim PPAIP Universitas Bakrie');
+
+        Mission::query()->create([
+            'statement' => 'Memperluas kolaborasi dengan mitra industri.',
+            'sort_order' => 1,
+        ]);
+
+        ProgramKerja::query()->create([
+            'icon' => 'Briefcase',
+            'title' => 'Internship Program',
+            'description' => 'Program magang berbasis kebutuhan industri.',
+            'sort_order' => 1,
+        ]);
+
+        TeamMember::query()->create([
+            'type' => 'ketua',
+            'name' => 'Dr. Ketua PPAIP',
+            'role' => 'Ketua UPT PPAIP',
+            'photo' => 'team/ketua.jpg',
+            'bio' => 'Memimpin pengembangan program PPAIP.',
+            'sort_order' => 1,
+        ]);
+
+        TeamMember::query()->create([
+            'type' => 'staff',
+            'name' => 'Staff PPAIP',
+            'role' => 'Program Officer',
+            'photo' => '/assets/team/staff.jpg',
+            'sort_order' => 2,
+        ]);
+
+        $this->get('/about')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('TentangKami')
+                ->where('aboutIntro', 'PPAIP menghubungkan pembelajaran dengan industri.')
+                ->where('vision', 'Menjadi pusat pembelajaran berbasis pengalaman.')
+                ->where('mission.0', 'Memperluas kolaborasi dengan mitra industri.')
+                ->where('programKerja.0.title', 'Internship Program')
+                ->where('teamMembers.ketua.name', 'Dr. Ketua PPAIP')
+                ->where('teamMembers.ketua.photo', $this->publicAsset('team/ketua.jpg'))
+                ->where('teamMembers.staff.0.name', 'Staff PPAIP')
+                ->where('teamMembers.staff.0.photo', '/assets/team/staff.jpg')
+                ->where('groupPhoto.src', $this->publicAsset('tentang-kami/team.jpg'))
+                ->where('groupPhoto.caption', 'Tim PPAIP Universitas Bakrie')
             );
     }
 
