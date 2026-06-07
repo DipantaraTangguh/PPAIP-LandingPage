@@ -100,6 +100,12 @@ vendor/bin/pint --test
 # Memperbaiki format PHP
 vendor/bin/pint
 
+# Memeriksa source React
+npm run lint
+
+# Memperbaiki temuan lint yang aman secara otomatis
+npm run lint:fix
+
 # Membuat production frontend assets
 npm run build
 
@@ -112,6 +118,7 @@ Sebelum merge atau deploy, minimal jalankan:
 ```bash
 composer test
 vendor/bin/pint --test
+npm run lint
 npm run build
 ```
 

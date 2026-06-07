@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "@inertiajs/react";
 import { GraduationCap } from "lucide-react";
 export function ProdiStatCard({ name, count, variant = "orange", href }) {

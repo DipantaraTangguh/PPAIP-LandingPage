@@ -1,4 +1,3 @@
-import React from "react";
 export function InternshipProdiCard({ name, kub, nonKub, bumn }) {
     return (
         <div className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow duration-300 cursor-pointer">

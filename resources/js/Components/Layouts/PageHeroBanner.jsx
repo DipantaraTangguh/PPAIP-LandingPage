@@ -1,4 +1,3 @@
-import React from "react";
 export function PageHeroBanner({ title, subtitle, backgroundImage }) {
     return (
         <section className="relative min-h-70 sm:min-h-85 md:min-h-100 py-12 overflow-hidden">

@@ -1,4 +1,3 @@
-import React from "react";
 export function ProgramCard({ name, image, link }) {
     return (
         <a href={link} className="group shrink-0 px-3 block">

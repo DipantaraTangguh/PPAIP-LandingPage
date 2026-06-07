@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { NavLink, SectionWrapper } from "../Elements";
 

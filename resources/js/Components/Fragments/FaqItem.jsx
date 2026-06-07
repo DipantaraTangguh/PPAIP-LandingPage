@@ -1,4 +1,3 @@
-import React from "react";
 import { ChevronIcon } from "../Elements";
 export function FaqItem({ question, answer, isOpen, onToggle }) {
     return (

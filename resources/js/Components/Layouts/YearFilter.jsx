@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionWrapper } from "../Elements";
 import { YearFilterPill } from "../Fragments";
 export function YearFilter({ years, activeYear, onYearChange }) {

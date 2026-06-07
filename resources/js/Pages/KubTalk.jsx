@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import {
     ArrowUpRight,
@@ -12,6 +12,25 @@ import {
     X,
 } from "lucide-react";
 import { Navbar, PageHeroBanner, Footer } from "@/Components/Layouts";
+
+function MarqueeTrack({ duration, logoSet }) {
+    return (
+        <div
+            className="flex shrink-0 items-center gap-16 animate-marquee"
+            style={{ animationDuration: `${duration}s` }}
+        >
+            {logoSet.map((company, index) => (
+                <div key={index} className="shrink-0 px-4">
+                    <img
+                        src={company.logo}
+                        alt={company.name}
+                        className="h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                    />
+                </div>
+            ))}
+        </div>
+    );
+}
 
 /* ─────────────────────────────────────────────────────────
    PARTNER LOGO MARQUEE
@@ -37,24 +56,6 @@ function PartnerMarquee({ gallery }) {
     const logoSet = Array.from({ length: repeatCount }, () => companies).flat();
     const duration = logoSet.length * 3;
 
-    // Track digandakan supaya loop-nya mulus.
-    const Track = () => (
-        <div
-            className="flex shrink-0 items-center gap-16 animate-marquee"
-            style={{ animationDuration: `${duration}s` }}
-        >
-            {logoSet.map((c, i) => (
-                <div key={i} className="shrink-0 px-4">
-                    <img
-                        src={c.logo}
-                        alt={c.name}
-                        className="h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                    />
-                </div>
-            ))}
-        </div>
-    );
-
     return (
         <section className="py-6 bg-white border-b border-gray-100 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
@@ -63,8 +64,8 @@ function PartnerMarquee({ gallery }) {
                 </p>
             </div>
             <div className="relative flex gap-16">
-                <Track />
-                <Track />
+                <MarqueeTrack duration={duration} logoSet={logoSet} />
+                <MarqueeTrack duration={duration} logoSet={logoSet} />
             </div>
         </section>
     );
@@ -268,10 +269,6 @@ function Lightbox({ gallery, index, onClose }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const item = index === null ? null : gallery[index];
     const images = item?.images || [];
-
-    useEffect(() => {
-        setCurrentImageIndex(0);
-    }, [index]);
 
     useEffect(() => {
         if (!item) return;
@@ -555,6 +552,7 @@ export default function KubTalk({
 
             {/* Lightbox */}
             <Lightbox
+                key={lightbox ?? "closed"}
                 gallery={gallery}
                 index={lightbox}
                 onClose={() => setLightbox(null)}

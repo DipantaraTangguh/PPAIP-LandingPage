@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SectionWrapper } from "../Elements";
 import { InternshipProdiCard } from "../Fragments";
 

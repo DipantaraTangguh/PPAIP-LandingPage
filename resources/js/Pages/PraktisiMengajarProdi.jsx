@@ -1,4 +1,3 @@
-import React from "react";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { BookOpen, Users, Percent, ArrowLeft } from "lucide-react";
 

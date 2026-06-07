@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionWrapper } from "../Elements";
 export function InfoCard({ title, description }) {
     return (

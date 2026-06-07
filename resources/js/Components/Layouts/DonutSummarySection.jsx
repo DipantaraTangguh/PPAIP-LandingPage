@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionWrapper } from "../Elements";
 import { DonutChart } from "../Fragments";
 export function DonutSummarySection({ kub, nonKub, bumn }) {

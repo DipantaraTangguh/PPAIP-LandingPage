@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CarouselDot, SectionWrapper } from "../Elements";
 import { ProgramCard } from "../Fragments";
@@ -33,18 +33,22 @@ export function ProgramCarousel({ programs }) {
     const intervalRef = useRef(null);
 
     const maxSlide = Math.max(0, programs.length - visibleCards);
-
-    // Resize bisa bikin slide aktif kelewat batas, jadi posisinya dirapihin lagi.
-    useEffect(() => {
-        setCurrentSlide((prev) => Math.min(prev, maxSlide));
-    }, [maxSlide]);
+    const activeSlide = Math.min(currentSlide, maxSlide);
 
     const nextSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+        setCurrentSlide((prev) => {
+            const active = Math.min(prev, maxSlide);
+
+            return active >= maxSlide ? 0 : active + 1;
+        });
     }, [maxSlide]);
 
     const prevSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+        setCurrentSlide((prev) => {
+            const active = Math.min(prev, maxSlide);
+
+            return active <= 0 ? maxSlide : active - 1;
+        });
     }, [maxSlide]);
 
     useEffect(() => {
@@ -54,7 +58,7 @@ export function ProgramCarousel({ programs }) {
         return () => clearInterval(intervalRef.current);
     }, [isPaused, nextSlide]);
 
-    const slideOffset = currentSlide * (100 / visibleCards);
+    const slideOffset = activeSlide * (100 / visibleCards);
 
     return (
         <section className="pb-16">
@@ -121,7 +125,7 @@ export function ProgramCarousel({ programs }) {
                         {Array.from({ length: maxSlide + 1 }).map((_, i) => (
                             <CarouselDot
                                 key={i}
-                                isActive={currentSlide === i}
+                                isActive={activeSlide === i}
                                 onClick={() => setCurrentSlide(i)}
                             />
                         ))}
