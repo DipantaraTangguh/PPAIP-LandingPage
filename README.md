@@ -1,10 +1,12 @@
 # PPAIP Universitas Bakrie
 
+[![CI](https://github.com/DipantaraTangguh/PPAIP-LandingPage/actions/workflows/ci.yml/badge.svg)](https://github.com/DipantaraTangguh/PPAIP-LandingPage/actions/workflows/ci.yml)
+
 Website dan CMS PPAIP Universitas Bakrie untuk mengelola program internship, KUB Talk, praktisi mengajar, sertifikasi mahasiswa, FAQ, serta konten profil unit.
 
 ## Tech Stack
 
-- PHP 8.3+
+- PHP 8.4.1+
 - Laravel 13
 - Filament 4
 - Inertia.js 2
@@ -17,7 +19,7 @@ Website dan CMS PPAIP Universitas Bakrie untuk mengelola program internship, KUB
 
 Pastikan server atau komputer lokal memiliki:
 
-- PHP 8.3 atau lebih baru beserta extension Laravel yang dibutuhkan.
+- PHP 8.4.1 atau lebih baru beserta extension Laravel yang dibutuhkan.
 - Composer 2.
 - Node.js 22 atau lebih baru dan npm.
 - MySQL 8+ untuk production. SQLite cukup untuk development dan testing.
