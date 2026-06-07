@@ -1,9 +1,13 @@
 export function PageHeroBanner({ title, subtitle, backgroundImage }) {
     return (
         <section className="relative min-h-70 sm:min-h-85 md:min-h-100 py-12 overflow-hidden">
-            <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url('${backgroundImage}')` }}
+            <img
+                src={backgroundImage}
+                alt=""
+                aria-hidden="true"
+                fetchpriority="high"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-black/30" />
 

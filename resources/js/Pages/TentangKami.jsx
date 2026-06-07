@@ -292,6 +292,7 @@ function SafeImage({ src, fallbackSrc, fallbackInitials, alt, className }) {
             alt={alt}
             className={className}
             loading="lazy"
+            decoding="async"
             onError={() => {
                 if (stage === "primary" && fallbackSrc) {
                     setStage("fallback");

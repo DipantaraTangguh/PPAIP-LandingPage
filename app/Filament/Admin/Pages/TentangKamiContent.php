@@ -66,6 +66,10 @@ class TentangKamiContent extends Page
                             ->disk('public')
                             ->directory('tentang-kami')
                             ->imageEditor()
+                            ->automaticallyResizeImagesMode('contain')
+                            ->automaticallyResizeImagesToWidth('1920')
+                            ->automaticallyResizeImagesToHeight('1080')
+                            ->automaticallyUpscaleImagesWhenResizing(false)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),
@@ -74,6 +78,10 @@ class TentangKamiContent extends Page
                             ->image()
                             ->disk('public')
                             ->directory('tentang-kami')
+                            ->automaticallyResizeImagesMode('contain')
+                            ->automaticallyResizeImagesToWidth('1920')
+                            ->automaticallyResizeImagesToHeight('1080')
+                            ->automaticallyUpscaleImagesWhenResizing(false)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),

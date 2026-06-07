@@ -19,6 +19,10 @@ class ProgramForm
                     ->disk('public')
                     ->directory('programs')
                     ->imageEditor()
+                    ->automaticallyResizeImagesMode('contain')
+                    ->automaticallyResizeImagesToWidth('1200')
+                    ->automaticallyResizeImagesToHeight('800')
+                    ->automaticallyUpscaleImagesWhenResizing(false)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(4096),
                 TextInput::make('link')

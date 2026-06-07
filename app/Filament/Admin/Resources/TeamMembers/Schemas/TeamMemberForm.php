@@ -25,6 +25,10 @@ class TeamMemberForm
                     ->disk('public')
                     ->directory('team')
                     ->imageEditor()
+                    ->automaticallyResizeImagesMode('contain')
+                    ->automaticallyResizeImagesToWidth('1000')
+                    ->automaticallyResizeImagesToHeight('1000')
+                    ->automaticallyUpscaleImagesWhenResizing(false)
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(4096),
                 Textarea::make('bio')->rows(3)->maxLength(3000)->columnSpanFull(),

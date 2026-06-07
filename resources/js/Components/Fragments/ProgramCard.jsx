@@ -6,6 +6,8 @@ export function ProgramCard({ name, image, link }) {
                     <img
                         src={image}
                         alt={name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-40 sm:h-48 object-cover"
                     />
                     <div

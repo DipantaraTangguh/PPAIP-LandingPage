@@ -109,6 +109,9 @@ npm run lint:fix
 # Membuat production frontend assets
 npm run build
 
+# Memastikan bundle dan gambar tidak melewati performance budget
+npm run build:check
+
 # Menampilkan route aplikasi
 php artisan route:list
 ```
@@ -120,6 +123,7 @@ composer test
 vendor/bin/pint --test
 npm run lint
 npm run build
+npm run build:check
 ```
 
 ## Content and Uploads
@@ -184,6 +188,7 @@ git pull --ff-only
 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 npm ci
 npm run build
+npm run build:check
 
 php artisan migrate --force
 php artisan storage:link
@@ -218,10 +223,22 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
+    location ^~ /build/assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    location ^~ /assets/ {
+        expires 7d;
+        add_header Cache-Control "public";
+        try_files $uri =404;
+    }
+
     location ~ \.php$ {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
     }
 
     location ~ /\.(?!well-known).* {
@@ -241,6 +258,25 @@ php artisan queue:work --sleep=3 --tries=3 --timeout=90
 ```
 
 Di production, jalankan worker menggunakan Supervisor, systemd, atau process manager dari platform hosting.
+
+## Health Check and Monitoring
+
+Aplikasi menyediakan dua endpoint:
+
+- `/up` untuk liveness check ringan. Gunakan untuk memastikan process Laravel masih hidup.
+- `/up/ready` untuk readiness check database, cache, dan permission tulis storage. Endpoint mengembalikan HTTP `503` jika salah satu dependency gagal.
+
+Arahkan uptime monitor atau load balancer ke `/up/ready`. Setiap response juga memiliki header `X-Request-ID`; nilai yang sama ikut masuk ke context log Laravel agar request bermasalah lebih gampang ditelusuri.
+
+Untuk server biasa, gunakan log harian dan simpan minimal 14 hari:
+
+```dotenv
+LOG_CHANNEL=daily
+LOG_LEVEL=error
+LOG_DAILY_DAYS=14
+```
+
+Untuk container, arahkan log ke `stderr` lalu kirim ke platform logging yang digunakan.
 
 ## Backup
 

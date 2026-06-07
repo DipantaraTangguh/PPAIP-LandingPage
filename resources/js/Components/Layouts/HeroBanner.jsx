@@ -1,9 +1,13 @@
 export function HeroBanner() {
     return (
         <section className="relative h-105 md:h-120 overflow-hidden">
-            <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: "url('/assets/hero-image.png')" }}
+            <img
+                src="/assets/hero-image.png"
+                alt=""
+                aria-hidden="true"
+                fetchpriority="high"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-linear-to-r from-[#802324]/85 via-[#802324]/60 to-transparent" />
 

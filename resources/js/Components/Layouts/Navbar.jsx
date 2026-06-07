@@ -132,6 +132,7 @@ export function Navbar({ links }) {
                     <img
                         src="/assets/logo-bakrie.png"
                         alt="Universitas Bakrie Logo"
+                        decoding="async"
                         className="h-9 w-auto"
                     />
                 </a>

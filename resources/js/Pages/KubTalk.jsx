@@ -25,6 +25,8 @@ function MarqueeTrack({ duration, logoSet }) {
                     <img
                         src={company.logo}
                         alt={company.name}
+                        loading="lazy"
+                        decoding="async"
                         className="h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                     />
                 </div>
@@ -135,6 +137,8 @@ function TalkCard({ item, onClick }) {
                 <img
                     src={currentImage}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
@@ -207,7 +211,13 @@ function TalkCard({ item, onClick }) {
                 {item.companyName && (
                     <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                         {item.companyLogo ? (
-                            <img src={item.companyLogo} alt={item.companyName} className="h-8 w-auto object-contain shrink-0" />
+                            <img
+                                src={item.companyLogo}
+                                alt={item.companyName}
+                                loading="lazy"
+                                decoding="async"
+                                className="h-8 w-auto object-contain shrink-0"
+                            />
                         ) : (
                             <div className="w-9 h-9 rounded-lg bg-[#6B1B1B]/10 flex items-center justify-center shrink-0">
                                 <span className="text-[#6B1B1B] text-sm font-black">{item.companyName.charAt(0)}</span>
@@ -349,6 +359,7 @@ function Lightbox({ gallery, index, onClose }) {
                         key={currentImage}
                         src={currentImage}
                         alt={item.title}
+                        decoding="async"
                         className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh]"
                         style={{ animation: "kubPhotoReveal 0.55s ease both" }}
                     />
@@ -423,7 +434,12 @@ function Lightbox({ gallery, index, onClose }) {
                         <div className="mb-5 flex items-center gap-3 rounded-2xl border border-[#f0d6b2] bg-white/80 p-3 shadow-sm backdrop-blur">
                             {item.companyLogo ? (
                                 <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
-                                    <img src={item.companyLogo} alt={item.companyName} className="max-h-8 w-auto object-contain" />
+                                    <img
+                                        src={item.companyLogo}
+                                        alt={item.companyName}
+                                        decoding="async"
+                                        className="max-h-8 w-auto object-contain"
+                                    />
                                 </div>
                             ) : (
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#6B1B1B]/10">
@@ -481,7 +497,13 @@ function Lightbox({ gallery, index, onClose }) {
                                         }`}
                                         aria-label={`Lihat foto ${idx + 1}`}
                                     >
-                                        <img src={image} alt={`${item.title} ${idx + 1}`} className="h-full w-full object-cover" />
+                                        <img
+                                            src={image}
+                                            alt={`${item.title} ${idx + 1}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="h-full w-full object-cover"
+                                        />
                                     </button>
                                 ))}
                             </div>

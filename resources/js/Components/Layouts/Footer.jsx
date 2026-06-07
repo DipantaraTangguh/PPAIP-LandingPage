@@ -88,6 +88,8 @@ export function Footer({ linkColumns }) {
                             <img
                                 src="/assets/logo-bakrie.png"
                                 alt="Universitas Bakrie Logo"
+                                loading="lazy"
+                                decoding="async"
                                 className="h-12 sm:h-14 w-auto opacity-90"
                             />
                         </div>
