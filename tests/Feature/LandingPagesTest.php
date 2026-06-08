@@ -3,18 +3,18 @@
 namespace Tests\Feature;
 
 use App\Models\Certification;
+use App\Models\CertificationMajor;
 use App\Models\Faq;
 use App\Models\InternshipYear;
 use App\Models\KubTalk;
 use App\Models\Mission;
 use App\Models\PageContent;
-use App\Models\PraktisiMengajarCourse;
-use App\Models\PraktisiMengajarProdi;
-use App\Models\PraktisiMengajarSemester;
+use App\Models\PractitionerTeachingCourse;
+use App\Models\PractitionerTeachingMajor;
+use App\Models\PractitionerTeachingSemester;
 use App\Models\Program;
-use App\Models\ProgramKerja;
-use App\Models\SertifikasiProdi;
 use App\Models\TeamMember;
+use App\Models\WorkProgram;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -73,7 +73,7 @@ class LandingPagesTest extends TestCase
             'sort_order' => 1,
         ]);
 
-        $year->prodiStats()->create([
+        $year->majorStats()->create([
             'name' => 'Informatika',
             'kub' => 10,
             'non_kub' => 6,
@@ -141,7 +141,7 @@ class LandingPagesTest extends TestCase
         PageContent::put('sertifikasi.about_description', 'Sertifikasi membantu mahasiswa membuktikan skill profesional.');
         PageContent::put('sertifikasi.banner_image', 'banners/sertifikasi.jpg');
 
-        $prodi = SertifikasiProdi::query()->create([
+        $prodi = CertificationMajor::query()->create([
             'name' => 'Manajemen',
             'sort_order' => 1,
         ]);
@@ -158,13 +158,13 @@ class LandingPagesTest extends TestCase
         $this->get('/student-certification')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('SertifikasiMahasiswa')
+                ->component('StudentCertification')
                 ->where('aboutDescription', 'Sertifikasi membantu mahasiswa membuktikan skill profesional.')
                 ->where('bannerImage', $this->publicAsset('banners/sertifikasi.jpg'))
-                ->where('prodiCertifications.0.name', 'Manajemen')
-                ->where('prodiCertifications.0.certifications.0.title', 'Digital Marketing Certification')
-                ->where('prodiCertifications.0.certifications.0.available', true)
-                ->where('prodiCertifications.0.certifications.0.registerUrl', 'https://example.com/register')
+                ->where('majorCertifications.0.name', 'Manajemen')
+                ->where('majorCertifications.0.certifications.0.title', 'Digital Marketing Certification')
+                ->where('majorCertifications.0.certifications.0.available', true)
+                ->where('majorCertifications.0.certifications.0.registerUrl', 'https://example.com/register')
             );
     }
 
@@ -173,25 +173,25 @@ class LandingPagesTest extends TestCase
         PageContent::put('praktisi_mengajar.about_description', 'Praktisi mengajar membawa kelas lebih dekat ke industri.');
         PageContent::put('praktisi_mengajar.banner_image', 'banners/praktisi.jpg');
 
-        $prodi = PraktisiMengajarProdi::query()->create([
+        $prodi = PractitionerTeachingMajor::query()->create([
             'name' => 'Ilmu Komunikasi',
             'slug' => 'ilmu-komunikasi',
             'sort_order' => 1,
         ]);
 
-        $semester = PraktisiMengajarSemester::query()->create([
+        $semester = PractitionerTeachingSemester::query()->create([
             'practitioner_teaching_major_id' => $prodi->id,
             'title' => 'Semester 5',
             'sort_order' => 1,
         ]);
 
-        PraktisiMengajarCourse::query()->create([
+        PractitionerTeachingCourse::query()->create([
             'practitioner_teaching_semester_id' => $semester->id,
             'name' => 'Strategic Communication',
             'is_practitioner' => true,
             'sort_order' => 1,
         ]);
-        PraktisiMengajarCourse::query()->create([
+        PractitionerTeachingCourse::query()->create([
             'practitioner_teaching_semester_id' => $semester->id,
             'name' => 'Media Research',
             'is_practitioner' => false,
@@ -201,18 +201,18 @@ class LandingPagesTest extends TestCase
         $this->get('/practitioner-teaching')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('PraktisiMengajar')
+                ->component('PractitionerTeaching')
                 ->where('aboutDescription', 'Praktisi mengajar membawa kelas lebih dekat ke industri.')
                 ->where('bannerImage', $this->publicAsset('banners/praktisi.jpg'))
-                ->where('prodiStats.0.name', 'Ilmu Komunikasi')
-                ->where('prodiStats.0.slug', 'ilmu-komunikasi')
-                ->where('prodiStats.0.count', 1)
+                ->where('majorStats.0.name', 'Ilmu Komunikasi')
+                ->where('majorStats.0.slug', 'ilmu-komunikasi')
+                ->where('majorStats.0.count', 1)
             );
 
         $this->get('/practitioner-teaching/ilmu-komunikasi')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('PraktisiMengajarProdi')
+                ->component('PractitionerTeachingMajor')
                 ->where('slug', 'ilmu-komunikasi')
                 ->where('detail.name', 'Ilmu Komunikasi')
                 ->where('detail.stats.mataKuliah', 2)
@@ -235,7 +235,7 @@ class LandingPagesTest extends TestCase
             'sort_order' => 1,
         ]);
 
-        ProgramKerja::query()->create([
+        WorkProgram::query()->create([
             'icon' => 'Briefcase',
             'title' => 'Internship Program',
             'description' => 'Program magang berbasis kebutuhan industri.',
@@ -262,11 +262,11 @@ class LandingPagesTest extends TestCase
         $this->get('/about')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('TentangKami')
+                ->component('AboutUs')
                 ->where('aboutIntro', 'PPAIP menghubungkan pembelajaran dengan industri.')
                 ->where('vision', 'Menjadi pusat pembelajaran berbasis pengalaman.')
                 ->where('mission.0', 'Memperluas kolaborasi dengan mitra industri.')
-                ->where('programKerja.0.title', 'Internship Program')
+                ->where('workPrograms.0.title', 'Internship Program')
                 ->where('teamMembers.ketua.name', 'Dr. Ketua PPAIP')
                 ->where('teamMembers.ketua.photo', $this->publicAsset('team/ketua.jpg'))
                 ->where('teamMembers.staff.0.name', 'Staff PPAIP')

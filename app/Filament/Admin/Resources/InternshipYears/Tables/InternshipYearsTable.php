@@ -20,7 +20,7 @@ class InternshipYearsTable
                 TextColumn::make('summary_kub')->label('KUB')->sortable(),
                 TextColumn::make('summary_non_kub')->label('Non-KUB')->sortable(),
                 TextColumn::make('summary_bumn')->label('BUMN')->sortable(),
-                TextColumn::make('prodi_stats_count')->counts('prodiStats')->label('# Prodi'),
+                TextColumn::make('major_stats_count')->counts('majorStats')->label('# Prodi'),
             ])
             ->recordActions([EditAction::make(), DeleteAction::make()])
             ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);

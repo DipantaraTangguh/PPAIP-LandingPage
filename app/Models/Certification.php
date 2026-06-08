@@ -18,8 +18,8 @@ class Certification extends Model
 
     protected $casts = ['is_available' => 'boolean'];
 
-    public function prodi(): BelongsTo
+    public function major(): BelongsTo
     {
-        return $this->belongsTo(SertifikasiProdi::class, 'certification_major_id');
+        return $this->belongsTo(CertificationMajor::class, 'certification_major_id');
     }
 }

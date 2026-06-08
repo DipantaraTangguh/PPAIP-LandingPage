@@ -3,7 +3,7 @@
 namespace App\Services\Landing;
 
 use App\Models\PageContent;
-use App\Models\PraktisiMengajarProdi;
+use App\Models\PractitionerTeachingMajor;
 use App\Support\PublicAssetUrl;
 
 class PractitionerTeachingPageData
@@ -12,10 +12,10 @@ class PractitionerTeachingPageData
 
     public function summary(): array
     {
-        $prodis = PraktisiMengajarProdi::with('semesters.courses')->ordered()->get();
+        $prodis = PractitionerTeachingMajor::with('semesters.courses')->ordered()->get();
 
         return [
-            'prodiStats' => $prodis->map(fn (PraktisiMengajarProdi $prodi) => [
+            'majorStats' => $prodis->map(fn (PractitionerTeachingMajor $prodi) => [
                 'name' => $prodi->name,
                 'slug' => $prodi->slug,
                 'count' => $prodi->semesters->flatMap->courses->where('is_practitioner', true)->count(),
@@ -26,7 +26,7 @@ class PractitionerTeachingPageData
 
     public function detail(string $slug): array
     {
-        $prodi = PraktisiMengajarProdi::with('semesters.courses')
+        $prodi = PractitionerTeachingMajor::with('semesters.courses')
             ->where('slug', $slug)
             ->first();
 
@@ -37,7 +37,7 @@ class PractitionerTeachingPageData
         ];
     }
 
-    private function mapDetail(PraktisiMengajarProdi $prodi): array
+    private function mapDetail(PractitionerTeachingMajor $prodi): array
     {
         $semesters = $prodi->semesters->map(function ($semester) {
             $courses = $semester->courses->map(fn ($course) => [

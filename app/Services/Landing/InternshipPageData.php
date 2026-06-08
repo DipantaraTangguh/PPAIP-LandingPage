@@ -12,7 +12,7 @@ class InternshipPageData
 
     public function payload(): array
     {
-        $years = InternshipYear::with('prodiStats')
+        $years = InternshipYear::with('majorStats')
             ->ordered()
             ->get();
 
@@ -25,7 +25,7 @@ class InternshipPageData
                     'nonKub' => (int) $year->summary_non_kub,
                     'bumn' => (int) $year->summary_bumn,
                 ],
-                'prodi' => $year->prodiStats->map(fn ($prodi) => [
+                'prodi' => $year->majorStats->map(fn ($prodi) => [
                     'name' => $prodi->name,
                     'kub' => (int) $prodi->kub,
                     'nonKub' => (int) $prodi->non_kub,

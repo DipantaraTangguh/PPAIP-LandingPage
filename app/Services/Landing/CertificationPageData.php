@@ -3,8 +3,8 @@
 namespace App\Services\Landing;
 
 use App\Models\Certification;
+use App\Models\CertificationMajor;
 use App\Models\PageContent;
-use App\Models\SertifikasiProdi;
 use App\Support\PublicAssetUrl;
 
 class CertificationPageData
@@ -13,10 +13,10 @@ class CertificationPageData
 
     public function payload(): array
     {
-        $prodis = SertifikasiProdi::with('certifications')->ordered()->get();
+        $prodis = CertificationMajor::with('certifications')->ordered()->get();
 
         return [
-            'prodiCertifications' => $prodis->map(fn (SertifikasiProdi $prodi) => [
+            'majorCertifications' => $prodis->map(fn (CertificationMajor $prodi) => [
                 'name' => $prodi->name,
                 'certifications' => $prodi->certifications->map(fn (Certification $certification) => [
                     'title' => $certification->title,

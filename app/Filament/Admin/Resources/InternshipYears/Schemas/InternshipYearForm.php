@@ -33,8 +33,8 @@ class InternshipYearForm
                     ]),
                 Section::make('Statistik per Prodi')
                     ->schema([
-                        Repeater::make('prodiStats')
-                            ->relationship('prodiStats')
+                        Repeater::make('majorStats')
+                            ->relationship('majorStats')
                             ->label('Statistik Prodi')
                             ->columns(5)
                             ->orderColumn('sort_order')

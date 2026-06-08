@@ -10,7 +10,7 @@ class PractitionerTeachingController extends Controller
 {
     public function index(PractitionerTeachingPageData $data): Response
     {
-        return Inertia::render('PraktisiMengajar', $data->summary());
+        return Inertia::render('PractitionerTeaching', $data->summary());
     }
 
     public function show(string $slug, PractitionerTeachingPageData $data): Response
@@ -19,6 +19,6 @@ class PractitionerTeachingController extends Controller
 
         abort_if($payload['detail'] === null, 404);
 
-        return Inertia::render('PraktisiMengajarProdi', $payload);
+        return Inertia::render('PractitionerTeachingMajor', $payload);
     }
 }

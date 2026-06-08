@@ -52,5 +52,18 @@ class FilamentAdminTest extends TestCase
         $this->actingAs($admin)
             ->get('/admin/kub-talk-content')
             ->assertOk();
+
+        foreach ([
+            '/admin/practitioner-teaching-content',
+            '/admin/practitioner-teaching-majors',
+            '/admin/student-certification-content',
+            '/admin/certification-majors',
+            '/admin/about-us-content',
+            '/admin/work-programs',
+        ] as $path) {
+            $this->actingAs($admin)
+                ->get($path)
+                ->assertOk();
+        }
     }
 }

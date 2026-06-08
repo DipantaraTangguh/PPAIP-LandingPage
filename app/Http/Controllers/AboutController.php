@@ -10,6 +10,6 @@ class AboutController extends Controller
 {
     public function __invoke(AboutPageData $data): Response
     {
-        return Inertia::render('TentangKami', $data->payload());
+        return Inertia::render('AboutUs', $data->payload());
     }
 }

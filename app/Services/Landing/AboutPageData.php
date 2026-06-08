@@ -4,8 +4,8 @@ namespace App\Services\Landing;
 
 use App\Models\Mission;
 use App\Models\PageContent;
-use App\Models\ProgramKerja;
 use App\Models\TeamMember;
+use App\Models\WorkProgram;
 use App\Support\PublicAssetUrl;
 
 class AboutPageData
@@ -21,7 +21,7 @@ class AboutPageData
             'aboutIntro' => PageContent::get('tentang_kami.about_intro'),
             'vision' => PageContent::get('tentang_kami.vision'),
             'mission' => Mission::ordered()->pluck('statement')->all(),
-            'programKerja' => ProgramKerja::ordered()->get()->map(fn (ProgramKerja $program) => [
+            'workPrograms' => WorkProgram::ordered()->get()->map(fn (WorkProgram $program) => [
                 'icon' => $program->icon,
                 'title' => $program->title,
                 'description' => $program->description,

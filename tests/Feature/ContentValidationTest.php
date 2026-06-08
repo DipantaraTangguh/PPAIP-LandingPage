@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Certification;
+use App\Models\CertificationMajor;
 use App\Models\InternshipYear;
-use App\Models\SertifikasiProdi;
 use App\Rules\SafeLink;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -54,20 +54,20 @@ class ContentValidationTest extends TestCase
             'year' => '2026',
         ]);
 
-        $year->prodiStats()->create([
+        $year->majorStats()->create([
             'name' => 'Informatika',
         ]);
 
         $this->expectException(QueryException::class);
 
-        $year->prodiStats()->create([
+        $year->majorStats()->create([
             'name' => 'Informatika',
         ]);
     }
 
     public function test_certification_title_must_be_unique_within_a_major(): void
     {
-        $major = SertifikasiProdi::query()->create([
+        $major = CertificationMajor::query()->create([
             'name' => 'Manajemen',
         ]);
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\PraktisiMengajarProdi;
+use App\Models\PractitionerTeachingMajor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,7 +22,7 @@ class SearchEngineTest extends TestCase
 
     public function test_sitemap_contains_public_pages_and_practitioner_details(): void
     {
-        PraktisiMengajarProdi::query()->create([
+        PractitionerTeachingMajor::query()->create([
             'name' => 'Informatika',
             'slug' => 'informatika',
             'sort_order' => 1,

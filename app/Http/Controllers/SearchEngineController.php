@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PraktisiMengajarProdi;
+use App\Models\PractitionerTeachingMajor;
 use Illuminate\Http\Response;
 
 class SearchEngineController extends Controller
@@ -17,10 +17,10 @@ class SearchEngineController extends Controller
             $this->entry(route('kub-talk'), '0.9', 'weekly'),
             $this->entry(route('about'), '0.7', 'monthly'),
         ])->merge(
-            PraktisiMengajarProdi::query()
+            PractitionerTeachingMajor::query()
                 ->ordered()
                 ->get(['slug', 'updated_at'])
-                ->map(fn (PraktisiMengajarProdi $prodi) => $this->entry(
+                ->map(fn (PractitionerTeachingMajor $prodi) => $this->entry(
                     route('practitioner-teaching.detail', $prodi->slug),
                     '0.8',
                     'monthly',

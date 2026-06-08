@@ -10,6 +10,6 @@ class CertificationController extends Controller
 {
     public function __invoke(CertificationPageData $data): Response
     {
-        return Inertia::render('SertifikasiMahasiswa', $data->payload());
+        return Inertia::render('StudentCertification', $data->payload());
     }
 }
