@@ -16,7 +16,7 @@ class KubTalkPageData
 
         return [
             'bannerImage' => $this->asset->resolve(
-                PageContent::get('kub_talk.banner_image', '/assets/kub-talk-3.png'),
+                PageContent::get('kub_talk.banner_image', '/assets/kub-talk-3.jpg'),
             ),
             'gallery' => $talks->map(fn (KubTalk $talk) => [
                 'images' => $this->images($talk),

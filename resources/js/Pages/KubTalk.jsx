@@ -8,7 +8,6 @@ import {
     Camera,
     ChevronLeft,
     ChevronRight,
-    Quote,
     Sparkles,
     X,
 } from "lucide-react";
@@ -530,7 +529,7 @@ function Lightbox({ gallery, index, onClose }) {
 ───────────────────────────────────────────────────────── */
 export default function KubTalk({
     gallery = [],
-    bannerImage = "/assets/kub-talk-3.png",
+    bannerImage = "/assets/kub-talk-3.jpg",
     stats = {},
 }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;

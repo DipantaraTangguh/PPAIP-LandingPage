@@ -178,7 +178,7 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 4,
                 'name' => 'KUB Talk',
-                'image' => '/assets/kub-talk-3.png',
+                'image' => '/assets/kub-talk-3.jpg',
                 'link' => '/kub-talk',
                 'sort_order' => 3,
                 'created_at' => '2026-06-05 03:20:00',
@@ -285,7 +285,7 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 9,
                 'key' => 'kub_talk.banner_image',
-                'value' => '/assets/kub-talk-3.png',
+                'value' => '/assets/kub-talk-3.jpg',
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-08 06:37:43',
             ],

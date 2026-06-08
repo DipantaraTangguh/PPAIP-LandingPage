@@ -73,6 +73,9 @@ jobs:
       - name: Lint frontend source
         run: npm run lint
 
+      - name: Run frontend unit tests
+        run: npm run test
+
       - name: Build production assets
         run: npm run build
 
