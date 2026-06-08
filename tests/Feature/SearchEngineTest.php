@@ -10,6 +10,16 @@ class SearchEngineTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_favicon_is_available_from_the_public_root(): void
+    {
+        $this->assertFileExists(public_path('favicon.ico'));
+        $this->assertGreaterThan(0, filesize(public_path('favicon.ico')));
+
+        $this->get('/favicon.ico')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'image/x-icon');
+    }
+
     public function test_sitemap_contains_public_pages_and_practitioner_details(): void
     {
         PraktisiMengajarProdi::query()->create([

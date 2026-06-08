@@ -11,6 +11,14 @@ use App\Http\Controllers\SearchEngineController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/favicon.ico', function () {
+    abort_unless(file_exists(public_path('favicon.ico')), 404);
+
+    return response()->file(public_path('favicon.ico'), [
+        'Content-Type' => 'image/x-icon',
+    ]);
+})->name('favicon');
+
 Route::get('/', HomeController::class)->name('home');
 Route::get('/internship-program', InternshipController::class)->name('internship-program');
 Route::get('/practitioner-teaching', [PractitionerTeachingController::class, 'index'])->name('practitioner-teaching');
