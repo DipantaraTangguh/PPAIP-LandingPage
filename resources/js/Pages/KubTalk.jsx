@@ -361,6 +361,7 @@ function Lightbox({ gallery, index, onClose }) {
                         key={currentImage}
                         src={currentImage}
                         alt={item.title}
+                        loading="lazy"
                         decoding="async"
                         className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh]"
                         style={{ animation: "kubPhotoReveal 0.55s ease both" }}
@@ -435,6 +436,7 @@ function Lightbox({ gallery, index, onClose }) {
                                     <img
                                         src={item.companyLogo}
                                         alt={item.companyName}
+                                        loading="lazy"
                                         decoding="async"
                                         className="max-h-8 w-auto object-contain"
                                     />
