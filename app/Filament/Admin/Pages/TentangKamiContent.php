@@ -70,7 +70,7 @@ class TentangKamiContent extends Page
                             ->automaticallyResizeImagesToWidth('1920')
                             ->automaticallyResizeImagesToHeight('1080')
                             ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),
                         FileUpload::make('group_photo_fallback')
@@ -82,7 +82,7 @@ class TentangKamiContent extends Page
                             ->automaticallyResizeImagesToWidth('1920')
                             ->automaticallyResizeImagesToHeight('1080')
                             ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                             ->maxSize(8192)
                             ->columnSpanFull(),
                         TextInput::make('group_photo_caption')

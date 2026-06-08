@@ -27,7 +27,7 @@ class KubTalkForm
                     ->automaticallyResizeImagesToWidth('1920')
                     ->automaticallyResizeImagesToHeight('1920')
                     ->automaticallyUpscaleImagesWhenResizing(false)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->maxFiles(30)
                     ->maxSize(8192)
                     ->columnSpanFull(),
@@ -53,7 +53,7 @@ class KubTalkForm
                             ->automaticallyResizeImagesToWidth('800')
                             ->automaticallyResizeImagesToHeight('400')
                             ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                             ->maxSize(2048)
                             ->helperText('Wajib diisi. Ukuran ideal: 200x80px, format PNG transparan.'),
                     ])

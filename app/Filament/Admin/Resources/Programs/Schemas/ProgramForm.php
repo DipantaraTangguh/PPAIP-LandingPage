@@ -23,7 +23,7 @@ class ProgramForm
                     ->automaticallyResizeImagesToWidth('1200')
                     ->automaticallyResizeImagesToHeight('800')
                     ->automaticallyUpscaleImagesWhenResizing(false)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->maxSize(4096),
                 TextInput::make('link')
                     ->placeholder('/internship-program')

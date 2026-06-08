@@ -53,7 +53,7 @@ class KubTalkContent extends Page
                             ->automaticallyResizeImagesToWidth('1920')
                             ->automaticallyResizeImagesToHeight('1080')
                             ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                             ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman KUB Talk. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),

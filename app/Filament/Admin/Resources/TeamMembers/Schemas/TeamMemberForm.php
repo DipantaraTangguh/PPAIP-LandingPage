@@ -29,7 +29,7 @@ class TeamMemberForm
                     ->automaticallyResizeImagesToWidth('1000')
                     ->automaticallyResizeImagesToHeight('1000')
                     ->automaticallyUpscaleImagesWhenResizing(false)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->maxSize(4096),
                 Textarea::make('bio')->rows(3)->maxLength(3000)->columnSpanFull(),
                 TextInput::make('sort_order')->integer()->minValue(0)->default(0)->required(),
