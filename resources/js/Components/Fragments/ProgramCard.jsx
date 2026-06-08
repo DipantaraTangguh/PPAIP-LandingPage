@@ -10,20 +10,6 @@ export function ProgramCard({ name, image, link }) {
                         decoding="async"
                         className="w-full h-40 sm:h-48 object-cover"
                     />
-                    <div
-                        className="absolute top-0 left-0 w-0 h-0"
-                        style={{
-                            borderTop: "28px solid #1B6B5B",
-                            borderRight: "28px solid transparent",
-                        }}
-                    />
-                    <div
-                        className="absolute top-0 right-0 w-0 h-0"
-                        style={{
-                            borderTop: "28px solid #1B6B5B",
-                            borderLeft: "28px solid transparent",
-                        }}
-                    />
                 </div>
                 <div className="px-4 py-4 flex items-center justify-between">
                     <h3 className="text-base font-semibold text-gray-800">

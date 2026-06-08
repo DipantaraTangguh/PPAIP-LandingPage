@@ -417,10 +417,6 @@ function Lightbox({ gallery, index, onClose }) {
                     <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-[#F5A623]/20" />
                     <div className="mb-5 flex items-start justify-between gap-4">
                         <div>
-                            <p className="inline-flex items-center gap-2 rounded-full bg-[#6B1B1B] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
-                                <Quote className="h-3.5 w-3.5" />
-                                Industry Insight
-                            </p>
                             {item.eventDate && (
                                 <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#7a4030]">
                                     <CalendarDays className="h-4 w-4 text-[#C4571A]" />
@@ -530,7 +526,7 @@ function Lightbox({ gallery, index, onClose }) {
 ───────────────────────────────────────────────────────── */
 export default function KubTalk({
     gallery = [],
-    bannerImage = "/assets/kub-talk-1.jpg",
+    bannerImage = "/assets/kub-talk-3.png",
     stats = {},
 }) {
     const { navLinks = [], footerLinks = [] } = usePage().props;
