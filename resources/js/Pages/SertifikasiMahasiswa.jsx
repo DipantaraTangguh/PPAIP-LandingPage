@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePage } from "@inertiajs/react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
     Briefcase,
     Monitor,
@@ -106,6 +107,9 @@ function CertificationRow({ cert, index }) {
 }
 
 function Modal({ prodi, onClose }) {
+    const isOpen = prodi !== null;
+    const focusTrapRef = useFocusTrap(isOpen);
+
     useEffect(() => {
         if (!prodi) return;
         const fn = (e) => e.key === "Escape" && onClose();
@@ -132,6 +136,10 @@ function Modal({ prodi, onClose }) {
             onClick={onClose}
         >
             <div
+                ref={focusTrapRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="certification-modal-title"
                 className="relative w-full overflow-hidden rounded-2xl bg-[#f7f4f1] flex flex-col"
                 style={{
                     maxWidth: 660,
@@ -145,7 +153,7 @@ function Modal({ prodi, onClose }) {
                     <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-white/60">
                         Program Studi
                     </p>
-                    <h2 className="pr-12 text-2xl font-extrabold leading-tight wrap-break-word sm:text-3xl">
+                    <h2 id="certification-modal-title" className="pr-12 text-2xl font-extrabold leading-tight wrap-break-word sm:text-3xl">
                         {prodi.name}
                     </h2>
                     <div className="flex flex-wrap gap-2.5 mt-4">

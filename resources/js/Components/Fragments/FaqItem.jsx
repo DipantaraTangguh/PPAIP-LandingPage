@@ -3,8 +3,10 @@ export function FaqItem({ question, answer, isOpen, onToggle }) {
     return (
         <div className="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300">
             <button
+                type="button"
                 onClick={onToggle}
-                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 cursor-pointer transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]/30"
             >
                 <span className="text-sm md:text-base text-gray-700 font-bold">
                     {question}

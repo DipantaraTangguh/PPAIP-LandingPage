@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePage } from "@inertiajs/react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
     ArrowUpRight,
     Building2,
@@ -293,6 +294,8 @@ function Lightbox({ gallery, index, onClose }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const item = index === null ? null : gallery[index];
     const images = item?.images || [];
+    const isOpen = index !== null;
+    const focusTrapRef = useFocusTrap(isOpen);
 
     useEffect(() => {
         if (!item) return;
@@ -343,6 +346,7 @@ function Lightbox({ gallery, index, onClose }) {
             onClick={onClose}
         >
             <div
+                ref={focusTrapRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="kub-talk-dialog-title"
