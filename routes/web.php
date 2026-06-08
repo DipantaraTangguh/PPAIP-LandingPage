@@ -29,6 +29,11 @@ Route::get('/kub-talk', KubTalkController::class)->name('kub-talk');
 Route::get('/student-certification', CertificationController::class)->name('student-certification');
 Route::get('/about', AboutController::class)->name('about');
 
+if (app()->environment('testing')) {
+    Route::get('/__test/forbidden', fn () => abort(403));
+    Route::get('/__test/server-error', fn () => abort(500));
+}
+
 Route::get('/sitemap.xml', [SearchEngineController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SearchEngineController::class, 'robots'])->name('robots');
 
