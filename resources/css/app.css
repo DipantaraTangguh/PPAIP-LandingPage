@@ -24,3 +24,172 @@ input[type="submit"],
 input[type="reset"] {
   cursor: pointer !important;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kubModalRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kubPhotoReveal {
+  from {
+    opacity: 0;
+    filter: saturate(0.82) contrast(0.95);
+    transform: scale(1.04);
+  }
+
+  to {
+    opacity: 1;
+    filter: saturate(1) contrast(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes catalogFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes catalogSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes footerWaveFlow {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(176px, 0, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease;
+}
+
+.animate-pop-in {
+  animation: popIn 0.28s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease var(--animation-delay, 0ms) both;
+}
+
+.animate-kub-fade-in {
+  animation: fadeIn 0.22s ease;
+}
+
+.animate-kub-modal-rise {
+  animation: kubModalRise 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-kub-photo-reveal {
+  animation: kubPhotoReveal 0.55s ease both;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover,
+.relative:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.animate-catalog-fade-in {
+  animation: catalogFadeIn 0.2s ease;
+}
+
+.animate-catalog-slide-up {
+  animation: catalogSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-wave-parallax {
+  animation-name: footerWaveFlow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.footer-wave-parallax.layer-back {
+  animation-duration: 22s;
+}
+
+.footer-wave-parallax.layer-mid1 {
+  animation-duration: 18s;
+}
+
+.footer-wave-parallax.layer-mid2 {
+  animation-duration: 14s;
+}
+
+.footer-wave-parallax.layer-front {
+  animation-duration: 10s;
+}

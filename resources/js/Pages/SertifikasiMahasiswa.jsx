@@ -66,8 +66,8 @@ function ProdiCard({ prodi, onClick }) {
 function CertificationRow({ cert, index }) {
     return (
         <div
-            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-[#802324]/25 hover:shadow-sm"
-            style={{ animation: `slideUp 0.4s ease ${index * 60}ms both` }}
+            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-[#802324]/25 hover:shadow-sm animate-slide-up"
+            style={{ "--animation-delay": `${index * 60}ms` }}
         >
             <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 shrink-0">
                 {index + 1}
@@ -125,12 +125,11 @@ function Modal({ prodi, onClose }) {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-4"
+            className="fixed inset-0 flex items-center justify-center p-4 animate-fade-in"
             style={{
                 zIndex: 9999,
                 background: "rgba(0,0,0,0.5)",
                 backdropFilter: "blur(6px)",
-                animation: "fadeIn 0.2s ease",
             }}
             onClick={onClose}
         >
@@ -139,12 +138,11 @@ function Modal({ prodi, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="certification-modal-title"
-                className="relative w-full overflow-hidden rounded-2xl bg-[#f7f4f1] flex flex-col"
+                className="relative w-full overflow-hidden rounded-2xl bg-[#f7f4f1] flex flex-col animate-pop-in"
                 style={{
                     maxWidth: 660,
                     maxHeight: "88vh",
                     boxShadow: "0 22px 60px rgba(15,23,42,0.28)",
-                    animation: "popIn 0.28s ease-out",
                 }}
                 onClick={(e) => e.stopPropagation()}
             >
@@ -221,11 +219,6 @@ export default function SertifikasiMahasiswa({
                 description="Temukan program sertifikasi profesional untuk mahasiswa Universitas Bakrie berdasarkan program studi dan ketersediaan pendaftaran."
                 image={bannerImage}
             />
-            <style>{`
-                @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-                @keyframes popIn { from{opacity:0;transform:scale(0.93) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
-                @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-            `}</style>
 
             <PublicLayout
                 rootClassName="min-h-screen bg-[#f5f5f5]"

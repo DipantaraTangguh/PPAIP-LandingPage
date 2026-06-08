@@ -6,25 +6,18 @@ import { InternshipProdiCard } from "../Fragments";
 function CatalogModal({ url, onClose }) {
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6"
+            className="fixed inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6 animate-catalog-fade-in"
             style={{
                 zIndex: 9999,
                 background: "rgba(0,0,0,0.6)",
                 backdropFilter: "blur(8px)",
-                animation: "catalogFadeIn 0.2s ease",
             }}
             onClick={onClose}
         >
-            <style>{`
-                @keyframes catalogFadeIn { from{opacity:0} to{opacity:1} }
-                @keyframes catalogSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-            `}</style>
-
             <div
-                className="relative w-full max-w-7xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+                className="relative w-full max-w-7xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col animate-catalog-slide-up"
                 style={{
                     maxHeight: "95vh",
-                    animation: "catalogSlideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)",
                 }}
                 onClick={(e) => e.stopPropagation()}
             >

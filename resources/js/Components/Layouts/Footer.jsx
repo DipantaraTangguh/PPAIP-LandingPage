@@ -13,24 +13,6 @@ function FooterWave() {
 
     return (
         <div className="relative w-full overflow-hidden leading-0 -mb-px">
-            <style>{`
-        @keyframes footerWaveFlow {
-          from { transform: translate3d(0, 0, 0); }
-          to   { transform: translate3d(${WAVELENGTH}px, 0, 0); }
-        }
-        .footer-wave-parallax {
-          animation-name: footerWaveFlow;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          will-change: transform;
-          backface-visibility: hidden;
-          transform: translate3d(0, 0, 0);
-        }
-        .footer-wave-parallax.layer-back  { animation-duration: 22s; }
-        .footer-wave-parallax.layer-mid1  { animation-duration: 18s; }
-        .footer-wave-parallax.layer-mid2  { animation-duration: 14s; }
-        .footer-wave-parallax.layer-front { animation-duration: 10s; }
-      `}</style>
             <svg
                 className="relative block w-full h-20 sm:h-27.5 md:h-35"
                 xmlns="http://www.w3.org/2000/svg"

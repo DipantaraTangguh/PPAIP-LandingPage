@@ -334,12 +334,11 @@ function Lightbox({ gallery, index, onClose }) {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-3 md:p-6"
+            className="fixed inset-0 flex items-center justify-center p-3 md:p-6 animate-kub-fade-in"
             style={{
                 zIndex: 9999,
                 background: "radial-gradient(circle at 20% 12%, rgba(245,166,35,.22), transparent 28%), radial-gradient(circle at 78% 0%, rgba(196,87,26,.2), transparent 26%), rgba(18, 5, 5, 0.78)",
                 backdropFilter: "blur(16px)",
-                animation: "fadeIn 0.22s ease",
             }}
             onClick={onClose}
         >
@@ -348,8 +347,8 @@ function Lightbox({ gallery, index, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="kub-talk-dialog-title"
-                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-[#120505] shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden"
-                style={{ maxHeight: "92vh", animation: "kubModalRise 0.45s cubic-bezier(0.16,1,0.3,1)" }}
+                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-[#120505] shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise"
+                style={{ maxHeight: "92vh" }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full bg-[#F5A623]/25 blur-3xl" />
@@ -363,8 +362,7 @@ function Lightbox({ gallery, index, onClose }) {
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
-                        className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh]"
-                        style={{ animation: "kubPhotoReveal 0.55s ease both" }}
+                        className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh] animate-kub-photo-reveal"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#120505]/70 via-transparent to-[#120505]/30" />
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#120505] to-transparent" />
@@ -553,16 +551,6 @@ export default function KubTalk({
                 description="Ikuti dokumentasi KUB Talk Universitas Bakrie, forum yang mempertemukan mahasiswa dengan pemimpin dan praktisi industri."
                 image={bannerImage}
             />
-            <style>{`
-                @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-                @keyframes popIn { from{opacity:0;transform:scale(0.93) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
-                @keyframes kubModalRise { from{opacity:0;transform:translateY(24px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
-                @keyframes kubPhotoReveal { from{opacity:0;transform:scale(1.04);filter:saturate(.82) contrast(.95)} to{opacity:1;transform:scale(1);filter:saturate(1) contrast(1)} }
-                @keyframes marquee { 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-100%,0,0)} }
-                .animate-marquee { animation: marquee 30s linear infinite; will-change:transform; }
-                .animate-marquee:hover, .relative:hover .animate-marquee { animation-play-state: paused; }
-            `}</style>
-
             <PublicLayout
                 rootClassName="min-h-screen bg-[#F4F5F7] font-sans antialiased"
                 hero={{
