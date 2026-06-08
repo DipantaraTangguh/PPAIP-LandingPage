@@ -2,32 +2,24 @@
 
 [![CI](https://github.com/DipantaraTangguh/PPAIP-LandingPage/actions/workflows/ci.yml/badge.svg)](https://github.com/DipantaraTangguh/PPAIP-LandingPage/actions/workflows/ci.yml)
 
-Website dan CMS PPAIP Universitas Bakrie untuk mengelola program internship, KUB Talk, praktisi mengajar, sertifikasi mahasiswa, FAQ, serta konten profil unit.
+Website publik dan CMS PPAIP Universitas Bakrie. Aplikasi ini dipakai untuk menampilkan program-program berbasis industri seperti internship, KUB Talk, practitioner teaching, student certification, FAQ, dan profil unit PPAIP.
+
+Public site fokus ke experience mahasiswa dan positioning “Experience The Real Thing”. Admin panel berbasis Filament dipakai tim internal untuk update konten, banner, program, statistik, FAQ, gallery KUB Talk, dan data pendukung lain tanpa perlu edit code.
 
 ## Tech Stack
 
-- PHP 8.4.1+
+- PHP 8.4+
 - Laravel 13
 - Filament 4
 - Inertia.js 2
 - React 18
 - Tailwind CSS 4
 - Vite 8
-- MySQL atau SQLite
-
-## Requirements
-
-Pastikan server atau komputer lokal memiliki:
-
-- PHP 8.4.1 atau lebih baru beserta extension Laravel yang dibutuhkan.
-- Composer 2.
-- Node.js 22 atau lebih baru dan npm.
-- MySQL 8+ untuk production. SQLite cukup untuk development dan testing.
-- Web server dengan document root mengarah ke folder `public`.
+- MySQL untuk production, SQLite cukup untuk local/testing
 
 ## Local Setup
 
-1. Install dependency dan buat environment file.
+Pastikan sudah ada PHP 8.4+, Composer 2, Node.js 22+, npm, dan database driver yang mau dipakai.
 
 ```bash
 composer install
@@ -36,9 +28,20 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-2. Konfigurasi database di `.env`.
+Untuk setup cepat pakai SQLite:
 
-Contoh MySQL:
+```bash
+touch database/database.sqlite
+```
+
+Lalu isi `.env`:
+
+```dotenv
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database/database.sqlite
+```
+
+Kalau pakai MySQL:
 
 ```dotenv
 DB_CONNECTION=mysql
@@ -49,28 +52,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Untuk SQLite:
-
-```bash
-touch database/database.sqlite
-```
-
-```dotenv
-DB_CONNECTION=sqlite
-DB_DATABASE=/absolute/path/to/database/database.sqlite
-```
-
-3. Konfigurasi administrator awal.
-
-```dotenv
-ADMIN_NAME="PPAIP Admin"
-ADMIN_EMAIL="admin@example.com"
-ADMIN_PASSWORD="use-a-strong-password"
-```
-
-`ADMIN_PASSWORD` minimal 12 karakter. Jangan gunakan kredensial contoh di production.
-
-4. Siapkan database, data awal, dan public storage.
+Jalankan migration, seeder, dan storage link:
 
 ```bash
 php artisan migrate
@@ -78,42 +60,131 @@ php artisan db:seed
 php artisan storage:link
 ```
 
-Seeder hanya membuat administrator jika `ADMIN_EMAIL` dan `ADMIN_PASSWORD` sudah diisi. Menjalankan seeder kembali akan memperbarui administrator dengan email yang sama.
-
-5. Jalankan development server.
+Jalankan aplikasi local:
 
 ```bash
 composer dev
 ```
 
-Website tersedia di `http://127.0.0.1:8000`. Filament CMS tersedia di `/admin`.
+Public site ada di `http://127.0.0.1:8000`. Admin panel ada di `http://127.0.0.1:8000/admin`.
+
+## Database & Seeders
+
+Seeder utama ada di `database/seeders/DatabaseSeeder.php`. Seeder ini menjalankan CMS seed content dan membuat admin pertama jika credential admin sudah disiapkan di `.env`.
+
+```dotenv
+ADMIN_NAME="PPAIP Admin"
+ADMIN_EMAIL="admin@example.com"
+ADMIN_PASSWORD="use-a-strong-password"
+```
+
+Catatan penting:
+
+- `ADMIN_PASSWORD` minimal 12 karakter.
+- Jangan pakai credential contoh di production.
+- Kalau `ADMIN_EMAIL` atau `ADMIN_PASSWORD` kosong, akun admin akan dilewati.
+- Menjalankan seeder ulang akan update admin dengan email yang sama.
+- Jangan rutin menjalankan `db:seed` di production kecuali memang ingin refresh/update seed content.
+
+## Admin Panel
+
+Filament CMS tersedia di `/admin`.
+
+Admin user harus punya kolom `is_admin = true`. Cara normalnya lewat seeder dengan env `ADMIN_*`. Kalau butuh manual via Tinker:
+
+```bash
+php artisan tinker
+```
+
+```php
+App\Models\User::query()->updateOrCreate(
+    ['email' => 'admin@example.com'],
+    [
+        'name' => 'PPAIP Admin',
+        'password' => Illuminate\Support\Facades\Hash::make('use-a-strong-password'),
+        'is_admin' => true,
+    ],
+);
+```
+
+Beberapa area penting di admin:
+
+- `/admin/welcome-content` untuk konten homepage.
+- `/admin/internship-years` dan `/admin/internship-content` untuk data internship.
+- `/admin/kub-talks` dan `/admin/kub-talk-content` untuk gallery dan banner KUB Talk.
+- `/admin/practitioner-teaching-majors` dan `/admin/practitioner-teaching-content` untuk practitioner teaching.
+- `/admin/certification-majors` dan `/admin/student-certification-content` untuk student certification.
+- `/admin/about-us-content`, `/admin/work-programs`, missions, dan team members untuk halaman About.
+- `/admin/faqs`, nav links, footer links, dan programs untuk konten pendukung.
+
+## Architecture Overview
+
+Aplikasi ini memakai Laravel sebagai backend, Inertia sebagai bridge, dan React untuk halaman publik.
+
+- `routes/web.php` mendefinisikan public routes, auth routes, SEO endpoints, health checks, dan route testing-only.
+- `app/Http/Controllers/*Controller.php` tipis dan delegasi data halaman ke service.
+- `app/Services/Landing/*PageData.php` menyiapkan payload Inertia dari model, CMS content, dan public asset resolver.
+- `app/Models` berisi Eloquent model dengan naming English yang mengikuti table/column database.
+- `app/Filament/Admin` berisi resource dan page CMS.
+- `resources/js/Pages` berisi Inertia page React.
+- `resources/js/Components` berisi shared layout, section, UI element, SEO, dan error boundary.
+- `resources/css/app.css` menyimpan Tailwind entry, design tokens, dan animasi global.
+- `resources/views/errors` berisi custom 403, 404, dan 500 pages.
+- `tests/Feature` dan `resources/js/tests` menjaga behavior backend, admin, SEO, upload validation, dan komponen frontend.
+
+Naming convention saat ini: internal code pakai English (`PractitionerTeachingMajor`, `CertificationMajor`, `WorkProgram`, `majorStats`), sementara copy UI boleh tetap Bahasa Indonesia sesuai kebutuhan user/admin.
+
+## Content & Uploads
+
+File upload dari Filament disimpan di:
+
+```text
+storage/app/public
+```
+
+Folder ini tidak masuk Git. Saat pindah server atau deploy baru:
+
+- Jalankan `php artisan storage:link`.
+- Backup/restore isi `storage/app/public`.
+- Pastikan `storage` dan `bootstrap/cache` writable oleh process PHP.
+
+Katalog internship default diarahkan ke:
+
+```text
+storage/app/public/student-catalog/Repository Magang 2025 UBakrie.pdf
+```
+
+Kalau nama file berubah, update `catalogUrl` di `app/Services/Landing/InternshipPageData.php`.
 
 ## Common Commands
 
 ```bash
-# Menjalankan semua test
+# Backend tests
 composer test
 
-# Memeriksa format PHP
+# PHP format check
 vendor/bin/pint --test
 
-# Memperbaiki format PHP
+# Auto-format PHP
 vendor/bin/pint
 
-# Memeriksa source React
+# Frontend lint
 npm run lint
 
-# Memperbaiki temuan lint yang aman secara otomatis
+# Auto-fix lint yang aman
 npm run lint:fix
 
-# Membuat production frontend assets
+# Frontend tests
+npm run test
+
+# Production frontend build
 npm run build
 
-# Memastikan bundle dan gambar tidak melewati performance budget
+# Bundle/performance budget check
 npm run build:check
 
-# Menampilkan route aplikasi
-php artisan route:list
+# Lihat route aplikasi
+php artisan route:list --except-vendor
 ```
 
 Sebelum merge atau deploy, minimal jalankan:
@@ -122,35 +193,14 @@ Sebelum merge atau deploy, minimal jalankan:
 composer test
 vendor/bin/pint --test
 npm run lint
+npm run test
 npm run build
 npm run build:check
 ```
 
-## Content and Uploads
+## Production Notes
 
-Media yang diunggah melalui Filament disimpan di:
-
-```text
-storage/app/public
-```
-
-Folder tersebut tidak disimpan di Git. Deployment baru wajib:
-
-1. Menjalankan `php artisan storage:link`.
-2. Memindahkan atau restore isi `storage/app/public` dari server sebelumnya.
-3. Memberikan permission tulis kepada process PHP untuk `storage` dan `bootstrap/cache`.
-
-Katalog internship saat ini diharapkan tersedia pada:
-
-```text
-storage/app/public/student-catalog/Repository Magang 2025 UBakrie.pdf
-```
-
-Jika nama atau lokasi file diubah, sesuaikan `catalogUrl` pada `LandingController`.
-
-## Production Environment
-
-Gunakan konfigurasi production berikut sebagai baseline:
+Baseline `.env` production:
 
 ```dotenv
 APP_NAME="PPAIP Universitas Bakrie"
@@ -168,18 +218,12 @@ DB_DATABASE=ppaip
 DB_USERNAME=ppaip_user
 DB_PASSWORD=strong-database-password
 
-FILESYSTEM_DISK=local
 CACHE_STORE=database
 SESSION_DRIVER=database
 QUEUE_CONNECTION=database
 ```
 
-Gunakan HTTPS dan jangan menyimpan `.env`, database dump, atau kredensial di repository.
-Simpan `APP_KEY` production dengan aman dan jangan menjalankan `key:generate` ulang setelah aplikasi memiliki data terenkripsi atau session aktif.
-
-## Production Deployment
-
-Contoh deployment manual menggunakan maintenance mode:
+Manual deploy flow:
 
 ```bash
 php artisan down --retry=60
@@ -198,189 +242,21 @@ php artisan queue:restart
 php artisan up
 ```
 
-Catatan:
+Production checklist:
 
-- Jalankan backup database dan media sebelum migration.
-- Jangan menjalankan `db:seed` pada setiap deploy. Gunakan hanya saat setup awal atau ketika memang ingin memperbarui seed content.
-- Jika frontend assets dibangun di CI, server tidak perlu menjalankan `npm ci` dan `npm run build`; upload folder `public/build` hasil CI.
-- Pastikan document root web server adalah `/path/to/project/public`, bukan root project.
-
-## Web Server
-
-### Nginx
-
-Contoh konfigurasi inti:
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.example;
-    root /var/www/ppaip/public;
-
-    index index.php;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ^~ /build/assets/ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-        try_files $uri =404;
-    }
-
-    location ^~ /assets/ {
-        expires 7d;
-        add_header Cache-Control "public";
-        try_files $uri =404;
-    }
-
-    location ~ \.php$ {
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
-    }
-
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
-}
-```
-
-Sesuaikan socket PHP-FPM dan aktifkan HTTPS melalui konfigurasi hosting.
+- Backup database dan `storage/app/public` sebelum migration.
+- Document root web server harus mengarah ke folder `public`.
+- Pakai HTTPS.
+- Jangan commit `.env`, database dump, atau credential.
+- Simpan `APP_KEY` production dengan aman. Jangan regenerate setelah aplikasi sudah berjalan dengan data/session aktif.
+- Jalankan queue worker kalau mulai ada email atau background job.
 
 ## Queue
 
-Environment default menggunakan database queue. Jika aplikasi mulai mengirim email atau menjalankan background job, aktifkan worker:
+Default queue menggunakan database driver. Untuk production:
 
 ```bash
 php artisan queue:work --sleep=3 --tries=3 --timeout=90
 ```
 
-Di production, jalankan worker menggunakan Supervisor, systemd, atau process manager dari platform hosting.
-
-## Health Check and Monitoring
-
-Aplikasi menyediakan dua endpoint:
-
-- `/up` untuk liveness check ringan. Gunakan untuk memastikan process Laravel masih hidup.
-- `/up/ready` untuk readiness check database, cache, dan permission tulis storage. Endpoint mengembalikan HTTP `503` jika salah satu dependency gagal.
-
-Arahkan uptime monitor atau load balancer ke `/up/ready`. Setiap response juga memiliki header `X-Request-ID`; nilai yang sama ikut masuk ke context log Laravel agar request bermasalah lebih gampang ditelusuri.
-
-Untuk server biasa, gunakan log harian dan simpan minimal 14 hari:
-
-```dotenv
-LOG_CHANNEL=daily
-LOG_LEVEL=error
-LOG_DAILY_DAYS=14
-```
-
-Untuk container, arahkan log ke `stderr` lalu kirim ke platform logging yang digunakan.
-
-## Backup
-
-Backup minimal harus mencakup:
-
-- Database production.
-- Seluruh folder `storage/app/public`.
-- `.env` production yang disimpan di secret manager atau lokasi aman.
-
-Contoh MySQL:
-
-```bash
-mysqldump -u ppaip_user -p ppaip > ppaip-$(date +%F).sql
-tar -czf ppaip-media-$(date +%F).tar.gz storage/app/public
-```
-
-Backup belum dianggap aman sampai proses restore pernah diuji.
-
-## Restore
-
-```bash
-mysql -u ppaip_user -p ppaip < ppaip-YYYY-MM-DD.sql
-tar -xzf ppaip-media-YYYY-MM-DD.tar.gz
-php artisan storage:link
-php artisan optimize:clear
-```
-
-Pastikan ownership dan permission folder storage sesuai dengan user PHP-FPM.
-
-## Troubleshooting
-
-### Gambar upload tidak tampil
-
-```bash
-php artisan storage:link
-```
-
-Pastikan `APP_URL` sesuai domain aktif dan `public/storage` mengarah ke `storage/app/public`.
-
-### Error permission pada storage
-
-Pastikan web server memiliki akses tulis ke:
-
-```text
-storage
-bootstrap/cache
-```
-
-### Perubahan `.env` tidak terbaca
-
-```bash
-php artisan optimize:clear
-php artisan optimize
-```
-
-### Halaman error setelah deployment
-
-```bash
-php artisan migrate:status
-php artisan about
-tail -n 100 storage/logs/laravel.log
-```
-
-Jangan mengaktifkan `APP_DEBUG=true` di production.
-
-### Admin tidak bisa login
-
-Pastikan user memiliki `is_admin = true`. Cek dan perbaiki status user melalui Tinker:
-
-```bash
-php artisan tinker
-```
-
-```php
-$user = App\Models\User::where('email', 'admin@example.com')->firstOrFail();
-$user->update(['is_admin' => true]);
-```
-
-Gunakan alur lupa password untuk mengganti password admin. Hindari menjalankan `DatabaseSeeder` untuk perbaikan akun di production karena seeder tersebut juga mengisi ulang konten CMS awal.
-
-## Release Checklist
-
-- `composer test` lulus.
-- `vendor/bin/pint --test` lulus.
-- `npm run build` lulus.
-- Database dan media sudah dibackup.
-- Environment production menggunakan `APP_DEBUG=false`.
-- Migration sudah dijalankan.
-- `storage:link` tersedia.
-- Homepage dan halaman program bisa dibuka.
-- Login dan akses Filament admin sudah dicek.
-- Upload gambar dari Filament sudah diuji.
-
-## Security
-
-- Registrasi publik dinonaktifkan.
-- Hanya user dengan `is_admin = true` yang dapat mengakses Filament.
-- Jangan membagikan akun admin antar pengguna.
-- Gunakan password unik dan password manager.
-- Rotasi kredensial database, email, dan admin saat ada pergantian pengelola.
-
-## SEO
-
-- Metadata halaman publik dikelola melalui `config/seo.php`.
-- Pastikan `APP_URL` berisi domain production agar canonical URL, Open Graph image, robots, dan sitemap tidak menunjuk ke localhost.
-- Sitemap tersedia di `/sitemap.xml` dan robots policy tersedia di `/robots.txt`.
-- Setelah domain aktif, daftarkan `/sitemap.xml` ke Google Search Console.
+Jalankan worker lewat Supervisor, systemd, atau process manager dari hosting.
