@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { usePage } from "@inertiajs/react";
 import {
     Briefcase,
     GraduationCap,
@@ -19,9 +18,7 @@ import {
 } from "lucide-react";
 
 import {
-    Navbar,
-    PageHeroBanner,
-    Footer,
+    PublicLayout,
 } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
 import Seo from "@/Components/Seo";
@@ -49,8 +46,6 @@ export default function TentangKami({
     teamMembers = { ketua: null, staff: [] },
     groupPhoto = null,
 }) {
-    const { navLinks = [], footerLinks = [] } = usePage().props;
-
     return (
         <>
             <Seo
@@ -59,15 +54,14 @@ export default function TentangKami({
                 image={groupPhoto?.src || "/assets/bakrie-banner.jpg"}
             />
 
-            <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased">
-                <Navbar links={navLinks} />
-
-                <PageHeroBanner
-                    title="Tentang Kami"
-                    subtitle="Mengenal lebih dekat tim, visi, misi, dan program kerja UPT PPAIP Universitas Bakrie."
-                    backgroundImage={groupPhoto?.src || "/assets/bakrie-banner.jpg"}
-                />
-
+            <PublicLayout
+                rootClassName="min-h-screen bg-[#f8f8f8] font-sans antialiased"
+                hero={{
+                    title: "Tentang Kami",
+                    subtitle: "Mengenal lebih dekat tim, visi, misi, dan program kerja UPT PPAIP Universitas Bakrie.",
+                    backgroundImage: groupPhoto?.src || "/assets/bakrie-banner.jpg",
+                }}
+            >
                 <IntroCard description={aboutIntro} />
 
                 <TeamSection
@@ -78,9 +72,7 @@ export default function TentangKami({
                 <VisionMissionSection vision={vision} mission={mission} />
 
                 <ProgramKerjaSection programs={programKerja} />
-
-                <Footer linkColumns={footerLinks} />
-            </div>
+            </PublicLayout>
         </>
     );
 }

@@ -1,18 +1,13 @@
-import { usePage } from '@inertiajs/react';
-
 import Seo from '@/Components/Seo';
 import {
-  Navbar,
+  PublicLayout,
   HeroBanner,
   AboutCard,
   ProgramCarousel,
   FaqSection,
-  Footer,
 } from '@/Components/Layouts';
 
 export default function Welcome({ programs = [], faqItems = [], aboutDescription = '' }) {
-  const { navLinks = [], footerLinks = [] } = usePage().props;
-
   return (
     <>
       <Seo
@@ -21,14 +16,11 @@ export default function Welcome({ programs = [], faqItems = [], aboutDescription
         image="/assets/bakrie-hero.jpg"
       />
 
-      <div className="min-h-screen bg-white font-sans antialiased">
-        <Navbar links={navLinks} />
-        <HeroBanner />
+      <PublicLayout heroSlot={<HeroBanner />}>
         <AboutCard description={aboutDescription} />
         <ProgramCarousel programs={programs} />
         <FaqSection items={faqItems} />
-        <Footer linkColumns={footerLinks} />
-      </div>
+      </PublicLayout>
     </>
   );
 }

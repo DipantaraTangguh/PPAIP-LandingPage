@@ -1,4 +1,5 @@
 export { Navbar } from "./Navbar";
+export { PublicLayout } from "./PublicLayout";
 export { HeroBanner } from "./HeroBanner";
 export { AboutCard } from "./AboutCard";
 export { ProgramCarousel } from "./ProgramCarousel";

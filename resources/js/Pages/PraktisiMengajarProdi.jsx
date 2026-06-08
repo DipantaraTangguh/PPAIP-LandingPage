@@ -1,20 +1,16 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { BookOpen, Users, Percent, ArrowLeft } from "lucide-react";
 
 import Seo from "@/Components/Seo";
 import {
-    Navbar,
-    PageHeroBanner,
+    PublicLayout,
     InfoCard,
-    Footer,
 } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
 
 export default function PraktisiMengajarProdi({ slug, detail, aboutDescription = "", bannerImage = "/assets/praktisi-mengajar.png" }) {
-    const { navLinks = [], footerLinks = [] } = usePage().props;
-
     if (!detail) {
-        return <ProdiNotFound slug={slug} navLinks={navLinks} footerLinks={footerLinks} />;
+        return <ProdiNotFound slug={slug} />;
     }
 
     const { name, stats, semesters } = detail;
@@ -27,15 +23,14 @@ export default function PraktisiMengajarProdi({ slug, detail, aboutDescription =
                 image={bannerImage}
             />
 
-            <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased">
-                <Navbar links={navLinks} />
-
-                <PageHeroBanner
-                    title={name}
-                    subtitle="Menampilkan data dan statistik praktisi yang mengajar di tiap program studi"
-                    backgroundImage={bannerImage}
-                />
-
+            <PublicLayout
+                rootClassName="min-h-screen bg-[#f8f8f8] font-sans antialiased"
+                hero={{
+                    title: name,
+                    subtitle: "Menampilkan data dan statistik praktisi yang mengajar di tiap program studi",
+                    backgroundImage: bannerImage,
+                }}
+            >
                 <SectionWrapper className="pt-6">
                     <Link
                         href="/practitioner-teaching"
@@ -73,9 +68,7 @@ export default function PraktisiMengajarProdi({ slug, detail, aboutDescription =
                 </section>
 
                 <InfoCard title="Keterangan lainnya" description={aboutDescription} />
-
-                <Footer linkColumns={footerLinks} />
-            </div>
+            </PublicLayout>
         </>
     );
 }
@@ -134,7 +127,7 @@ function CoursePill({ course }) {
     return <span className={`${base} ${styles}`}>{course.name}</span>;
 }
 
-function ProdiNotFound({ slug, navLinks, footerLinks }) {
+function ProdiNotFound({ slug }) {
     return (
         <>
             <Seo
@@ -142,8 +135,7 @@ function ProdiNotFound({ slug, navLinks, footerLinks }) {
                 description="Program studi yang diminta tidak tersedia."
                 noIndex
             />
-            <div className="min-h-screen bg-[#f8f8f8] font-sans antialiased flex flex-col">
-                <Navbar links={navLinks} />
+            <PublicLayout rootClassName="min-h-screen bg-[#f8f8f8] font-sans antialiased flex flex-col">
                 <div className="flex-1 flex items-center justify-center px-4 py-24">
                     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-10 max-w-md text-center">
                         <h1 className="text-2xl font-bold text-gray-900 mb-3">
@@ -165,8 +157,7 @@ function ProdiNotFound({ slug, navLinks, footerLinks }) {
                         </Link>
                     </div>
                 </div>
-                <Footer linkColumns={footerLinks} />
-            </div>
+            </PublicLayout>
         </>
     );
 }

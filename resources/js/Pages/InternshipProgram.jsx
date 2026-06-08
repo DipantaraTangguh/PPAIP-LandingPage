@@ -1,19 +1,14 @@
 import { useMemo, useState } from 'react';
-import { usePage } from '@inertiajs/react';
 
 import Seo from '@/Components/Seo';
 import {
-  Navbar,
-  PageHeroBanner,
+  PublicLayout,
   YearFilter,
   DonutSummarySection,
   InternshipProdiGrid,
-  Footer,
 } from '@/Components/Layouts';
 
 export default function InternshipProgramPage({ years = [], internshipData = {}, bannerImage = '/assets/internship-program.png', catalogUrl }) {
-  const { navLinks = [], footerLinks = [] } = usePage().props;
-
   const defaultYear = useMemo(() => {
     if (years.length === 0) return null;
     return [...years].sort((a, b) => Number(b) - Number(a))[0] || years[years.length - 1];
@@ -30,15 +25,14 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
         image={bannerImage}
       />
 
-      <div className="min-h-screen bg-gray-50 font-sans antialiased">
-        <Navbar links={navLinks} />
-
-        <PageHeroBanner
-          title="Internship Program"
-          subtitle="Persentase sebaran tempat mahasiswa magang"
-          backgroundImage={bannerImage}
-        />
-
+      <PublicLayout
+        rootClassName="min-h-screen bg-gray-50 font-sans antialiased"
+        hero={{
+          title: 'Internship Program',
+          subtitle: 'Persentase sebaran tempat mahasiswa magang',
+          backgroundImage: bannerImage,
+        }}
+      >
         {years.length > 0 && (
           <YearFilter
             years={years}
@@ -63,9 +57,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
             />
           </>
         )}
-
-        <Footer linkColumns={footerLinks} />
-      </div>
+      </PublicLayout>
     </>
   );
 }

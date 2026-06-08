@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { usePage } from "@inertiajs/react";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
     Briefcase,
@@ -15,7 +14,7 @@ import {
     Clock3,
     X,
 } from "lucide-react";
-import { Navbar, PageHeroBanner, InfoCard, Footer } from "@/Components/Layouts";
+import { PublicLayout, InfoCard } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
 import Seo from "@/Components/Seo";
 
@@ -204,7 +203,6 @@ export default function SertifikasiMahasiswa({
     aboutDescription = "",
     bannerImage = "/assets/internship-mandiri.png",
 }) {
-    const { navLinks = [], footerLinks = [] } = usePage().props;
     const [selected, setSelected] = useState(null);
 
     const totalCerts = prodiCertifications.reduce(
@@ -229,14 +227,14 @@ export default function SertifikasiMahasiswa({
                 @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
             `}</style>
 
-            <div className="min-h-screen bg-[#f5f5f5]">
-                <Navbar links={navLinks} />
-                <PageHeroBanner
-                    title="Sertifikasi Mahasiswa"
-                    subtitle="Temukan dan ikuti program sertifikasi profesional sesuai program studi Anda."
-                    backgroundImage={bannerImage}
-                />
-
+            <PublicLayout
+                rootClassName="min-h-screen bg-[#f5f5f5]"
+                hero={{
+                    title: "Sertifikasi Mahasiswa",
+                    subtitle: "Temukan dan ikuti program sertifikasi profesional sesuai program studi Anda.",
+                    backgroundImage: bannerImage,
+                }}
+            >
                 <section className="relative z-10 -mt-10 mb-16 px-4">
                     <SectionWrapper>
                         <div className="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm">
@@ -312,8 +310,7 @@ export default function SertifikasiMahasiswa({
                     title="Tentang Sertifikasi"
                     description={aboutDescription}
                 />
-                <Footer linkColumns={footerLinks} />
-            </div>
+            </PublicLayout>
 
             <Modal prodi={selected} onClose={() => setSelected(null)} />
         </>

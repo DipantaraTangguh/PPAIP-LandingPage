@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { usePage } from "@inertiajs/react";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
     ArrowUpRight,
@@ -11,7 +10,7 @@ import {
     Sparkles,
     X,
 } from "lucide-react";
-import { Navbar, PageHeroBanner, Footer } from "@/Components/Layouts";
+import { PublicLayout } from "@/Components/Layouts";
 import Seo from "@/Components/Seo";
 
 function MarqueeTrack({ duration, logoSet }) {
@@ -532,7 +531,6 @@ export default function KubTalk({
     bannerImage = "/assets/kub-talk-3.jpg",
     stats = {},
 }) {
-    const { navLinks = [], footerLinks = [] } = usePage().props;
     const [lightbox, setLightbox] = useState(null);
     const lightboxTriggerRef = useRef(null);
 
@@ -563,15 +561,14 @@ export default function KubTalk({
                 .animate-marquee:hover, .relative:hover .animate-marquee { animation-play-state: paused; }
             `}</style>
 
-            <div className="min-h-screen bg-[#F4F5F7] font-sans antialiased">
-                <Navbar links={navLinks} />
-
-                <PageHeroBanner
-                    title="KUB Talk"
-                    subtitle="Kolaborasi eksklusif dengan pemimpin industri nasional untuk mempersiapkan mahasiswa menjadi profesional masa depan."
-                    backgroundImage={bannerImage}
-                />
-
+            <PublicLayout
+                rootClassName="min-h-screen bg-[#F4F5F7] font-sans antialiased"
+                hero={{
+                    title: "KUB Talk",
+                    subtitle: "Kolaborasi eksklusif dengan pemimpin industri nasional untuk mempersiapkan mahasiswa menjadi profesional masa depan.",
+                    backgroundImage: bannerImage,
+                }}
+            >
                 {/* Stats Strip */}
                 <StatsBar stats={stats} />
 
@@ -614,8 +611,7 @@ export default function KubTalk({
 
                 {/* CTA */}
                 <CTABanner />
-                <Footer linkColumns={footerLinks} />
-            </div>
+            </PublicLayout>
 
             {/* Lightbox */}
             <Lightbox
