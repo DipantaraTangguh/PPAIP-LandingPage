@@ -166,16 +166,21 @@ export function Navbar({ links }) {
             {mobileOpen && (
                 <div className="md:hidden absolute left-0 right-0 top-full z-40 bg-brand-primary border-t border-white/10 shadow-lg">
                     <div className="px-4 py-3 flex flex-col">
-                        {links.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-brand-gold transition-colors duration-200"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        {links.map((link) => {
+                            const isExternal = link.href?.startsWith("http://") || link.href?.startsWith("https://");
+                            return (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    target={isExternal ? "_blank" : undefined}
+                                    rel={isExternal ? "noopener noreferrer" : undefined}
+                                    onClick={() => setMobileOpen(false)}
+                                    className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-brand-gold transition-colors duration-200"
+                                >
+                                    {link.label}
+                                </a>
+                            );
+                        })}
                         <div className="mt-2 pt-3 border-t border-white/10 flex justify-start">
                             <GoogleTranslateSwitch />
                         </div>

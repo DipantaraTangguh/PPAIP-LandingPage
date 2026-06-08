@@ -12,6 +12,81 @@ class CmsContentSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
+        // Table: page_contents
+        DB::table('page_contents')->truncate();
+        DB::table('page_contents')->insert([
+            [
+                'id' => 1,
+                'key' => 'welcome.about_description',
+                'value' => 'Universitas Bakrie (UBakrie) adalah universitas swasta dengan akreditasi Unggul yang dikelola oleh Yayasan Pendidikan Bakrie. Didirikan pada tahun 2009, UBakrie berkomitmen untuk menyediakan pendidikan tinggi berkualitas dengan pengakuan nasional dan internasional. Ciri khas UBakrie adalah metode Experiential Learning, yang didasarkan pada pengalaman dunia nyata di dunia usaha dan industri. Mahasiswa belajar langsung dari para profesional, termasuk para CEO perusahaan di Grup Bakrie, melalui kasus nyata, praktikum, kunjungan industri, dan proyek nyata.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 2,
+                'key' => 'praktisi_mengajar.about_description',
+                'value' => 'Universitas Bakrie (UBakrie) adalah universitas swasta dengan akreditasi Unggul yang dikelola oleh Yayasan Pendidikan Bakrie. Didirikan pada tahun 2009, UBakrie berkomitmen untuk menyediakan pendidikan tinggi berkualitas dengan pengakuan nasional dan internasional. Ciri khas UBakrie adalah metode Pembelajaran Berbasis Pengalaman, yang didasarkan pada pengalaman dunia nyata di bidang bisnis dan industri. Mahasiswa belajar langsung dari para profesional, termasuk CEO perusahaan-perusahaan dalam Grup Bakrie, melalui studi kasus nyata, praktik, kunjungan industri, dan proyek nyata.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 3,
+                'key' => 'sertifikasi.about_description',
+                'value' => 'Halaman ini menampilkan daftar sertifikasi yang dapat diikuti oleh mahasiswa Universitas Bakrie per program studi. Klik salah satu program studi untuk melihat sertifikasi yang tersedia maupun yang akan segera hadir.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 4,
+                'key' => 'tentang_kami.about_intro',
+                'value' => 'UPT Pengembangan Pembelajaran, Akademik & Inovasi Pembelajaran (PPAIP) adalah unit pelaksana teknis Universitas Bakrie yang berfokus pada pengembangan akademik, pengelolaan program magang mahasiswa, sertifikasi profesional, serta peningkatan kompetensi dosen. Kami hadir untuk menjembatani dunia kampus dengan dunia industri melalui ekosistem pembelajaran berbasis pengalaman.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 5,
+                'key' => 'tentang_kami.vision',
+                'value' => 'Menjadi unit pelaksana teknis yang unggul dalam pengembangan akademik dan inovasi pembelajaran berbasis pengalaman, yang menghubungkan dunia akademik dengan dunia industri secara berkelanjutan.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 6,
+                'key' => 'tentang_kami.group_photo_src',
+                'value' => 'tentang-kami/01KTK6R3QV965XWPSDP9V97F4C.jpg',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-08 08:49:20',
+            ],
+            [
+                'id' => 7,
+                'key' => 'tentang_kami.group_photo_fallback',
+                'value' => NULL,
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-08 08:49:20',
+            ],
+            [
+                'id' => 8,
+                'key' => 'tentang_kami.group_photo_caption',
+                'value' => 'Tim PPAIP Universitas Bakrie — berkomitmen mendukung mahasiswa, dosen, dan mitra industri dalam ekosistem pembelajaran yang berkualitas.',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-05 03:20:00',
+            ],
+            [
+                'id' => 9,
+                'key' => 'kub_talk.banner_image',
+                'value' => 'banners/01KTK6NMWX10XN7BQTY7WVYZGA.jpg',
+                'created_at' => '2026-06-05 03:20:00',
+                'updated_at' => '2026-06-08 08:47:59',
+            ],
+            [
+                'id' => 10,
+                'key' => 'kub_talk.total_students',
+                'value' => '500+',
+                'created_at' => '2026-06-08 04:12:19',
+                'updated_at' => '2026-06-08 04:12:19',
+            ],
+        ]);
+
         // Table: nav_links
         DB::table('nav_links')->truncate();
         DB::table('nav_links')->insert([
@@ -26,7 +101,7 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 2,
                 'label' => 'Portal Magang',
-                'href' => '#',
+                'href' => 'http://127.0.0.1:8001',
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -48,7 +123,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 1,
                 'group_index' => 1,
                 'label' => 'Penerimaan',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 0,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -57,7 +132,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 2,
                 'group_index' => 1,
                 'label' => 'Kontak',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -66,7 +141,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 3,
                 'group_index' => 1,
                 'label' => 'Informasi',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -75,7 +150,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 4,
                 'group_index' => 2,
                 'label' => 'FAQ',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 0,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -84,7 +159,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 5,
                 'group_index' => 2,
                 'label' => 'Hubungi Kami',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -93,7 +168,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 6,
                 'group_index' => 2,
                 'label' => 'Karir',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -102,7 +177,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 7,
                 'group_index' => 2,
                 'label' => 'Riset',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 3,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -111,7 +186,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 8,
                 'group_index' => 3,
                 'label' => 'Berita',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 0,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -120,7 +195,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 9,
                 'group_index' => 3,
                 'label' => 'Kebijakan Privasi',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -129,7 +204,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 10,
                 'group_index' => 3,
                 'label' => 'Tentang Mahasiswa',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -138,7 +213,7 @@ class CmsContentSeeder extends Seeder
                 'id' => 11,
                 'group_index' => 3,
                 'label' => 'Tentang Dosen',
-                'url' => null,
+                'url' => NULL,
                 'sort_order' => 3,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -223,87 +298,12 @@ class CmsContentSeeder extends Seeder
             ],
         ]);
 
-        // Table: page_contents
-        DB::table('page_contents')->truncate();
-        DB::table('page_contents')->insert([
-            [
-                'id' => 1,
-                'key' => 'welcome.about_description',
-                'value' => 'Universitas Bakrie (UBakrie) adalah universitas swasta dengan akreditasi Unggul yang dikelola oleh Yayasan Pendidikan Bakrie. Didirikan pada tahun 2009, UBakrie berkomitmen untuk menyediakan pendidikan tinggi berkualitas dengan pengakuan nasional dan internasional. Ciri khas UBakrie adalah metode Experiential Learning, yang didasarkan pada pengalaman dunia nyata di dunia usaha dan industri. Mahasiswa belajar langsung dari para profesional, termasuk para CEO perusahaan di Grup Bakrie, melalui kasus nyata, praktikum, kunjungan industri, dan proyek nyata.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 2,
-                'key' => 'praktisi_mengajar.about_description',
-                'value' => 'Universitas Bakrie (UBakrie) adalah universitas swasta dengan akreditasi Unggul yang dikelola oleh Yayasan Pendidikan Bakrie. Didirikan pada tahun 2009, UBakrie berkomitmen untuk menyediakan pendidikan tinggi berkualitas dengan pengakuan nasional dan internasional. Ciri khas UBakrie adalah metode Pembelajaran Berbasis Pengalaman, yang didasarkan pada pengalaman dunia nyata di bidang bisnis dan industri. Mahasiswa belajar langsung dari para profesional, termasuk CEO perusahaan-perusahaan dalam Grup Bakrie, melalui studi kasus nyata, praktik, kunjungan industri, dan proyek nyata.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 3,
-                'key' => 'sertifikasi.about_description',
-                'value' => 'Halaman ini menampilkan daftar sertifikasi yang dapat diikuti oleh mahasiswa Universitas Bakrie per program studi. Klik salah satu program studi untuk melihat sertifikasi yang tersedia maupun yang akan segera hadir.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 4,
-                'key' => 'tentang_kami.about_intro',
-                'value' => 'UPT Pengembangan Pembelajaran, Akademik & Inovasi Pembelajaran (PPAIP) adalah unit pelaksana teknis Universitas Bakrie yang berfokus pada pengembangan akademik, pengelolaan program magang mahasiswa, sertifikasi profesional, serta peningkatan kompetensi dosen. Kami hadir untuk menjembatani dunia kampus dengan dunia industri melalui ekosistem pembelajaran berbasis pengalaman.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 5,
-                'key' => 'tentang_kami.vision',
-                'value' => 'Menjadi unit pelaksana teknis yang unggul dalam pengembangan akademik dan inovasi pembelajaran berbasis pengalaman, yang menghubungkan dunia akademik dengan dunia industri secara berkelanjutan.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 6,
-                'key' => 'tentang_kami.group_photo_src',
-                'value' => '/assets/ppaip-team-group.jpg',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 7,
-                'key' => 'tentang_kami.group_photo_fallback',
-                'value' => '/assets/bakrie-banner.jpg',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 8,
-                'key' => 'tentang_kami.group_photo_caption',
-                'value' => 'Tim PPAIP Universitas Bakrie — berkomitmen mendukung mahasiswa, dosen, dan mitra industri dalam ekosistem pembelajaran yang berkualitas.',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-05 03:20:00',
-            ],
-            [
-                'id' => 9,
-                'key' => 'kub_talk.banner_image',
-                'value' => '/assets/kub-talk-3.jpg',
-                'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-08 08:47:04',
-            ],
-            [
-                'id' => 10,
-                'key' => 'kub_talk.total_students',
-                'value' => '500+',
-                'created_at' => '2026-06-08 04:12:19',
-                'updated_at' => '2026-06-08 04:12:19',
-            ],
-        ]);
-
         // Table: internship_years
         DB::table('internship_years')->truncate();
         DB::table('internship_years')->insert([
             [
                 'id' => 1,
-                'year' => 2024,
+                'year' => '2024',
                 'summary_kub' => 120,
                 'summary_non_kub' => 40,
                 'summary_bumn' => 30,
@@ -313,7 +313,7 @@ class CmsContentSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'year' => 2025,
+                'year' => '2025',
                 'summary_kub' => 150,
                 'summary_non_kub' => 50,
                 'summary_bumn' => 45,
@@ -323,7 +323,7 @@ class CmsContentSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'year' => 2026,
+                'year' => '2026',
                 'summary_kub' => 160,
                 'summary_non_kub' => 60,
                 'summary_bumn' => 55,
@@ -2196,6 +2196,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:11',
                 'updated_at' => '2026-06-05 03:40:11',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 929,
                 'practitioner_teaching_semester_id' => 81,
@@ -3096,6 +3098,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:11',
                 'updated_at' => '2026-06-05 03:40:11',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1029,
                 'practitioner_teaching_semester_id' => 90,
@@ -3996,6 +4000,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:11',
                 'updated_at' => '2026-06-05 03:40:11',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1129,
                 'practitioner_teaching_semester_id' => 99,
@@ -4896,6 +4902,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:11',
                 'updated_at' => '2026-06-05 03:40:11',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1229,
                 'practitioner_teaching_semester_id' => 107,
@@ -5796,6 +5804,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1329,
                 'practitioner_teaching_semester_id' => 116,
@@ -6696,6 +6706,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1429,
                 'practitioner_teaching_semester_id' => 125,
@@ -7596,6 +7608,8 @@ class CmsContentSeeder extends Seeder
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
             ],
+        ]);
+        DB::table('practitioner_teaching_courses')->insert([
             [
                 'id' => 1529,
                 'practitioner_teaching_semester_id' => 133,
@@ -8440,7 +8454,7 @@ class CmsContentSeeder extends Seeder
         DB::table('kub_talks')->insert([
             [
                 'id' => 3,
-                'image' => null,
+                'image' => NULL,
                 'images' => '["kub-talks\\/01KTJQAGZXWKM8FNH15K1YVCTW.png","kub-talks\\/01KTJQAH01Q6QYZ6WRR1VWRFGC.png"]',
                 'title' => 'KUB Talk with PT VKTR Teknologi Mobilitas',
                 'description' => '✨ KUB TALK: Mengenal Lebih Dekat Inovasi Mobilitas bersama PT VKTR Teknologi Mobilitas Tbk! ✨
@@ -8457,7 +8471,7 @@ Sesi luar biasa ini dibawakan langsung oleh Bapak R. Ariyo Putro, selaku SVP Hum
             ],
             [
                 'id' => 4,
-                'image' => null,
+                'image' => NULL,
                 'images' => '["kub-talks\\/01KTJY96F16V09A06SB0HDBTQH.jpg"]',
                 'title' => 'KUB Talk with PT Kutai Bara Nusantara',
                 'description' => 'Hari ini kita kupas tuntas bareng PT Kutai Bara Nusantara di KUB TALK! Belajar langsung dari ahlinya tentang dunia IT di industri profesional bersama Pak Adi Alam, S.Kom., M.M.S.I.',
@@ -8472,7 +8486,7 @@ Sesi luar biasa ini dibawakan langsung oleh Bapak R. Ariyo Putro, selaku SVP Hum
             ],
             [
                 'id' => 5,
-                'image' => null,
+                'image' => NULL,
                 'images' => '["kub-talks\\/01KTJYS36YZS48A5DEWQ3M82Q6.jpg"]',
                 'title' => 'KUB Talk with PT Bumi Resources',
                 'description' => 'Acara kolaborasi antara PPAIP dan Program Studi Manajemen (Fakultas Ekonomi dan Ilmu Sosial) yang berlangsung di Auditorium BT42 hari ini berjalan dengan sangat antusias dan lancar.
@@ -8590,7 +8604,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Digital Business Strategy',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8623,7 +8637,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Audit Internal Sertifikasi',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8645,7 +8659,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Public Relations Specialist',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8656,7 +8670,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Ahli Muda Teknik Bangunan Gedung',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 0,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8667,7 +8681,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'K3 Konstruksi',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8700,7 +8714,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'SAP Fundamentals',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8744,7 +8758,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Machine Learning Specialty',
                 'issuer' => 'Google',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 3,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8766,7 +8780,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Supply Chain Management',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8777,7 +8791,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Auditor Lingkungan',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 0,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
@@ -8799,7 +8813,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
                 'title' => 'Food Safety Manager',
                 'issuer' => 'BNSP',
                 'is_available' => 0,
-                'register_url' => null,
+                'register_url' => NULL,
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:40:12',
                 'updated_at' => '2026-06-05 03:40:12',
