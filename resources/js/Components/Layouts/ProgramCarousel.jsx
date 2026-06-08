@@ -99,7 +99,7 @@ export function ProgramCarousel({ programs }) {
                                     type="button"
                                     onClick={prevSlide}
                                     aria-label="Previous slide"
-                                    className="absolute top-1/2 left-2 sm:-left-4 md:-left-6 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 text-[#802324] shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:bg-[#802324] hover:text-white hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]"
+                                    className="absolute top-1/2 left-2 sm:-left-4 md:-left-6 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 text-brand-dark shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:bg-brand-dark hover:text-white hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark"
                                 >
                                     <ChevronLeft
                                         className="w-5 h-5"
@@ -110,7 +110,7 @@ export function ProgramCarousel({ programs }) {
                                     type="button"
                                     onClick={nextSlide}
                                     aria-label="Next slide"
-                                    className="absolute top-1/2 right-2 sm:-right-4 md:-right-6 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 text-[#802324] shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:bg-[#802324] hover:text-white hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]"
+                                    className="absolute top-1/2 right-2 sm:-right-4 md:-right-6 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 text-brand-dark shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:bg-brand-dark hover:text-white hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark"
                                 >
                                     <ChevronRight
                                         className="w-5 h-5"

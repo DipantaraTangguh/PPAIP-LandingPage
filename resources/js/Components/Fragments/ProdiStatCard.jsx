@@ -3,11 +3,11 @@ import { GraduationCap } from "lucide-react";
 export function ProdiStatCard({ name, count, variant = "orange", href }) {
     const badgeColors =
         variant === "orange"
-            ? "bg-[#ea580c] text-white"
-            : "bg-[#802324] text-white";
+            ? "bg-brand-orange text-white"
+            : "bg-brand-dark text-white";
 
     const iconColors =
-        variant === "orange" ? "text-[#ea580c]" : "text-[#802324]";
+        variant === "orange" ? "text-brand-orange" : "text-brand-dark";
 
     const content = (
         <>
@@ -31,7 +31,7 @@ export function ProdiStatCard({ name, count, variant = "orange", href }) {
     );
 
     const baseClasses =
-        "flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:shadow-md hover:border-[#802324]/30 transition-all duration-300 cursor-pointer";
+        "flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4 hover:shadow-md hover:border-brand-dark/30 transition-all duration-300 cursor-pointer";
 
     if (href) {
         return (

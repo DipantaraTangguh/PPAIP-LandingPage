@@ -1,5 +1,83 @@
 @import "tailwindcss";
 
+:root {
+  --brand-primary: #6B1B1B;
+  --brand-dark: #802324;
+  --brand-deep: #5d1111;
+  --brand-hover: #7d2222;
+  --brand-gold: #F5A623;
+  --brand-gold-light: #fff0b8;
+  --brand-orange: #ea580c;
+  --brand-copper: #C4571A;
+  --brand-rust: #a03420;
+  --brand-ink: #3a0d0d;
+  --brand-night: #120505;
+  --brand-card-border: #f4d8b8;
+  --brand-card-hover: #f6b756;
+  --brand-cream: #fff8ee;
+  --brand-cream-soft: #fff4de;
+  --brand-cream-border: #f0d6b2;
+  --brand-gold-soft: #ffe1a3;
+  --brand-brown: #7a4030;
+  --brand-text-dark: #301010;
+  --brand-heading: #240b0b;
+  --brand-body-muted: #6f554d;
+  --page-soft: #F4F5F7;
+  --surface-muted: #f8f8f8;
+  --surface-soft: #f5f5f5;
+  --surface-warm: #f7f4f1;
+  --surface-white: #fff;
+  --kub-media: #210b0b;
+  --kub-overlay: #190606;
+  --chart-kub: #D4871C;
+  --chart-kub-soft: #E8952E;
+  --chart-non-kub: #2E7D32;
+  --chart-non-kub-soft: #F5C57A;
+  --chart-bumn: #2563EB;
+  --status-success: #15803d;
+  --status-success-light: #16a34a;
+  --app-progress: #4B5563;
+}
+
+@theme {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-light: var(--brand-gold-light);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-copper: var(--brand-copper);
+  --color-brand-rust: var(--brand-rust);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-night: var(--brand-night);
+  --color-brand-card-border: var(--brand-card-border);
+  --color-brand-card-hover: var(--brand-card-hover);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-cream-soft: var(--brand-cream-soft);
+  --color-brand-cream-border: var(--brand-cream-border);
+  --color-brand-gold-soft: var(--brand-gold-soft);
+  --color-brand-brown: var(--brand-brown);
+  --color-brand-text-dark: var(--brand-text-dark);
+  --color-brand-heading: var(--brand-heading);
+  --color-brand-body-muted: var(--brand-body-muted);
+  --color-page-soft: var(--page-soft);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-warm: var(--surface-warm);
+  --color-surface-white: var(--surface-white);
+  --color-kub-media: var(--kub-media);
+  --color-kub-overlay: var(--kub-overlay);
+  --color-chart-kub: var(--chart-kub);
+  --color-chart-kub-soft: var(--chart-kub-soft);
+  --color-chart-non-kub: var(--chart-non-kub);
+  --color-chart-non-kub-soft: var(--chart-non-kub-soft);
+  --color-chart-bumn: var(--chart-bumn);
+  --color-status-success: var(--status-success);
+  --color-status-success-light: var(--status-success-light);
+  --color-app-progress: var(--app-progress);
+}
+
 /* Google Translate injects a top frame, jadi kita tahan layout biar gak lompat. */
 body {
   top: 0 !important;
@@ -167,6 +245,31 @@ input[type="reset"] {
 
 .animate-catalog-slide-up {
   animation: catalogSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bg-kub-cta {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-rust) 55%,
+    var(--brand-copper) 100%
+  );
+}
+
+.bg-kub-detail-panel {
+  background: linear-gradient(
+    160deg,
+    var(--brand-cream) 0%,
+    var(--surface-white) 46%,
+    var(--brand-cream-soft) 100%
+  );
+}
+
+.bg-kub-lightbox-backdrop {
+  background:
+    radial-gradient(circle at 20% 12%, color-mix(in srgb, var(--brand-gold) 22%, transparent), transparent 28%),
+    radial-gradient(circle at 78% 0%, color-mix(in srgb, var(--brand-copper) 20%, transparent), transparent 26%),
+    color-mix(in srgb, var(--brand-night) 78%, transparent);
 }
 
 .footer-wave-parallax {

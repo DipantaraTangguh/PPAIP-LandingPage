@@ -78,9 +78,9 @@ function PartnerMarquee({ gallery }) {
 ───────────────────────────────────────────────────────── */
 function StatsBar({ stats }) {
     const items = [
-        { value: stats.totalCompanies || 0, label: "Perusahaan Mitra", color: "#6B1B1B" },
-        { value: stats.totalSessions || 0, label: "Sesi KUB Talk", color: "#6B1B1B" },
-        { value: stats.totalStudents || "500+", label: "Mahasiswa Terlibat", color: "#16a34a" },
+        { value: stats.totalCompanies || 0, label: "Perusahaan Mitra", color: "var(--brand-primary)" },
+        { value: stats.totalSessions || 0, label: "Sesi KUB Talk", color: "var(--brand-primary)" },
+        { value: stats.totalStudents || "500+", label: "Mahasiswa Terlibat", color: "var(--status-success-light)" },
     ];
 
     return (
@@ -120,7 +120,7 @@ function TalkCard({ item, onClick }) {
 
     return (
         <div
-            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-[#f4d8b8] bg-white shadow-[0_18px_60px_rgba(107,27,27,0.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#f6b756] hover:shadow-[0_28px_90px_rgba(107,27,27,0.18)] focus-within:ring-4 focus-within:ring-[#F5A623]/60"
+            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-brand-card-border bg-white shadow-[0_18px_60px_rgba(107,27,27,0.08)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-card-hover hover:shadow-[0_28px_90px_rgba(107,27,27,0.18)] focus-within:ring-4 focus-within:ring-brand-gold/60"
         >
             <button
                 type="button"
@@ -129,10 +129,10 @@ function TalkCard({ item, onClick }) {
                 aria-label={`Buka detail ${item.title}`}
                 className="absolute inset-0 z-10 rounded-[1.75rem] focus:outline-none"
             />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#6B1B1B] via-[#F5A623] to-[#C4571A]" />
-            <div className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-[#F5A623]/20 blur-3xl transition-opacity duration-500 group-hover:opacity-90" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-primary via-brand-gold to-brand-copper" />
+            <div className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-brand-gold/20 blur-3xl transition-opacity duration-500 group-hover:opacity-90" />
 
-            <div className="relative flex h-60 items-center justify-center overflow-hidden bg-[#210b0b]">
+            <div className="relative flex h-60 items-center justify-center overflow-hidden bg-kub-media">
                 <img
                     src={currentImage}
                     alt={item.title}
@@ -141,27 +141,27 @@ function TalkCard({ item, onClick }) {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#190606]/75 via-[#190606]/8 to-[#190606]/35" />
+                <div className="absolute inset-0 bg-gradient-to-t from-kub-overlay/75 via-kub-overlay/8 to-kub-overlay/35" />
                 <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(circle at 25% 10%, rgba(245,166,35,.28), transparent 32%)" }} />
 
                 <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
-                    <Sparkles className="h-3.5 w-3.5 text-[#F5A623]" />
+                    <Sparkles className="h-3.5 w-3.5 text-brand-gold" />
                     Industry Session
                 </div>
 
                 {item.eventDate && (
                     <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur-sm">
-                        <CalendarDays className="h-3.5 w-3.5 text-[#F5A623]" />
+                        <CalendarDays className="h-3.5 w-3.5 text-brand-gold" />
                         {item.eventDate}
                     </span>
                 )}
 
                 <div className="absolute bottom-4 left-4 right-4 z-10 flex items-end justify-between gap-3">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-white/92 px-3 py-1.5 text-xs font-bold text-[#6B1B1B] shadow-lg backdrop-blur">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/92 px-3 py-1.5 text-xs font-bold text-brand-primary shadow-lg backdrop-blur">
                         <Camera className="h-3.5 w-3.5" />
                         {images.length || 1} Foto
                     </div>
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5A623] text-[#3a0d0d] shadow-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-gold text-brand-ink shadow-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
                         <ArrowUpRight className="h-5 w-5" strokeWidth={2.6} />
                     </span>
                 </div>
@@ -172,7 +172,7 @@ function TalkCard({ item, onClick }) {
                             type="button"
                             onClick={handlePrev}
                             aria-label={`Foto sebelumnya untuk ${item.title}`}
-                            className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
+                            className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-ink opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
                         </button>
@@ -180,7 +180,7 @@ function TalkCard({ item, onClick }) {
                             type="button"
                             onClick={handleNext}
                             aria-label={`Foto berikutnya untuk ${item.title}`}
-                            className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#3a0d0d] opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
+                            className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-ink opacity-0 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white group-hover:opacity-100"
                         >
                             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
                         </button>
@@ -218,15 +218,15 @@ function TalkCard({ item, onClick }) {
                                 className="h-8 w-auto object-contain shrink-0"
                             />
                         ) : (
-                            <div className="w-9 h-9 rounded-lg bg-[#6B1B1B]/10 flex items-center justify-center shrink-0">
-                                <span className="text-[#6B1B1B] text-sm font-black">{item.companyName.charAt(0)}</span>
+                            <div className="w-9 h-9 rounded-lg bg-brand-primary/10 flex items-center justify-center shrink-0">
+                                <span className="text-brand-primary text-sm font-black">{item.companyName.charAt(0)}</span>
                             </div>
                         )}
                         <span className="text-sm font-bold text-gray-700 truncate">{item.companyName}</span>
                     </div>
                 )}
 
-                <h3 className="text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-[#6B1B1B] transition-colors">
+                <h3 className="text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-brand-primary transition-colors">
                     {item.title}
                 </h3>
 
@@ -261,7 +261,7 @@ function TalkCard({ item, onClick }) {
 ───────────────────────────────────────────────────────── */
 function CTABanner() {
     return (
-        <section className="py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #6B1B1B 0%, #a03420 55%, #C4571A 100%)" }}>
+        <section className="py-20 relative overflow-hidden bg-kub-cta">
             <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full" style={{ background: "rgba(255,255,255,0.05)" }} />
             <div className="absolute bottom-0 -left-16 w-60 h-60 rounded-full" style={{ background: "rgba(255,255,255,0.04)" }} />
             <div className="relative max-w-3xl mx-auto px-4 text-center">
@@ -273,7 +273,7 @@ function CTABanner() {
                 </p>
                 <a
                     href="#"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-[#6B1B1B] font-bold text-sm hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-brand-primary font-bold text-sm hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
                 >
                     Hubungi Kami
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,10 +334,9 @@ function Lightbox({ gallery, index, onClose }) {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-3 md:p-6 animate-kub-fade-in"
+            className="fixed inset-0 flex items-center justify-center p-3 md:p-6 animate-kub-fade-in bg-kub-lightbox-backdrop"
             style={{
                 zIndex: 9999,
-                background: "radial-gradient(circle at 20% 12%, rgba(245,166,35,.22), transparent 28%), radial-gradient(circle at 78% 0%, rgba(196,87,26,.2), transparent 26%), rgba(18, 5, 5, 0.78)",
                 backdropFilter: "blur(16px)",
             }}
             onClick={onClose}
@@ -347,15 +346,15 @@ function Lightbox({ gallery, index, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="kub-talk-dialog-title"
-                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-[#120505] shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise"
+                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-brand-night shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise"
                 style={{ maxHeight: "92vh" }}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full bg-[#F5A623]/25 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-28 right-10 h-80 w-80 rounded-full bg-[#C4571A]/20 blur-3xl" />
+                <div className="pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full bg-brand-gold/25 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-28 right-10 h-80 w-80 rounded-full bg-brand-copper/20 blur-3xl" />
                 <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10" />
 
-                <div className="relative flex min-h-[42vh] items-center justify-center overflow-hidden bg-[#210b0b] md:min-h-[76vh]">
+                <div className="relative flex min-h-[42vh] items-center justify-center overflow-hidden bg-kub-media md:min-h-[76vh]">
                     <img
                         key={currentImage}
                         src={currentImage}
@@ -364,16 +363,16 @@ function Lightbox({ gallery, index, onClose }) {
                         decoding="async"
                         className="h-full max-h-[48vh] w-full object-contain md:max-h-[76vh] animate-kub-photo-reveal"
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#120505]/70 via-transparent to-[#120505]/30" />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#120505] to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-night/70 via-transparent to-brand-night/30" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-night to-transparent" />
 
                     <div className="absolute left-5 top-5 z-20 flex flex-wrap items-center gap-2">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-[#F5A623]/35 bg-[#F5A623]/18 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#ffe1a3] shadow-lg backdrop-blur-md">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/35 bg-brand-gold/18 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-brand-gold-soft shadow-lg backdrop-blur-md">
                             <Sparkles className="h-3.5 w-3.5" />
                             KUB Talk Showcase
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/12 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-md">
-                            <Camera className="h-3.5 w-3.5 text-[#F5A623]" />
+                            <Camera className="h-3.5 w-3.5 text-brand-gold" />
                             {currentImageIndex + 1} / {images.length || 1}
                         </span>
                     </div>
@@ -383,7 +382,7 @@ function Lightbox({ gallery, index, onClose }) {
                             <button
                                 type="button"
                                 onClick={handlePrev}
-                                className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
+                                className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-x-1 hover:bg-brand-gold hover:text-brand-ink"
                                 aria-label="Foto sebelumnya"
                             >
                                 <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
@@ -391,7 +390,7 @@ function Lightbox({ gallery, index, onClose }) {
                             <button
                                 type="button"
                                 onClick={handleNext}
-                                className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:translate-x-1 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
+                                className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/12 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:translate-x-1 hover:bg-brand-gold hover:text-brand-ink"
                                 aria-label="Foto berikutnya"
                             >
                                 <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
@@ -405,7 +404,7 @@ function Lightbox({ gallery, index, onClose }) {
                                         aria-valuemin={1}
                                         aria-valuemax={images.length}
                                         aria-valuenow={currentImageIndex + 1}
-                                        className="h-full rounded-full bg-gradient-to-r from-[#F5A623] to-[#fff0b8] transition-all duration-500"
+                                        className="h-full rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light transition-all duration-500"
                                         style={{ width: `${imageProgress}%` }}
                                     />
                                 </div>
@@ -414,13 +413,13 @@ function Lightbox({ gallery, index, onClose }) {
                     )}
                 </div>
 
-                <div className="relative flex min-h-0 flex-col overflow-y-auto bg-[linear-gradient(160deg,#fff8ee_0%,#ffffff_46%,#fff4de_100%)] p-5 md:p-7">
-                    <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-[#F5A623]/20" />
+                <div className="relative flex min-h-0 flex-col overflow-y-auto bg-kub-detail-panel p-5 md:p-7">
+                    <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-brand-gold/20" />
                     <div className="mb-5 flex items-start justify-between gap-4">
                         <div>
                             {item.eventDate && (
-                                <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#7a4030]">
-                                    <CalendarDays className="h-4 w-4 text-[#C4571A]" />
+                                <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-brown">
+                                    <CalendarDays className="h-4 w-4 text-brand-copper" />
                                     {item.eventDate}
                                 </p>
                             )}
@@ -428,7 +427,7 @@ function Lightbox({ gallery, index, onClose }) {
                     </div>
 
                     {item.companyName && (
-                        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-[#f0d6b2] bg-white/80 p-3 shadow-sm backdrop-blur">
+                        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-brand-cream-border bg-white/80 p-3 shadow-sm backdrop-blur">
                             {item.companyLogo ? (
                                 <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
                                     <img
@@ -440,29 +439,29 @@ function Lightbox({ gallery, index, onClose }) {
                                     />
                                 </div>
                             ) : (
-                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#6B1B1B]/10">
-                                    <Building2 className="h-5 w-5 text-[#6B1B1B]" />
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-primary/10">
+                                    <Building2 className="h-5 w-5 text-brand-primary" />
                                 </div>
                             )}
                             <div className="min-w-0">
-                                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#C4571A]">Mitra Industri</p>
-                                <p className="truncate text-base font-black text-[#301010]">{item.companyName}</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-brand-copper">Mitra Industri</p>
+                                <p className="truncate text-base font-black text-brand-text-dark">{item.companyName}</p>
                             </div>
                         </div>
                     )}
 
                     <h3
                         id="kub-talk-dialog-title"
-                        className="text-2xl font-black leading-tight text-[#240b0b] md:text-3xl"
+                        className="text-2xl font-black leading-tight text-brand-heading md:text-3xl"
                     >
                         {item.title}
                     </h3>
-                    {item.desc && <p className="mt-3 text-sm leading-7 text-[#6f554d]">{item.desc}</p>}
+                    {item.desc && <p className="mt-3 text-sm leading-7 text-brand-body-muted">{item.desc}</p>}
 
                     {item.speakerName && (
-                        <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#240b0b] p-4 text-white shadow-[0_18px_40px_rgba(36,11,11,0.18)]">
-                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5A623]">
-                                <span className="text-sm font-black text-[#3a0d0d]">
+                        <div className="mt-5 flex items-center gap-3 rounded-2xl bg-brand-heading p-4 text-white shadow-[0_18px_40px_rgba(36,11,11,0.18)]">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-gold">
+                                <span className="text-sm font-black text-brand-ink">
                                     {item.speakerName.split(" ").map(w => w[0]).join("").slice(0, 2)}
                                 </span>
                             </div>
@@ -476,8 +475,8 @@ function Lightbox({ gallery, index, onClose }) {
                     {images.length > 1 && (
                         <div className="mt-5 min-h-0">
                             <div className="mb-3 flex items-center justify-between">
-                                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#7a4030]">Photo Highlights</p>
-                                <p className="text-xs font-bold text-[#C4571A]">{images.length} dokumentasi</p>
+                                <p className="text-xs font-black uppercase tracking-[0.16em] text-brand-brown">Photo Highlights</p>
+                                <p className="text-xs font-bold text-brand-copper">{images.length} dokumentasi</p>
                             </div>
                             <div className="flex max-h-24 gap-2 overflow-x-auto pb-1 pr-1">
                                 {images.map((image, idx) => (
@@ -490,7 +489,7 @@ function Lightbox({ gallery, index, onClose }) {
                                         }}
                                         className={`relative h-20 w-24 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300 ${
                                             idx === currentImageIndex
-                                                ? "border-[#F5A623] shadow-[0_10px_28px_rgba(245,166,35,.28)]"
+                                                ? "border-brand-gold shadow-[0_10px_28px_rgba(245,166,35,.28)]"
                                                 : "border-white opacity-70 hover:opacity-100"
                                         }`}
                                         aria-label={`Lihat foto ${idx + 1}`}
@@ -513,7 +512,7 @@ function Lightbox({ gallery, index, onClose }) {
                     type="button"
                     onClick={onClose}
                     autoFocus
-                    className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:bg-[#F5A623] hover:text-[#3a0d0d]"
+                    className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:bg-brand-gold hover:text-brand-ink"
                     aria-label="Tutup detail KUB Talk"
                 >
                     <X className="w-5 h-5" strokeWidth={2} />
@@ -552,7 +551,7 @@ export default function KubTalk({
                 image={bannerImage}
             />
             <PublicLayout
-                rootClassName="min-h-screen bg-[#F4F5F7] font-sans antialiased"
+                rootClassName="min-h-screen bg-page-soft font-sans antialiased"
                 hero={{
                     title: "KUB Talk",
                     subtitle: "Kolaborasi eksklusif dengan pemimpin industri nasional untuk mempersiapkan mahasiswa menjadi profesional masa depan.",
@@ -569,7 +568,7 @@ export default function KubTalk({
                 <section className="py-8 md:py-12">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-8">
-                            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-[#6B1B1B] bg-[#6B1B1B]/10 mb-5">
+                            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-brand-primary bg-brand-primary/10 mb-5">
                                 Dokumentasi
                             </span>
                             <h2 className="text-4xl md:text-5xl font-black text-gray-900">

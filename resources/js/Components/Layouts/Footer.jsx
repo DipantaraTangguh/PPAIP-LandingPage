@@ -5,10 +5,10 @@ function FooterWave() {
     const BASE_X = -176; // Offset satu wave biar loop animasi gak kelihatan putus.
 
     const layers = [
-        { className: "layer-back", y: 0, fill: "rgba(245,166,35,0.3)" },
-        { className: "layer-mid1", y: 3, fill: "rgba(128,35,36,0.5)" },
-        { className: "layer-mid2", y: 5, fill: "rgba(128,35,36,0.7)" },
-        { className: "layer-front", y: 7, fill: "#5d1111" },
+        { className: "layer-back", y: 0, fill: "color-mix(in srgb, var(--brand-gold) 30%, transparent)" },
+        { className: "layer-mid1", y: 3, fill: "color-mix(in srgb, var(--brand-dark) 50%, transparent)" },
+        { className: "layer-mid2", y: 5, fill: "color-mix(in srgb, var(--brand-dark) 70%, transparent)" },
+        { className: "layer-front", y: 7, fill: "var(--brand-deep)" },
     ];
 
     return (
@@ -63,7 +63,7 @@ export function Footer({ linkColumns }) {
         <footer className="relative mt-16 md:mt-24">
             <FooterWave />
 
-            <div className="bg-[#5d1111]">
+            <div className="bg-brand-deep">
                 <SectionWrapper className="py-10 md:py-14">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center sm:text-left">
                         <div className="flex items-center justify-center sm:justify-start sm:col-span-2 md:col-span-1">
@@ -94,7 +94,7 @@ export function Footer({ linkColumns }) {
                                         <a
                                             key={linkIndex}
                                             href={url}
-                                            className="text-white/80 text-sm hover:text-[#F5A623] transition-colors duration-200"
+                                            className="text-white/80 text-sm hover:text-brand-gold transition-colors duration-200"
                                         >
                                             {label}
                                         </a>

@@ -11,7 +11,7 @@ export function NavLink({ href, children }) {
             href={href}
             className={`flex items-center px-3 lg:px-5 text-base font-medium transition-all duration-300 border-b-2 ${
                 isActive
-                    ? "text-[#F5A623] border-[#F5A623] bg-black/20"
+                    ? "text-brand-gold border-brand-gold bg-black/20"
                     : "text-white/85 border-transparent hover:text-white hover:bg-black/20"
             }`}
         >

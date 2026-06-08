@@ -9,7 +9,7 @@ export function HeroBanner() {
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-[#802324]/85 via-[#802324]/60 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-brand-dark/85 via-brand-dark/60 to-transparent" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full">
                 <div className="pb-16 sm:pb-24">

@@ -2,10 +2,10 @@ export function YearFilterPill({ year, isActive, onClick }) {
     return (
         <button
             onClick={onClick}
-            className={`px-6 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623] focus-visible:ring-offset-2 ${
+            className={`px-6 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 ${
                 isActive
-                    ? "bg-[#F5A623] text-[#5d1111] shadow-md ring-2 ring-[#802324]/20 scale-105"
-                    : "bg-[#802324] text-white hover:bg-[#5d1111]"
+                    ? "bg-brand-gold text-brand-deep shadow-md ring-2 ring-brand-dark/20 scale-105"
+                    : "bg-brand-dark text-white hover:bg-brand-deep"
             }`}
             aria-pressed={isActive}
         >

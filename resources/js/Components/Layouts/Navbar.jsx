@@ -80,7 +80,7 @@ function GoogleTranslateSwitch() {
                     onClick={() => switchTo("id")}
                     className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
                         activeLang === "id"
-                            ? "bg-white text-[#802324]"
+                            ? "bg-white text-brand-dark"
                             : "text-white/70 hover:text-white"
                     }`}
                 >
@@ -90,7 +90,7 @@ function GoogleTranslateSwitch() {
                     onClick={() => switchTo("en")}
                     className={`px-2.5 py-0.5 rounded-full text-xs font-semibold cursor-pointer transition-all duration-300 ${
                         activeLang === "en"
-                            ? "bg-white text-[#802324]"
+                            ? "bg-white text-brand-dark"
                             : "text-white/70 hover:text-white"
                     }`}
                 >
@@ -123,7 +123,7 @@ export function Navbar({ links }) {
     }, [mobileOpen]);
 
     return (
-        <nav className="bg-[#6B1B1B] relative">
+        <nav className="bg-brand-primary relative">
             <SectionWrapper className="flex items-stretch justify-between min-h-14">
                 <a
                     href="/"
@@ -151,7 +151,7 @@ export function Navbar({ links }) {
                 <button
                     type="button"
                     onClick={() => setMobileOpen((v) => !v)}
-                    className="md:hidden flex items-center justify-center w-11 h-11 my-auto rounded-lg text-white hover:bg-black/20 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623]"
+                    className="md:hidden flex items-center justify-center w-11 h-11 my-auto rounded-lg text-white hover:bg-black/20 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                     aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
                     aria-expanded={mobileOpen}
                 >
@@ -164,14 +164,14 @@ export function Navbar({ links }) {
             </SectionWrapper>
 
             {mobileOpen && (
-                <div className="md:hidden absolute left-0 right-0 top-full z-40 bg-[#6B1B1B] border-t border-white/10 shadow-lg">
+                <div className="md:hidden absolute left-0 right-0 top-full z-40 bg-brand-primary border-t border-white/10 shadow-lg">
                     <div className="px-4 py-3 flex flex-col">
                         {links.map((link) => (
                             <a
                                 key={link.label}
                                 href={link.href}
                                 onClick={() => setMobileOpen(false)}
-                                className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-[#F5A623] transition-colors duration-200"
+                                className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-brand-gold transition-colors duration-200"
                             >
                                 {link.label}
                             </a>

@@ -55,7 +55,7 @@ export default function TentangKami({
             />
 
             <PublicLayout
-                rootClassName="min-h-screen bg-[#f8f8f8] font-sans antialiased"
+                rootClassName="min-h-screen bg-surface-muted font-sans antialiased"
                 hero={{
                     title: "Tentang Kami",
                     subtitle: "Mengenal lebih dekat tim, visi, misi, dan program kerja UPT PPAIP Universitas Bakrie.",
@@ -84,7 +84,7 @@ function IntroCard({ description }) {
                 <div className="bg-white rounded-2xl shadow-xl shadow-black/8 p-6 sm:p-8 md:p-10">
                     <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-center">
                         <div className="md:w-2/5 flex-shrink-0 md:pl-5 py-1">
-                            <h2 className="text-2xl md:text-3xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#802324] to-[#ea580c]">
+                            <h2 className="text-2xl md:text-3xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-dark to-brand-orange">
                                 Mengenal UPT PPAIP
                             </h2>
                         </div>
@@ -135,7 +135,7 @@ function TeamCard({ member, featured = false }) {
             } hover:-translate-y-0.5 transition-all duration-300`}
         >
             <div
-                className={`relative overflow-hidden bg-gradient-to-br from-[#802324] to-[#5d1111] ${
+                className={`relative overflow-hidden bg-gradient-to-br from-brand-dark to-brand-deep ${
                     featured ? "aspect-[5/4]" : "aspect-[4/3]"
                 }`}
             >
@@ -151,7 +151,7 @@ function TeamCard({ member, featured = false }) {
                 <h3 className="text-base md:text-lg font-bold text-gray-900">
                     {member.name}
                 </h3>
-                <span className="inline-block text-[11px] md:text-xs font-semibold uppercase tracking-widest text-[#802324]">
+                <span className="inline-block text-[11px] md:text-xs font-semibold uppercase tracking-widest text-brand-dark">
                     {member.role}
                 </span>
                 {member.bio && (
@@ -171,14 +171,14 @@ function VisionMissionSection({ vision, mission }) {
             <SectionWrapper>
                 <SectionHeading eyebrow="Arah Kami" title="Visi & Misi" />
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                    <div className="lg:col-span-2 rounded-2xl bg-gradient-to-br from-[#802324] to-[#5d1111] text-white p-6 sm:p-7 md:p-8 shadow-md flex flex-col">
+                    <div className="lg:col-span-2 rounded-2xl bg-gradient-to-br from-brand-dark to-brand-deep text-white p-6 sm:p-7 md:p-8 shadow-md flex flex-col">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-[#F5A623] text-[#802324] flex items-center justify-center shadow-sm">
+                            <div className="w-10 h-10 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center shadow-sm">
                                 <Compass className="w-5 h-5" strokeWidth={2.25} />
                             </div>
                             <h3 className="text-xl font-bold">Visi</h3>
                         </div>
-                        <Quote className="w-7 h-7 text-[#F5A623]/80 mb-2" strokeWidth={2} />
+                        <Quote className="w-7 h-7 text-brand-gold/80 mb-2" strokeWidth={2} />
                         <p className="text-white/90 text-sm md:text-base leading-relaxed">
                             {vision}
                         </p>
@@ -186,7 +186,7 @@ function VisionMissionSection({ vision, mission }) {
 
                     <div className="lg:col-span-3 rounded-2xl bg-white border border-gray-200 p-6 sm:p-7 md:p-8 shadow-sm">
                         <div className="flex items-center gap-3 mb-5">
-                            <div className="w-10 h-10 rounded-full bg-[#ea580c]/10 text-[#ea580c] flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center">
                                 <Target className="w-5 h-5" strokeWidth={2.25} />
                             </div>
                             <h3 className="text-xl font-bold text-gray-900">Misi</h3>
@@ -194,7 +194,7 @@ function VisionMissionSection({ vision, mission }) {
                         <ol className="space-y-4">
                             {mission.map((item, i) => (
                                 <li key={i} className="flex gap-3">
-                                    <span className="shrink-0 w-7 h-7 rounded-full bg-[#ea580c] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                                    <span className="shrink-0 w-7 h-7 rounded-full bg-brand-orange text-white text-xs font-bold flex items-center justify-center mt-0.5">
                                         {i + 1}
                                     </span>
                                     <p className="text-gray-700 text-sm md:text-base leading-relaxed">
@@ -229,8 +229,8 @@ function ProgramKerjaSection({ programs }) {
 function ProgramCard({ program }) {
     const Icon = ICON_MAP[program.icon] || Briefcase;
     return (
-        <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-[#802324]/30 hover:-translate-y-0.5 transition-all duration-300 p-6 flex flex-col">
-            <div className="w-12 h-12 rounded-xl bg-[#802324]/10 text-[#802324] flex items-center justify-center mb-4 group-hover:bg-[#802324] group-hover:text-white transition-colors duration-300">
+        <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-brand-dark/30 hover:-translate-y-0.5 transition-all duration-300 p-6 flex flex-col">
+            <div className="w-12 h-12 rounded-xl bg-brand-dark/10 text-brand-dark flex items-center justify-center mb-4 group-hover:bg-brand-dark group-hover:text-white transition-colors duration-300">
                 <Icon className="w-6 h-6" strokeWidth={2} />
             </div>
             <h3 className="text-lg font-bold text-gray-900 mb-2">
@@ -246,7 +246,7 @@ function ProgramCard({ program }) {
 function SectionHeading({ eyebrow, title }) {
     return (
         <div className="text-center mb-10">
-            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-widest text-[#802324] bg-gray-100 border border-gray-200 mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-widest text-brand-dark bg-gray-100 border border-gray-200 mb-4">
                 {eyebrow}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
@@ -263,7 +263,7 @@ function SafeImage({ src, fallbackSrc, fallbackInitials, alt, className }) {
         if (fallbackInitials) {
             return (
                 <div
-                    className={`flex items-center justify-center bg-gradient-to-br from-[#802324] to-[#5d1111] text-white ${className}`}
+                    className={`flex items-center justify-center bg-gradient-to-br from-brand-dark to-brand-deep text-white ${className}`}
                     aria-label={alt}
                     role="img"
                 >

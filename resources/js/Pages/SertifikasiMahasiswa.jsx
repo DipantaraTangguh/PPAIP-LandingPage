@@ -39,9 +39,9 @@ function ProdiCard({ prodi, onClick }) {
         <button
             type="button"
             onClick={onClick}
-            className="group w-full cursor-pointer text-left bg-white rounded-xl border border-gray-200 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:border-[#802324]/35 hover:shadow-md transition-all duration-200 flex flex-col p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]/30"
+            className="group w-full cursor-pointer text-left bg-white rounded-xl border border-gray-200 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:border-brand-dark/35 hover:shadow-md transition-all duration-200 flex flex-col p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark/30"
         >
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-[#802324]/8 text-[#802324] transition-colors duration-200 group-hover:bg-[#802324] group-hover:text-white">
+            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-dark/8 text-brand-dark transition-colors duration-200 group-hover:bg-brand-dark group-hover:text-white">
                 <Icon className="w-6 h-6" strokeWidth={2} aria-hidden="true" />
             </div>
 
@@ -66,7 +66,7 @@ function ProdiCard({ prodi, onClick }) {
 function CertificationRow({ cert, index }) {
     return (
         <div
-            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-[#802324]/25 hover:shadow-sm animate-slide-up"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-brand-dark/25 hover:shadow-sm animate-slide-up"
             style={{ "--animation-delay": `${index * 60}ms` }}
         >
             <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 shrink-0">
@@ -89,7 +89,7 @@ function CertificationRow({ cert, index }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-[#802324] px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:bg-[#5d1111] hover:shadow-sm"
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-brand-dark px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:bg-brand-deep hover:shadow-sm"
                     >
                         Daftar
                         <MoveRight className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -138,7 +138,7 @@ function Modal({ prodi, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="certification-modal-title"
-                className="relative w-full overflow-hidden rounded-2xl bg-[#f7f4f1] flex flex-col animate-pop-in"
+                className="relative w-full overflow-hidden rounded-2xl bg-surface-warm flex flex-col animate-pop-in"
                 style={{
                     maxWidth: 660,
                     maxHeight: "88vh",
@@ -146,7 +146,7 @@ function Modal({ prodi, onClose }) {
                 }}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="relative shrink-0 overflow-hidden border-b border-[#5d1111]/10 bg-[#802324] px-5 py-6 text-white sm:px-8 sm:py-8">
+                <div className="relative shrink-0 overflow-hidden border-b border-brand-deep/10 bg-brand-dark px-5 py-6 text-white sm:px-8 sm:py-8">
                     <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-white/60">
                         Program Studi
                     </p>
@@ -188,7 +188,7 @@ function Modal({ prodi, onClose }) {
                 </div>
 
                 <div className="shrink-0 border-t border-gray-200 bg-white px-6 py-3.5 text-center text-xs text-gray-500">
-                    Klik <strong className="text-[#802324]">Daftar</strong>{" "}
+                    Klik <strong className="text-brand-dark">Daftar</strong>{" "}
                     untuk mendaftar sertifikasi yang tersedia
                 </div>
             </div>
@@ -221,7 +221,7 @@ export default function SertifikasiMahasiswa({
             />
 
             <PublicLayout
-                rootClassName="min-h-screen bg-[#f5f5f5]"
+                rootClassName="min-h-screen bg-surface-soft"
                 hero={{
                     title: "Sertifikasi Mahasiswa",
                     subtitle: "Temukan dan ikuti program sertifikasi profesional sesuai program studi Anda.",
@@ -255,8 +255,8 @@ export default function SertifikasiMahasiswa({
                                             className="text-4xl font-extrabold"
                                             style={{
                                                 color: green
-                                                    ? "#15803d"
-                                                    : "#802324",
+                                                    ? "var(--status-success)"
+                                                    : "var(--brand-dark)",
                                             }}
                                         >
                                             {val}
@@ -274,7 +274,7 @@ export default function SertifikasiMahasiswa({
                 <section className="pb-24">
                     <SectionWrapper>
                         <div className="text-center mb-12">
-                            <span className="inline-block rounded-md border border-gray-200 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#802324] shadow-sm mb-6">
+                            <span className="inline-block rounded-md border border-gray-200 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-brand-dark shadow-sm mb-6">
                                 Sertifikasi Mahasiswa
                             </span>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">

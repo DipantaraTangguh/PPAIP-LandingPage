@@ -15,7 +15,7 @@ export function ProgramCard({ name, image, link }) {
                     <h3 className="text-base font-semibold text-gray-800">
                         {name}
                     </h3>
-                    <span className="text-sm text-gray-500 group-hover:text-[#ea580c] transition-colors duration-200 flex items-center gap-1">
+                    <span className="text-sm text-gray-500 group-hover:text-brand-orange transition-colors duration-200 flex items-center gap-1">
                         Details <span className="text-lg">→</span>
                     </span>
                 </div>

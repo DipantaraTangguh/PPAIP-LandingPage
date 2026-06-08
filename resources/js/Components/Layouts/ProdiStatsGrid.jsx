@@ -26,7 +26,7 @@ export function ProdiStatsGrid({ stats }) {
         <section className="py-16">
             <SectionWrapper className="relative">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-                    <span className="text-transparent bg-clip-text bg-linear-to-r from-[#802324] to-[#ea580c]">
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-dark to-brand-orange">
                         Statistik Program Studi
                     </span>
                 </h2>
@@ -35,7 +35,7 @@ export function ProdiStatsGrid({ stats }) {
                     {totalPages > 1 && (
                         <button
                             onClick={prevPage}
-                            className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-[#802324] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
+                            className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-brand-dark hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
                             aria-label="Previous page"
                         >
                             <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
@@ -71,7 +71,7 @@ export function ProdiStatsGrid({ stats }) {
                     {totalPages > 1 && (
                         <button
                             onClick={nextPage}
-                            className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-[#802324] hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
+                            className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-md border border-gray-100 items-center justify-center text-brand-dark hover:bg-gray-50 hover:scale-110 cursor-pointer transition-all focus:outline-none"
                             aria-label="Next page"
                         >
                             <ChevronRight className="w-6 h-6" strokeWidth={2.5} />

@@ -6,7 +6,7 @@ export function FaqItem({ question, answer, isOpen, onToggle }) {
                 type="button"
                 onClick={onToggle}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 cursor-pointer transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#802324]/30"
+                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 cursor-pointer transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark/30"
             >
                 <span className="text-sm md:text-base text-gray-700 font-bold">
                     {question}
