@@ -14,7 +14,6 @@ import {
     Sparkles,
     Target,
     Compass,
-    Quote,
 } from "lucide-react";
 
 import {
@@ -178,7 +177,6 @@ function VisionMissionSection({ vision, mission }) {
                             </div>
                             <h3 className="text-xl font-bold">Visi</h3>
                         </div>
-                        <Quote className="w-7 h-7 text-brand-gold/80 mb-2" strokeWidth={2} />
                         <p className="text-white/90 text-sm md:text-base leading-relaxed">
                             {vision}
                         </p>

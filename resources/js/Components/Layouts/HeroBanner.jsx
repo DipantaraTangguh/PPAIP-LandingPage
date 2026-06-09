@@ -12,7 +12,7 @@ export function HeroBanner() {
             <div className="absolute inset-0 bg-linear-to-r from-brand-dark/85 via-brand-dark/60 to-transparent" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full">
-                <div className="pb-16 sm:pb-24">
+                <div>
                     <h1
                         className="notranslate text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold italic text-white leading-[1.1] tracking-tight"
                         style={{
