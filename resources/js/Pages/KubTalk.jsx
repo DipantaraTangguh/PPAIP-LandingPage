@@ -59,9 +59,14 @@ function PartnerMarquee({ gallery }) {
     const duration = logoSet.length * 3;
 
     return (
-        <section className="py-6 bg-white border-b border-gray-100 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-                <p className="text-center text-sm md:text-base font-bold uppercase tracking-widest text-black">
+        <section className="relative overflow-hidden bg-white py-7">
+            <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-transparent via-brand-gold to-transparent"
+            />
+
+            <div className="mx-auto mb-6 max-w-7xl px-4 sm:px-6 lg:px-8">
+                <p className="text-center text-sm font-bold uppercase tracking-widest text-brand-body-muted md:text-base">
                     Didukung oleh Mitra Industri
                 </p>
             </div>
@@ -69,6 +74,11 @@ function PartnerMarquee({ gallery }) {
                 <MarqueeTrack duration={duration} logoSet={logoSet} />
                 <MarqueeTrack duration={duration} logoSet={logoSet} />
             </div>
+
+            <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-1 bg-linear-to-r from-transparent via-brand-dark/55 to-transparent"
+            />
         </section>
     );
 }
