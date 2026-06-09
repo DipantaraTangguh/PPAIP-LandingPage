@@ -61,7 +61,7 @@ function PartnerMarquee({ gallery }) {
     return (
         <section className="py-6 bg-white border-b border-gray-100 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-                <p className="text-center text-sm md:text-base font-bold uppercase tracking-widest text-gray-400">
+                <p className="text-center text-sm md:text-base font-bold uppercase tracking-widest text-black">
                     Didukung oleh Mitra Industri
                 </p>
             </div>
@@ -84,15 +84,26 @@ function StatsBar({ stats }) {
     ];
 
     return (
-        <section className="relative z-10 -mt-10 mb-6 px-4">
-            <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm">
-                <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                    {items.map(({ value, label, color }) => (
-                        <div key={label} className="flex-1 flex flex-col items-center py-7 px-4">
-                            <span className="text-4xl font-black" style={{ color }}>{value}</span>
-                            <span className="mt-1.5 text-xs font-bold uppercase tracking-widest text-gray-400">{label}</span>
-                        </div>
-                    ))}
+        <section className="relative overflow-hidden bg-linear-to-b from-brand-cream-soft/45 to-white py-8 sm:py-10">
+            <div
+                aria-hidden="true"
+                className="absolute -left-20 top-0 h-44 w-44 rounded-full bg-brand-gold/10 blur-3xl"
+            />
+            <div
+                aria-hidden="true"
+                className="absolute -right-20 bottom-0 h-48 w-48 rounded-full bg-brand-dark/5 blur-3xl"
+            />
+
+            <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                <div className="overflow-hidden rounded-2xl border border-brand-cream-border/80 bg-linear-to-br from-white via-white to-brand-cream shadow-[0_16px_45px_rgba(70,20,20,0.10)]">
+                    <div className="flex flex-col divide-y divide-brand-cream-border/70 md:flex-row md:divide-x md:divide-y-0">
+                        {items.map(({ value, label, color }) => (
+                            <div key={label} className="flex flex-1 flex-col items-center px-4 py-7">
+                                <span className="text-4xl font-black" style={{ color }}>{value}</span>
+                                <span className="mt-1.5 text-xs font-bold uppercase tracking-widest text-gray-400">{label}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
@@ -565,7 +576,7 @@ export default function KubTalk({
                 <PartnerMarquee gallery={gallery} />
 
                 {/* Main Gallery Grid */}
-                <section className="py-8 md:py-12">
+                <section className="pb-12 pt-10 md:pb-16 md:pt-14">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-8">
                             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-brand-primary bg-brand-primary/10 mb-5">

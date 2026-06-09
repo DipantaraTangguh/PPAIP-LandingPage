@@ -228,10 +228,19 @@ export default function StudentCertification({
                     backgroundImage: bannerImage,
                 }}
             >
-                <section className="relative z-10 -mt-10 mb-16 px-4">
-                    <SectionWrapper>
-                        <div className="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm">
-                            <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                <section className="relative overflow-hidden bg-linear-to-b from-brand-cream-soft/60 via-surface-soft to-surface-soft py-10 sm:py-12 md:py-14">
+                    <div
+                        aria-hidden="true"
+                        className="absolute -left-20 top-0 h-52 w-52 rounded-full bg-brand-gold/12 blur-3xl"
+                    />
+                    <div
+                        aria-hidden="true"
+                        className="absolute -right-20 bottom-0 h-56 w-56 rounded-full bg-brand-dark/6 blur-3xl"
+                    />
+
+                    <SectionWrapper className="relative">
+                        <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-brand-cream-border/80 bg-linear-to-br from-white via-white to-brand-cream shadow-[0_16px_45px_rgba(70,20,20,0.10)]">
+                            <div className="flex flex-col divide-y divide-brand-cream-border/70 md:flex-row md:divide-x md:divide-y-0">
                                 {[
                                     {
                                         val: majorCertifications.length,
@@ -249,7 +258,7 @@ export default function StudentCertification({
                                 ].map(({ val, label, green }) => (
                                     <div
                                         key={label}
-                                        className="flex-1 flex flex-col items-center py-7 px-4"
+                                        className="flex flex-1 flex-col items-center px-4 py-7"
                                     >
                                         <span
                                             className="text-4xl font-extrabold"
