@@ -4,9 +4,6 @@ import { NavLink, SectionWrapper } from "../Elements";
 
 const TRANSLATE_ELEMENT_ID = "google_translate_element_hidden";
 const TRANSLATE_SCRIPT_ID = "google-translate-script";
-const TRANSLATE_TIMEOUT = 8000;
-
-let translateWidgetPromise;
 
 function currentLanguage() {
     const match = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]+\/([^;]+)/);
@@ -14,159 +11,84 @@ function currentLanguage() {
     return match?.[1] === "en" ? "en" : "id";
 }
 
-function waitForTranslateCombo() {
-    const combo = document.querySelector(".goog-te-combo");
-    if (combo) return Promise.resolve(combo);
+function initializeTranslateWidget() {
+    const host = document.getElementById(TRANSLATE_ELEMENT_ID);
+    const TranslateElement = window.google?.translate?.TranslateElement;
 
-    return new Promise((resolve, reject) => {
-        const observer = new MutationObserver(() => {
-            const nextCombo = document.querySelector(".goog-te-combo");
-            if (!nextCombo) return;
+    if (
+        !host ||
+        !TranslateElement ||
+        host.dataset.translateInitialized === "true"
+    ) {
+        return;
+    }
 
-            window.clearTimeout(timeout);
-            observer.disconnect();
-            resolve(nextCombo);
-        });
-        const timeout = window.setTimeout(() => {
-            observer.disconnect();
-            reject(new Error("Google Translate tidak siap tepat waktu."));
-        }, TRANSLATE_TIMEOUT);
-
-        observer.observe(document.body, { childList: true, subtree: true });
-    });
+    // Cookie sudah diset sebelum widget jalan, jadi hasil translate lebih stabil.
+    new TranslateElement(
+        {
+            pageLanguage: "id",
+            includedLanguages: "en",
+            autoDisplay: false,
+        },
+        TRANSLATE_ELEMENT_ID,
+    );
+    host.dataset.translateInitialized = "true";
 }
 
 function ensureTranslateWidget() {
-    const combo = document.querySelector(".goog-te-combo");
-    if (combo) return Promise.resolve(combo);
+    window.googleTranslateElementInit = initializeTranslateWidget;
 
-    if (translateWidgetPromise) {
-        const previousWidgetPromise = translateWidgetPromise;
-
-        translateWidgetPromise = previousWidgetPromise.then((previousCombo) => {
-            if (previousCombo?.isConnected) return previousCombo;
-
-            translateWidgetPromise = undefined;
-            return ensureTranslateWidget();
-        });
-
-        return translateWidgetPromise;
+    if (window.google?.translate?.TranslateElement) {
+        initializeTranslateWidget();
+        return;
     }
 
-    translateWidgetPromise = new Promise((resolve, reject) => {
-        let initialized = false;
-        let settled = false;
-        let timeout;
+    if (document.getElementById(TRANSLATE_SCRIPT_ID)) {
+        return;
+    }
 
-        const succeed = (nextCombo) => {
-            if (settled) return;
+    const script = document.createElement("script");
+    script.id = TRANSLATE_SCRIPT_ID;
+    script.src =
+        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.async = true;
+    document.body.appendChild(script);
+}
 
-            settled = true;
-            window.clearTimeout(timeout);
-            resolve(nextCombo);
-        };
+function cookieDomainVariants() {
+    const hostname = window.location.hostname;
 
-        const fail = (error) => {
-            if (settled) return;
+    if (!hostname || hostname === "localhost") {
+        return [""];
+    }
 
-            settled = true;
-            window.clearTimeout(timeout);
-            reject(error);
-        };
+    return ["", hostname, `.${hostname}`];
+}
 
-        const initialize = () => {
-            if (initialized) return;
-
-            const host = document.getElementById(TRANSLATE_ELEMENT_ID);
-            const TranslateElement = window.google?.translate?.TranslateElement;
-            if (!host || !TranslateElement) return;
-
-            initialized = true;
-
-            try {
-                new TranslateElement(
-                    {
-                        pageLanguage: "id",
-                        includedLanguages: "en",
-                        autoDisplay: false,
-                    },
-                    TRANSLATE_ELEMENT_ID,
-                );
-                waitForTranslateCombo().then(succeed).catch(fail);
-            } catch (error) {
-                fail(error);
-            }
-        };
-
-        timeout = window.setTimeout(
-            () => fail(new Error("Google Translate tidak merespons.")),
-            TRANSLATE_TIMEOUT,
-        );
-
-        window.googleTranslateElementInit = initialize;
-
-        const existingScript = document.getElementById(TRANSLATE_SCRIPT_ID);
-        if (existingScript) {
-            initialize();
-            existingScript.addEventListener(
-                "error",
-                () => fail(new Error("Google Translate gagal dimuat.")),
-                { once: true },
-            );
-            return;
-        }
-
-        const script = document.createElement("script");
-        script.id = TRANSLATE_SCRIPT_ID;
-        script.src =
-            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-        script.async = true;
-        script.addEventListener(
-            "error",
-            () => fail(new Error("Google Translate gagal dimuat.")),
-            { once: true },
-        );
-        document.body.appendChild(script);
-
-        initialize();
-    }).catch((error) => {
-        translateWidgetPromise = undefined;
-        throw error;
+function setTranslateCookie(language) {
+    cookieDomainVariants().forEach((domain) => {
+        const domainPart = domain ? `;domain=${domain}` : "";
+        document.cookie = `googtrans=/id/${language};path=/;SameSite=Lax${domainPart}`;
     });
-
-    return translateWidgetPromise;
 }
 
 function clearTranslateCookie() {
     const expired = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    const hostname = window.location.hostname;
 
-    document.cookie = `googtrans=;path=/;${expired};SameSite=Lax`;
-
-    if (hostname) {
-        document.cookie = `googtrans=;path=/;domain=${hostname};${expired};SameSite=Lax`;
-        document.cookie = `googtrans=;path=/;domain=.${hostname};${expired};SameSite=Lax`;
-    }
+    cookieDomainVariants().forEach((domain) => {
+        const domainPart = domain ? `;domain=${domain}` : "";
+        document.cookie = `googtrans=;path=/;${expired};SameSite=Lax${domainPart}`;
+    });
 }
 
 export function GoogleTranslateSwitch({
     activeLang,
-    isSwitching,
-    status,
     onSelect,
 }) {
-    const unavailable = status === "error";
-
     return (
         <div
             className="flex items-center gap-1.5 ml-3 px-1 py-1 rounded-full bg-white/15 select-none notranslate"
             aria-label="Pilih bahasa"
-            aria-busy={isSwitching}
-            title={
-                unavailable
-                    ? "Layanan terjemahan sedang tidak tersedia"
-                    : undefined
-            }
         >
             <button
                 type="button"
@@ -193,74 +115,42 @@ export function GoogleTranslateSwitch({
                 EN
             </button>
             <span className="sr-only" role="status" aria-live="polite">
-                {isSwitching
-                    ? "Sedang mengganti bahasa"
-                    : unavailable
-                      ? "Layanan terjemahan sedang tidak tersedia"
-                      : `Bahasa aktif: ${activeLang.toUpperCase()}`}
+                Bahasa aktif: {activeLang.toUpperCase()}
             </span>
         </div>
     );
 }
 
-export function Navbar({ links }) {
+export function Navbar({
+    links,
+    reloadPage = () => window.location.reload(),
+}) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeLang, setActiveLang] = useState(currentLanguage);
-    const [translateStatus, setTranslateStatus] = useState("loading");
-    const [isSwitching, setIsSwitching] = useState(false);
 
     useEffect(() => {
-        let mounted = true;
-
-        ensureTranslateWidget()
-            .then(() => {
-                if (mounted) setTranslateStatus("ready");
-            })
-            .catch(() => {
-                if (mounted) setTranslateStatus("error");
-            });
-
-        return () => {
-            mounted = false;
-        };
+        ensureTranslateWidget();
     }, []);
 
-    const switchLanguage = async (language) => {
-        if (language === activeLang || isSwitching) return;
+    const switchLanguage = (language) => {
+        if (language === activeLang) return;
 
-        setIsSwitching(true);
-        setTranslateStatus("loading");
+        setActiveLang(language);
 
-        try {
-            if (language === "id") {
-                clearTranslateCookie();
-                setActiveLang("id");
-                window.dispatchEvent(
-                    new CustomEvent("googleTranslateChange", { detail: "id" }),
-                );
-                window.location.reload();
-                return;
-            }
-
-            const combo = await ensureTranslateWidget();
-            combo.value = "en";
-            combo.dispatchEvent(new Event("change", { bubbles: true }));
-            setActiveLang("en");
-            setTranslateStatus("ready");
-            window.dispatchEvent(
-                new CustomEvent("googleTranslateChange", { detail: "en" }),
-            );
-        } catch {
-            setTranslateStatus("error");
-        } finally {
-            setIsSwitching(false);
+        if (language === "en") {
+            setTranslateCookie(language);
+        } else {
+            clearTranslateCookie();
         }
+
+        window.dispatchEvent(
+            new CustomEvent("googleTranslateChange", { detail: language }),
+        );
+        reloadPage();
     };
 
     const languageSwitchProps = {
         activeLang,
-        isSwitching,
-        status: translateStatus,
         onSelect: switchLanguage,
     };
 
