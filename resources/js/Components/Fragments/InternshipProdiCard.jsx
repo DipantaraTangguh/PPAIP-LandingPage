@@ -25,19 +25,19 @@ export function InternshipProdiCard({ name, kub, nonKub, bumn }) {
                 <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-chart-kub rounded-sm" />
                     <span className="font-medium text-gray-700">{kub} %</span>
-                    <span className="text-gray-400 ml-1">KUB</span>
+                    <span className="text-gray-400 ml-1 notranslate" translate="no">KUB</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-chart-non-kub rounded-sm" />
                     <span className="font-medium text-gray-700">
                         {nonKub} %
                     </span>
-                    <span className="text-gray-400 ml-1">Non-KUB</span>
+                    <span className="text-gray-400 ml-1 notranslate" translate="no">Non-KUB</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-chart-bumn rounded-sm" />
                     <span className="font-medium text-gray-700">{bumn} %</span>
-                    <span className="text-gray-400 ml-1">BUMN</span>
+                    <span className="text-gray-400 ml-1 notranslate" translate="no">BUMN</span>
                 </div>
             </div>
         </div>

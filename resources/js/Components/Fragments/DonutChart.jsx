@@ -133,7 +133,8 @@ export function DonutChart({ kub, nonKub, bumn }) {
                                         fontSize={segment.label.length > 4 ? "12" : "16"}
                                         fontWeight="600"
                                         pointerEvents="none"
-                                        className="transition-all duration-300 ease-out"
+                                        className="transition-all duration-300 ease-out notranslate"
+                                        translate="no"
                                     >
                                         {segment.label}
                                     </text>
@@ -142,7 +143,7 @@ export function DonutChart({ kub, nonKub, bumn }) {
                     </svg>
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                         <div className="flex h-20 w-20 flex-col items-center justify-center rounded-full bg-white/90 text-center shadow-sm ring-1 ring-black/5 backdrop-blur">
-                            <span className="text-[11px] font-bold uppercase tracking-wide text-gray-400">
+                            <span className="text-[11px] font-bold uppercase tracking-wide text-gray-400 notranslate" translate="no">
                                 {activeSegment.label}
                             </span>
                             <span className="text-xl font-extrabold text-gray-900">
@@ -176,7 +177,7 @@ export function DonutChart({ kub, nonKub, bumn }) {
                                     className="w-5 h-5 rounded shrink-0"
                                     style={{ backgroundColor: segment.color }}
                                 />
-                                <span className="text-base font-medium text-gray-700 w-24">
+                                <span className="text-base font-medium text-gray-700 w-24 notranslate" translate="no">
                                     {segment.label}
                                 </span>
                                 <span className="text-xl font-bold text-gray-900">
