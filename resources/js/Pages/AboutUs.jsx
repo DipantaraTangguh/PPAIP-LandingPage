@@ -78,25 +78,25 @@ export default function AboutUs({
 
 function IntroCard({ description }) {
     return (
-        <section className="relative overflow-hidden bg-linear-to-b from-brand-cream-soft/60 via-surface-muted to-surface-muted py-10 sm:py-12 md:py-14">
+        <section className="relative overflow-hidden bg-linear-to-b from-brand-dark/8 via-surface-muted to-surface-muted py-10 sm:py-12 md:py-14">
             <div
                 aria-hidden="true"
-                className="absolute -left-20 top-0 h-52 w-52 rounded-full bg-brand-gold/12 blur-3xl"
+                className="absolute -left-20 top-0 h-52 w-52 rounded-full bg-brand-primary/12 blur-3xl"
             />
             <div
                 aria-hidden="true"
-                className="absolute -right-20 bottom-0 h-56 w-56 rounded-full bg-brand-dark/6 blur-3xl"
+                className="absolute -right-20 bottom-0 h-56 w-56 rounded-full bg-chart-bumn/7 blur-3xl"
             />
 
             <SectionWrapper className="relative">
-                <div className="overflow-hidden rounded-2xl border border-brand-cream-border/80 bg-linear-to-br from-white via-white to-brand-cream shadow-[0_16px_45px_rgba(70,20,20,0.10)]">
+                <div className="overflow-hidden rounded-2xl border border-brand-dark/15 bg-linear-to-br from-white via-white to-brand-dark/6 shadow-[0_16px_45px_rgba(70,20,20,0.10)]">
                     <div className="flex flex-col gap-7 p-7 sm:p-9 md:flex-row md:items-center md:gap-12 md:p-10">
                         <div className="shrink-0 md:w-2/5 md:pl-5">
                             <h2 className="text-2xl font-extrabold leading-tight text-brand-heading md:text-3xl">
                                 Mengenal UPT PPAIP
                             </h2>
                         </div>
-                        <div className="relative border-t border-brand-cream-border pt-7 md:w-3/5 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+                        <div className="relative border-t border-brand-dark/15 pt-7 md:w-3/5 md:border-l md:border-t-0 md:pl-10 md:pt-0">
                             <p className="relative text-sm leading-7 text-brand-body-muted sm:text-base sm:leading-8 md:text-left">
                                 {description}
                             </p>
@@ -144,7 +144,7 @@ function TeamCard({ member, featured = false }) {
         >
             <div
                 className={`relative overflow-hidden bg-gradient-to-br from-brand-dark to-brand-deep ${
-                    featured ? "aspect-[5/4]" : "aspect-[4/3]"
+                    featured ? "aspect-[4/3]" : "aspect-[3/2]"
                 }`}
             >
                 <SafeImage

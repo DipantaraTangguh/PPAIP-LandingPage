@@ -5,11 +5,11 @@ import { describe, expect, it } from 'vitest';
 import { DonutChart } from '@/Components/Fragments/DonutChart';
 
 describe('DonutChart', () => {
-    it('shows KUB, Non-KUB, and BUMN percentages from the summary data', () => {
+    it('shows KUB, External, and BUMN percentages from the summary data', () => {
         render(<DonutChart kub={60} nonKub={30} bumn={10} />);
 
         expect(screen.getByRole('button', { name: 'KUB: 60 (60%)' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Non-KUB: 30 (30%)' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'External: 30 (30%)' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'BUMN: 10 (10%)' })).toBeInTheDocument();
         expect(screen.getAllByText('60%')).toHaveLength(2);
         expect(screen.getAllByText('30%')).toHaveLength(1);

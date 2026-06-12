@@ -3,8 +3,8 @@ import React, { useState } from "react";
 export function DonutChart({ kub, nonKub, bumn }) {
     const [activeKey, setActiveKey] = useState(null);
     const segments = [
-        { key: "kub", label: "KUB", value: kub, color: "var(--chart-kub-soft)" },
-        { key: "nonKub", label: "Non-KUB", value: nonKub, color: "var(--chart-non-kub-soft)" },
+        { key: "kub", label: "KUB", value: kub, color: "var(--chart-kub)" },
+        { key: "nonKub", label: "External", value: nonKub, color: "var(--chart-non-kub)" },
         { key: "bumn", label: "BUMN", value: bumn, color: "var(--chart-bumn)" },
     ];
     const total = segments.reduce((sum, segment) => sum + segment.value, 0);
@@ -183,7 +183,10 @@ export function DonutChart({ kub, nonKub, bumn }) {
                                 <span className="text-xl font-bold text-gray-900">
                                     {segment.value}
                                 </span>
-                                <span className="text-chart-non-kub font-semibold text-base ml-auto">
+                                <span
+                                    className="font-semibold text-base ml-auto"
+                                    style={{ color: segment.color }}
+                                >
                                     {segment.pct}%
                                 </span>
                             </button>

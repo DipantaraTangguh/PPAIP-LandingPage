@@ -32,7 +32,7 @@ export function InternshipProdiCard({ name, kub, nonKub, bumn }) {
                     <span className="font-medium text-gray-700">
                         {nonKub} %
                     </span>
-                    <span className="text-gray-400 ml-1 notranslate" translate="no">Non-KUB</span>
+                    <span className="text-gray-400 ml-1 notranslate" translate="no">External</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-chart-bumn rounded-sm" />

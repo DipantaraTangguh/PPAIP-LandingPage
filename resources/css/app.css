@@ -29,10 +29,8 @@
   --surface-white: #fff;
   --kub-media: #210b0b;
   --kub-overlay: #190606;
-  --chart-kub: #D4871C;
-  --chart-kub-soft: #E8952E;
-  --chart-non-kub: #2E7D32;
-  --chart-non-kub-soft: #F5C57A;
+  --chart-kub: #9B2C2C;
+  --chart-non-kub: #0F766E;
   --chart-bumn: #2563EB;
   --status-success: #15803d;
   --status-success-light: #16a34a;
@@ -69,9 +67,7 @@
   --color-kub-media: var(--kub-media);
   --color-kub-overlay: var(--kub-overlay);
   --color-chart-kub: var(--chart-kub);
-  --color-chart-kub-soft: var(--chart-kub-soft);
   --color-chart-non-kub: var(--chart-non-kub);
-  --color-chart-non-kub-soft: var(--chart-non-kub-soft);
   --color-chart-bumn: var(--chart-bumn);
   --color-status-success: var(--status-success);
   --color-status-success-light: var(--status-success-light);
