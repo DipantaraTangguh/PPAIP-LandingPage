@@ -27,6 +27,11 @@ class LandingPagesTest extends TestCase
     public function test_homepage_uses_cms_programs_faqs_and_about_content(): void
     {
         PageContent::put('welcome.about_description', 'PPAIP connects learning with real industry experience.');
+        PageContent::put('internship_program.banner_image', 'banners/internship.jpg');
+        PageContent::put('praktisi_mengajar.banner_image', 'banners/practitioner-teaching.jpg');
+        PageContent::put('sertifikasi.banner_image', 'banners/certification.jpg');
+        PageContent::put('kub_talk.banner_image', 'banners/kub-talk.jpg');
+        PageContent::put('industry_challenge_class.banner_image', 'banners/industry-challenge.jpg');
 
         Program::query()->create([
             'name' => 'KUB Talk',
@@ -40,6 +45,24 @@ class LandingPagesTest extends TestCase
             'link' => '/internship-program',
             'sort_order' => 1,
         ]);
+        Program::query()->create([
+            'name' => 'Praktisi Mengajar',
+            'image' => '/assets/praktisi-mengajar.png',
+            'link' => '/practitioner-teaching',
+            'sort_order' => 3,
+        ]);
+        Program::query()->create([
+            'name' => 'Sertifikasi Mahasiswa',
+            'image' => '/assets/internship-mandiri.png',
+            'link' => '/student-certification',
+            'sort_order' => 4,
+        ]);
+        Program::query()->create([
+            'name' => 'Industry Challenge Class',
+            'image' => '/assets/kub-talk-3.jpg',
+            'link' => '/industry-challenge-class',
+            'sort_order' => 5,
+        ]);
 
         Faq::query()->create([
             'question' => 'Apa itu Experience The Real Thing?',
@@ -52,11 +75,17 @@ class LandingPagesTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Welcome')
                 ->where('aboutDescription', 'PPAIP connects learning with real industry experience.')
-                ->has('programs', 2)
+                ->has('programs', 5)
                 ->where('programs.0.name', 'Internship Program')
-                ->where('programs.0.image', '/assets/internship-program.png')
+                ->where('programs.0.image', $this->publicAsset('banners/internship.jpg'))
                 ->where('programs.1.name', 'KUB Talk')
-                ->where('programs.1.image', $this->publicAsset('programs/kub-talk.jpg'))
+                ->where('programs.1.image', $this->publicAsset('banners/kub-talk.jpg'))
+                ->where('programs.2.name', 'Praktisi Mengajar')
+                ->where('programs.2.image', $this->publicAsset('banners/practitioner-teaching.jpg'))
+                ->where('programs.3.name', 'Sertifikasi Mahasiswa')
+                ->where('programs.3.image', $this->publicAsset('banners/certification.jpg'))
+                ->where('programs.4.name', 'Industry Challenge Class')
+                ->where('programs.4.image', $this->publicAsset('banners/industry-challenge.jpg'))
                 ->has('faqItems', 1)
                 ->where('faqItems.0.question', 'Apa itu Experience The Real Thing?')
             );

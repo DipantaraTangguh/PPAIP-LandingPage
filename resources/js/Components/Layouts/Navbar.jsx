@@ -187,10 +187,10 @@ export function Navbar({
                     className="flex items-center gap-3 py-3 hover:opacity-90 transition-opacity"
                 >
                     <img
-                        src="/assets/logo-bakrie.png"
+                        src="/assets/Logo_UB_Samping_dasar gelap.png"
                         alt="Universitas Bakrie Logo"
                         decoding="async"
-                        className="h-9 w-auto"
+                        className="h-15 w-auto"
                     />
                 </a>
 

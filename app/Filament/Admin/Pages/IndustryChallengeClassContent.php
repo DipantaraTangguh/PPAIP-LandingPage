@@ -33,10 +33,6 @@ class IndustryChallengeClassContent extends Page
     {
         $this->form->fill([
             'banner_image' => PageContent::get('industry_challenge_class.banner_image') ?: null,
-            'total_students' => PageContent::get(
-                'industry_challenge_class.total_students',
-                '500+',
-            ),
         ]);
     }
 
@@ -61,15 +57,6 @@ class IndustryChallengeClassContent extends Page
                             ->helperText('Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
                     ]),
-                Section::make('Statistik Halaman')
-                    ->schema([
-                        TextInput::make('total_students')
-                            ->label('Jumlah Mahasiswa Terlibat')
-                            ->placeholder('contoh: 500+')
-                            ->required()
-                            ->maxLength(20)
-                            ->rules(['regex:/^[0-9][0-9.,]*\+?$/']),
-                    ]),
             ])
             ->statePath('data');
     }
@@ -88,10 +75,6 @@ class IndustryChallengeClassContent extends Page
         PageContent::put(
             'industry_challenge_class.banner_image',
             $data['banner_image'] ?? null,
-        );
-        PageContent::put(
-            'industry_challenge_class.total_students',
-            $data['total_students'] ?? '500+',
         );
 
         Notification::make()

@@ -2,7 +2,7 @@ export function HeroBanner() {
     return (
         <section className="relative h-105 md:h-120 overflow-hidden">
             <img
-                src="/assets/hero-image.png"
+                src="/assets/Bakrie-Tower.jpg"
                 alt=""
                 aria-hidden="true"
                 fetchpriority="high"

@@ -16,7 +16,7 @@ class WelcomePageData
         return [
             'programs' => Program::ordered()->get()->map(fn (Program $program) => [
                 'name' => $program->name,
-                'image' => $this->asset->resolve($program->image),
+                'image' => $this->programImage($program),
                 'link' => $program->link,
             ])->all(),
             'faqItems' => Faq::ordered()->get()->map(fn (Faq $faq) => [
@@ -25,5 +25,23 @@ class WelcomePageData
             ])->all(),
             'aboutDescription' => PageContent::get('welcome.about_description'),
         ];
+    }
+
+    private function programImage(Program $program): string
+    {
+        $bannerKey = match ($program->link) {
+            '/internship-program' => 'internship_program.banner_image',
+            '/practitioner-teaching' => 'praktisi_mengajar.banner_image',
+            '/student-certification' => 'sertifikasi.banner_image',
+            '/kub-talk' => 'kub_talk.banner_image',
+            '/industry-challenge-class' => 'industry_challenge_class.banner_image',
+            default => null,
+        };
+
+        $image = $bannerKey
+            ? PageContent::get($bannerKey, $program->image)
+            : $program->image;
+
+        return $this->asset->resolve($image);
     }
 }
