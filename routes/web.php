@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IndustryChallengeClassController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\KubTalkController;
 use App\Http\Controllers\PractitionerTeachingController;
@@ -26,6 +27,8 @@ Route::get('/practitioner-teaching/{slug}', [PractitionerTeachingController::cla
     ->where('slug', '[a-z0-9-]+')
     ->name('practitioner-teaching.detail');
 Route::get('/kub-talk', KubTalkController::class)->name('kub-talk');
+Route::get('/industry-challenge-class', IndustryChallengeClassController::class)
+    ->name('industry-challenge-class');
 Route::get('/student-certification', CertificationController::class)->name('student-certification');
 Route::get('/about', AboutController::class)->name('about');
 

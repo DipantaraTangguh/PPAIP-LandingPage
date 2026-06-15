@@ -13,23 +13,49 @@ import {
 import { PublicLayout } from "@/Components/Layouts";
 import Seo from "@/Components/Seo";
 
-function MarqueeTrack({ duration, logoSet }) {
+const DEFAULT_PAGE_CONTENT = {
+    title: "KUB Talk",
+    seoDescription:
+        "Ikuti dokumentasi KUB Talk Universitas Bakrie, forum yang mempertemukan mahasiswa dengan pemimpin dan praktisi industri.",
+    heroSubtitle:
+        "Kolaborasi eksklusif dengan pemimpin industri nasional untuk mempersiapkan mahasiswa menjadi profesional masa depan.",
+    sessionLabel: "Sesi KUB Talk",
+    showcaseLabel: "KUB Talk Showcase",
+    galleryTitle: "Sesi KUB Talk",
+    galleryDescription:
+        "Rangkaian talk inspiratif yang menghubungkan mahasiswa dengan pemimpin industri terkemuka.",
+    emptyMessage: "Belum ada dokumentasi KUB Talk",
+};
+
+function MarqueeGroup({ logoSet }) {
     return (
-        <div
-            className="flex shrink-0 items-center gap-16 animate-marquee"
-            style={{ animationDuration: `${duration}s` }}
-        >
+        <div className="flex shrink-0 items-center gap-16 pr-16">
             {logoSet.map((company, index) => (
-                <div key={index} className="shrink-0 px-4">
+                <div
+                    key={`${company.name}-${index}`}
+                    className="flex h-16 w-44 shrink-0 items-center justify-center px-3"
+                >
                     <img
                         src={company.logo}
                         alt={company.name}
-                        loading="lazy"
+                        loading="eager"
                         decoding="async"
-                        className="h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                        className="max-h-16 max-w-full object-contain opacity-60 grayscale transition-all duration-300 hover:grayscale-0 hover:opacity-100"
                     />
                 </div>
             ))}
+        </div>
+    );
+}
+
+function MarqueeTrack({ duration, logoSet }) {
+    return (
+        <div
+            className="flex w-max animate-marquee"
+            style={{ animationDuration: `${duration}s` }}
+        >
+            <MarqueeGroup logoSet={logoSet} />
+            <MarqueeGroup logoSet={logoSet} />
         </div>
     );
 }
@@ -70,8 +96,7 @@ function PartnerMarquee({ gallery }) {
                     Didukung oleh Mitra Industri
                 </p>
             </div>
-            <div className="relative flex gap-16">
-                <MarqueeTrack duration={duration} logoSet={logoSet} />
+            <div className="relative overflow-hidden">
                 <MarqueeTrack duration={duration} logoSet={logoSet} />
             </div>
 
@@ -86,10 +111,10 @@ function PartnerMarquee({ gallery }) {
 /* ─────────────────────────────────────────────────────────
    STATS BAR
 ───────────────────────────────────────────────────────── */
-function StatsBar({ stats }) {
+function StatsBar({ stats, sessionLabel }) {
     const items = [
         { value: stats.totalCompanies || 0, label: "Perusahaan Mitra", color: "var(--brand-primary)" },
-        { value: stats.totalSessions || 0, label: "Sesi KUB Talk", color: "var(--brand-primary)" },
+        { value: stats.totalSessions || 0, label: sessionLabel, color: "var(--brand-primary)" },
         { value: stats.totalStudents || "500+", label: "Mahasiswa Terlibat", color: "var(--status-success-light)" },
     ];
 
@@ -278,38 +303,9 @@ function TalkCard({ item, onClick }) {
 }
 
 /* ─────────────────────────────────────────────────────────
-   CTA BANNER
-───────────────────────────────────────────────────────── */
-function CTABanner() {
-    return (
-        <section className="py-20 relative overflow-hidden bg-kub-cta">
-            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full" style={{ background: "rgba(255,255,255,0.05)" }} />
-            <div className="absolute bottom-0 -left-16 w-60 h-60 rounded-full" style={{ background: "rgba(255,255,255,0.04)" }} />
-            <div className="relative max-w-3xl mx-auto px-4 text-center">
-                <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-                    Bergabunglah dengan KUB Talk Berikutnya
-                </h2>
-                <p className="text-white/70 text-base md:text-lg mb-8 max-w-xl mx-auto">
-                    Jadilah bagian dari diskusi eksklusif bersama pemimpin industri terkemuka Indonesia.
-                </p>
-                <a
-                    href="#"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-brand-primary font-bold text-sm hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
-                >
-                    Hubungi Kami
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5-5 5M6 12h12" />
-                    </svg>
-                </a>
-            </div>
-        </section>
-    );
-}
-
-/* ─────────────────────────────────────────────────────────
    LIGHTBOX MODAL (refreshed)
 ───────────────────────────────────────────────────────── */
-function Lightbox({ gallery, index, onClose }) {
+function Lightbox({ gallery, index, onClose, showcaseLabel, dialogLabel }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const item = index === null ? null : gallery[index];
     const images = item?.images || [];
@@ -366,7 +362,7 @@ function Lightbox({ gallery, index, onClose }) {
                 ref={focusTrapRef}
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="kub-talk-dialog-title"
+                aria-labelledby="showcase-dialog-title"
                 className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-brand-night shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise"
                 style={{ maxHeight: "92vh" }}
                 onClick={(e) => e.stopPropagation()}
@@ -390,7 +386,7 @@ function Lightbox({ gallery, index, onClose }) {
                     <div className="absolute left-5 top-5 z-20 flex flex-wrap items-center gap-2">
                         <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/35 bg-brand-gold/18 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-brand-gold-soft shadow-lg backdrop-blur-md">
                             <Sparkles className="h-3.5 w-3.5" />
-                            KUB Talk Showcase
+                            {showcaseLabel}
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/12 px-3.5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-md">
                             <Camera className="h-3.5 w-3.5 text-brand-gold" />
@@ -472,7 +468,7 @@ function Lightbox({ gallery, index, onClose }) {
                     )}
 
                     <h3
-                        id="kub-talk-dialog-title"
+                        id="showcase-dialog-title"
                         className="text-2xl font-black leading-tight text-brand-heading md:text-3xl"
                     >
                         {item.title}
@@ -534,7 +530,7 @@ function Lightbox({ gallery, index, onClose }) {
                     onClick={onClose}
                     autoFocus
                     className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:bg-brand-gold hover:text-brand-ink"
-                    aria-label="Tutup detail KUB Talk"
+                    aria-label={`Tutup detail ${dialogLabel}`}
                 >
                     <X className="w-5 h-5" strokeWidth={2} />
                 </button>
@@ -550,7 +546,9 @@ export default function KubTalk({
     gallery = [],
     bannerImage = "/assets/kub-talk-3.jpg",
     stats = {},
+    pageContent = {},
 }) {
+    const content = { ...DEFAULT_PAGE_CONTENT, ...pageContent };
     const [lightbox, setLightbox] = useState(null);
     const lightboxTriggerRef = useRef(null);
 
@@ -567,20 +565,20 @@ export default function KubTalk({
     return (
         <>
             <Seo
-                title="KUB Talk"
-                description="Ikuti dokumentasi KUB Talk Universitas Bakrie, forum yang mempertemukan mahasiswa dengan pemimpin dan praktisi industri."
+                title={content.title}
+                description={content.seoDescription}
                 image={bannerImage}
             />
             <PublicLayout
                 rootClassName="min-h-screen bg-page-soft font-sans antialiased"
                 hero={{
-                    title: "KUB Talk",
-                    subtitle: "Kolaborasi eksklusif dengan pemimpin industri nasional untuk mempersiapkan mahasiswa menjadi profesional masa depan.",
+                    title: content.title,
+                    subtitle: content.heroSubtitle,
                     backgroundImage: bannerImage,
                 }}
             >
                 {/* Stats Strip */}
-                <StatsBar stats={stats} />
+                <StatsBar stats={stats} sessionLabel={content.sessionLabel} />
 
                 {/* Partner Logo Marquee */}
                 <PartnerMarquee gallery={gallery} />
@@ -593,10 +591,10 @@ export default function KubTalk({
                                 Dokumentasi
                             </span>
                             <h2 className="text-4xl md:text-5xl font-black text-gray-900">
-                                Sesi KUB Talk
+                                {content.galleryTitle}
                             </h2>
                             <p className="mt-4 text-base text-gray-500 max-w-lg mx-auto">
-                                Rangkaian talk inspiratif yang menghubungkan mahasiswa dengan pemimpin industri terkemuka.
+                                {content.galleryDescription}
                             </p>
                         </div>
 
@@ -613,14 +611,12 @@ export default function KubTalk({
                         ) : (
                             <div className="text-center py-20 text-gray-400">
                                 <p className="text-5xl mb-3">📋</p>
-                                <p className="font-semibold">Belum ada dokumentasi KUB Talk</p>
+                                <p className="font-semibold">{content.emptyMessage}</p>
                             </div>
                         )}
                     </div>
                 </section>
 
-                {/* CTA */}
-                <CTABanner />
             </PublicLayout>
 
             {/* Lightbox */}
@@ -629,6 +625,8 @@ export default function KubTalk({
                 gallery={gallery}
                 index={lightbox}
                 onClose={closeLightbox}
+                showcaseLabel={content.showcaseLabel}
+                dialogLabel={content.title}
             />
         </>
     );

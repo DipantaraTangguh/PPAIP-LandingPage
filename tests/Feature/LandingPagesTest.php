@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Certification;
 use App\Models\CertificationMajor;
 use App\Models\Faq;
+use App\Models\IndustryChallengeClass;
 use App\Models\InternshipYear;
 use App\Models\KubTalk;
 use App\Models\Mission;
@@ -133,6 +134,45 @@ class LandingPagesTest extends TestCase
                 ->where('stats.totalSessions', 2)
                 ->where('stats.totalCompanies', 1)
                 ->where('stats.totalStudents', '750+')
+            );
+    }
+
+    public function test_industry_challenge_class_exposes_its_own_gallery_and_stats(): void
+    {
+        PageContent::put(
+            'industry_challenge_class.banner_image',
+            'banners/industry-challenge.jpg',
+        );
+        PageContent::put('industry_challenge_class.total_students', '320+');
+
+        IndustryChallengeClass::query()->create([
+            'images' => ['industry-challenge-classes/event-1.jpg'],
+            'title' => 'Supply Chain Industry Challenge',
+            'description' => 'Mahasiswa menyelesaikan kasus nyata bersama mitra industri.',
+            'company_name' => 'PT Mitra Industri',
+            'company_logo' => 'industry-challenge-classes/logos/mitra.png',
+            'speaker_name' => 'Alya Putri',
+            'speaker_title' => 'Business Strategy Lead',
+            'event_date' => '2026-06-12',
+            'sort_order' => 1,
+        ]);
+
+        $this->get('/industry-challenge-class')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('IndustryChallengeClass')
+                ->where(
+                    'bannerImage',
+                    $this->publicAsset('banners/industry-challenge.jpg'),
+                )
+                ->has('gallery', 1)
+                ->where('gallery.0.title', 'Supply Chain Industry Challenge')
+                ->where('gallery.0.companyName', 'PT Mitra Industri')
+                ->where('gallery.0.speakerName', 'Alya Putri')
+                ->where('gallery.0.eventDate', '12 Jun 2026')
+                ->where('stats.totalSessions', 1)
+                ->where('stats.totalCompanies', 1)
+                ->where('stats.totalStudents', '320+')
             );
     }
 

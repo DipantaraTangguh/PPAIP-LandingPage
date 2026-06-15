@@ -15,6 +15,7 @@ class SearchEngineController extends Controller
             $this->entry(route('practitioner-teaching'), '0.9', 'monthly'),
             $this->entry(route('student-certification'), '0.9', 'monthly'),
             $this->entry(route('kub-talk'), '0.9', 'weekly'),
+            $this->entry(route('industry-challenge-class'), '0.9', 'weekly'),
             $this->entry(route('about'), '0.7', 'monthly'),
         ])->merge(
             PractitionerTeachingMajor::query()

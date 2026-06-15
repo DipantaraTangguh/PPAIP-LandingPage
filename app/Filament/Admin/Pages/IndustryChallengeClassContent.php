@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Filament\Admin\Pages;
+
+use App\Models\PageContent;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+
+class IndustryChallengeClassContent extends Page
+{
+    protected string $view = 'filament.admin.pages.industry-challenge-class-content';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static ?string $title = 'Konten Industry Challenge Class';
+
+    protected static ?string $navigationLabel = 'Konten Halaman';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Industry Challenge Class';
+
+    protected static ?int $navigationSort = 0;
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill([
+            'banner_image' => PageContent::get('industry_challenge_class.banner_image') ?: null,
+            'total_students' => PageContent::get(
+                'industry_challenge_class.total_students',
+                '500+',
+            ),
+        ]);
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make('Banner Halaman')
+                    ->schema([
+                        FileUpload::make('banner_image')
+                            ->label('Gambar Banner')
+                            ->image()
+                            ->disk('public')
+                            ->directory('banners')
+                            ->imageEditor()
+                            ->automaticallyResizeImagesMode('contain')
+                            ->automaticallyResizeImagesToWidth('1920')
+                            ->automaticallyResizeImagesToHeight('1080')
+                            ->automaticallyUpscaleImagesWhenResizing(false)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+                            ->maxSize(8192)
+                            ->helperText('Kosongkan untuk memakai gambar bawaan.')
+                            ->columnSpanFull(),
+                    ]),
+                Section::make('Statistik Halaman')
+                    ->schema([
+                        TextInput::make('total_students')
+                            ->label('Jumlah Mahasiswa Terlibat')
+                            ->placeholder('contoh: 500+')
+                            ->required()
+                            ->maxLength(20)
+                            ->rules(['regex:/^[0-9][0-9.,]*\+?$/']),
+                    ]),
+            ])
+            ->statePath('data');
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            Action::make('save')->label('Simpan')->submit('save'),
+        ];
+    }
+
+    public function save(): void
+    {
+        $data = $this->form->getState();
+
+        PageContent::put(
+            'industry_challenge_class.banner_image',
+            $data['banner_image'] ?? null,
+        );
+        PageContent::put(
+            'industry_challenge_class.total_students',
+            $data['total_students'] ?? '500+',
+        );
+
+        Notification::make()
+            ->title('Konten Industry Challenge Class tersimpan')
+            ->success()
+            ->send();
+    }
+}

@@ -3,9 +3,11 @@
 namespace Tests\Feature;
 
 use App\Filament\Admin\Resources\Faqs\FaqResource;
+use App\Filament\Admin\Resources\IndustryChallengeClasses\IndustryChallengeClassResource;
 use App\Filament\Admin\Resources\InternshipYears\InternshipYearResource;
 use App\Filament\Admin\Resources\KubTalks\KubTalkResource;
 use App\Filament\Admin\Resources\Programs\ProgramResource;
+use App\Models\IndustryChallengeClass;
 use App\Models\InternshipYear;
 use App\Models\KubTalk;
 use App\Models\User;
@@ -20,6 +22,10 @@ class FilamentAdminTest extends TestCase
     {
         $this->assertSame(['index', 'create', 'edit'], array_keys(InternshipYearResource::getPages()));
         $this->assertSame(['index', 'create', 'edit'], array_keys(KubTalkResource::getPages()));
+        $this->assertSame(
+            ['index', 'create', 'edit'],
+            array_keys(IndustryChallengeClassResource::getPages()),
+        );
         $this->assertSame(['index', 'create', 'edit'], array_keys(ProgramResource::getPages()));
         $this->assertSame(['index', 'create', 'edit'], array_keys(FaqResource::getPages()));
     }
@@ -30,6 +36,10 @@ class FilamentAdminTest extends TestCase
         $year = InternshipYear::query()->create(['year' => '2026']);
         $talk = KubTalk::query()->create([
             'title' => 'KUB Talk Test',
+            'company_name' => 'PT Test Industri',
+        ]);
+        $challengeClass = IndustryChallengeClass::query()->create([
+            'title' => 'Industry Challenge Test',
             'company_name' => 'PT Test Industri',
         ]);
 
@@ -51,6 +61,18 @@ class FilamentAdminTest extends TestCase
 
         $this->actingAs($admin)
             ->get('/admin/kub-talk-content')
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get('/admin/industry-challenge-classes')
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get("/admin/industry-challenge-classes/{$challengeClass->id}/edit")
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get('/admin/industry-challenge-class-content')
             ->assertOk();
 
         foreach ([

@@ -34,6 +34,7 @@ class SearchEngineTest extends TestCase
             ->assertSee('<?xml version="1.0" encoding="UTF-8"?>', false)
             ->assertSee('<loc>'.route('home').'</loc>', false)
             ->assertSee('<loc>'.route('internship-program').'</loc>', false)
+            ->assertSee('<loc>'.route('industry-challenge-class').'</loc>', false)
             ->assertSee('<loc>'.route('practitioner-teaching.detail', 'informatika').'</loc>', false)
             ->assertDontSee('/admin', false)
             ->assertDontSee('/dashboard', false);
