@@ -6,6 +6,7 @@
   --brand-deep: #5d1111;
   --brand-hover: #7d2222;
   --brand-gold: #F5A623;
+  --nav-active-gold: #FFD05A;
   --brand-gold-light: #fff0b8;
   --brand-orange: #ea580c;
   --brand-copper: #C4571A;
@@ -43,6 +44,7 @@
   --color-brand-deep: var(--brand-deep);
   --color-brand-hover: var(--brand-hover);
   --color-brand-gold: var(--brand-gold);
+  --color-nav-active-gold: var(--nav-active-gold);
   --color-brand-gold-light: var(--brand-gold-light);
   --color-brand-orange: var(--brand-orange);
   --color-brand-copper: var(--brand-copper);

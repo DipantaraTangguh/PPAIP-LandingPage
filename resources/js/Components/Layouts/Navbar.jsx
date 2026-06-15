@@ -232,7 +232,7 @@ export function Navbar({
                                     target={isExternal ? "_blank" : undefined}
                                     rel={isExternal ? "noopener noreferrer" : undefined}
                                     onClick={() => setMobileOpen(false)}
-                                    className="px-3 py-3 text-base font-medium text-white/90 rounded-lg hover:bg-black/20 hover:text-brand-gold transition-colors duration-200"
+                                    className="px-3 py-3 text-base font-medium text-white rounded-lg hover:bg-black/20 hover:text-brand-gold transition-colors duration-200"
                                 >
                                     {link.label}
                                 </a>

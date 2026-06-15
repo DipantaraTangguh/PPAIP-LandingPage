@@ -68,11 +68,11 @@ export function Footer({ linkColumns }) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center sm:text-left">
                         <div className="flex items-center justify-center sm:justify-start sm:col-span-2 md:col-span-1">
                             <img
-                                src="/assets/logo-bakrie.png"
+                                src="/assets/Logo_UB_Samping_dasar gelap.png"
                                 alt="Universitas Bakrie Logo"
                                 loading="lazy"
                                 decoding="async"
-                                className="h-12 sm:h-14 w-auto opacity-90"
+                                className="h-20 sm:h-24 w-auto opacity-90"
                             />
                         </div>
 
@@ -94,7 +94,7 @@ export function Footer({ linkColumns }) {
                                         <a
                                             key={linkIndex}
                                             href={url}
-                                            className="text-white/80 text-sm hover:text-brand-gold transition-colors duration-200"
+                                            className="text-white text-sm hover:text-brand-gold transition-colors duration-200"
                                         >
                                             {label}
                                         </a>
@@ -104,12 +104,12 @@ export function Footer({ linkColumns }) {
                         ))}
                     </div>
                 </SectionWrapper>
-
+ 
                 <div className="border-t border-white/10">
                     <SectionWrapper className="py-5">
-                        <p className="text-center text-white/50 text-xs">
+                        <p className="text-center text-white text-xs">
                             © 2025{" "}
-                            <span className="font-bold text-white/70">
+                            <span className="font-bold text-white">
                                 UPT PPAIP
                             </span>{" "}
                             – Universitas Bakrie. All Rights Reserved.
