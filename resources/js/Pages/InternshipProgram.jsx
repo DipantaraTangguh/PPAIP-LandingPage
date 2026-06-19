@@ -54,6 +54,7 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
               key={activeYear + '-grid'}
               prodiList={currentData.prodi}
               catalogUrl={catalogUrl}
+              activeYear={activeYear}
             />
           </>
         )}

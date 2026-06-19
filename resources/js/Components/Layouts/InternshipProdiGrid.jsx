@@ -1,86 +1,260 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+    BookOpen,
+    ChevronLeft,
+    ChevronRight,
+    ExternalLink,
+    Sparkles,
+    X,
+} from "lucide-react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { SectionWrapper } from "../Elements";
 import { InternshipProdiCard } from "../Fragments";
 
-/* ── PDF Viewer Modal ──────────────────────────────────── */
-function CatalogModal({ url, onClose }) {
+function buildCatalogPageUrl(url, page) {
+    if (!page) return null;
+
+    const safeUrl = encodeURI(url);
+    const pageNumber = Number(page);
+    const separator = safeUrl.includes("#") ? "&" : "#";
+
+    return `${safeUrl}${separator}page=${pageNumber}&toolbar=0&navpanes=0&view=FitH`;
+}
+
+function CatalogModal({
+    url,
+    items,
+    activeIndex,
+    activeYear,
+    onSelect,
+    onClose,
+}) {
+    const modalRef = useFocusTrap(true);
+    const activeItem = items[activeIndex] || items[0];
+    const hasCatalog = Boolean(activeItem?.catalogStartPage);
+    const catalogPageUrl = buildCatalogPageUrl(url, activeItem?.catalogStartPage);
+    const isFirst = activeIndex <= 0;
+    const isLast = activeIndex >= items.length - 1;
+
+    useEffect(() => {
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        const closeOnEscape = (event) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        window.addEventListener("keydown", closeOnEscape);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("keydown", closeOnEscape);
+        };
+    }, [onClose]);
+
+    const goPrev = () => {
+        if (!isFirst) {
+            onSelect(activeIndex - 1);
+        }
+    };
+
+    const goNext = () => {
+        if (!isLast) {
+            onSelect(activeIndex + 1);
+        }
+    };
+
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6 animate-catalog-fade-in"
-            style={{
-                zIndex: 9999,
-                background: "rgba(0,0,0,0.6)",
-                backdropFilter: "blur(8px)",
-            }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-night/80 p-2 backdrop-blur-xl animate-catalog-fade-in sm:p-4 md:p-6"
             onClick={onClose}
+            role="presentation"
         >
             <div
-                className="relative w-full max-w-7xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col animate-catalog-slide-up"
-                style={{
-                    maxHeight: "95vh",
-                }}
+                ref={modalRef}
+                className="relative grid max-h-[95vh] w-full max-w-7xl overflow-hidden rounded-[2rem] border border-white/15 bg-brand-night shadow-[0_40px_140px_rgba(0,0,0,0.55)] animate-catalog-slide-up lg:grid-cols-[0.82fr_1.35fr]"
                 onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="student-catalog-title"
             >
-                {/* ── Window title bar ──────────────────── */}
-                <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-brand-primary to-brand-rust">
-                    <div className="flex items-center gap-3">
-                        {/* Traffic-light dots */}
-                        <div className="flex items-center gap-1.5">
-                            <span className="w-3 h-3 rounded-full bg-red-400/80 border border-red-500/30" />
-                            <span className="w-3 h-3 rounded-full bg-yellow-400/80 border border-yellow-500/30" />
-                            <span className="w-3 h-3 rounded-full bg-green-400/80 border border-green-500/30" />
+                <div className="relative flex min-h-[36rem] flex-col overflow-hidden bg-linear-to-br from-brand-primary via-brand-deep to-brand-night p-6 text-white sm:p-8">
+                    <div className="pointer-events-none absolute -left-24 top-8 h-64 w-64 rounded-full bg-brand-gold/18 blur-3xl" />
+                    <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 translate-x-1/3 translate-y-1/3 rounded-full bg-brand-copper/30 blur-3xl" />
+
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="absolute right-5 top-5 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:rotate-90 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-nav-active-gold lg:hidden"
+                        aria-label="Tutup katalog"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
+
+                    <div className="relative z-10">
+                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/35 bg-brand-gold/15 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.22em] text-nav-active-gold">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            Student Catalog Lookbook
                         </div>
-                        <div className="flex items-center gap-2 ml-2">
-                            <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span className="text-sm font-semibold text-white/90 truncate">
-                                Katalog Mahasiswa Magang
-                            </span>
+
+                        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/55">
+                            {activeYear ? `Katalog Magang ${activeYear}` : "Katalog Magang"}
+                        </p>
+                        <h3
+                            id="student-catalog-title"
+                            className="text-3xl font-black leading-tight sm:text-4xl"
+                        >
+                            {activeItem.name}
+                        </h3>
+
+                        <div className="mt-6 grid grid-cols-3 gap-2 text-center">
+                            <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
+                                <p className="text-xl font-black">{activeItem.kub}%</p>
+                                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/50 notranslate" translate="no">KUB</p>
+                            </div>
+                            <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
+                                <p className="text-xl font-black">{activeItem.nonKub}%</p>
+                                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/50 notranslate" translate="no">External</p>
+                            </div>
+                            <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
+                                <p className="text-xl font-black">{activeItem.bumn}%</p>
+                                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/50 notranslate" translate="no">BUMN</p>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+
+                    <div className="relative z-10 mt-8 flex-1 overflow-y-auto pr-1">
+                        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/45">
+                            Pilih Program Studi
+                        </p>
+                        <div className="grid gap-2">
+                            {items.map((item, index) => {
+                                const isActive = index === activeIndex;
+
+                                return (
+                                    <button
+                                        key={item.name}
+                                        type="button"
+                                        onClick={() => onSelect(index)}
+                                        className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm font-semibold transition-all duration-300 ${
+                                            isActive
+                                                ? "border-nav-active-gold bg-nav-active-gold text-brand-ink shadow-[0_14px_34px_rgba(255,208,90,0.2)]"
+                                                : "border-white/10 bg-white/7 text-white/72 hover:border-white/25 hover:bg-white/12 hover:text-white"
+                                        }`}
+                                    >
+                                        <span>{item.name}</span>
+                                        <span className="text-xs opacity-70">
+                                            {item.catalogStartPage ? `p. ${item.catalogStartPage}` : "blank"}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="relative z-10 mt-6 flex flex-wrap items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={goPrev}
+                            disabled={isFirst}
+                            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/18 disabled:cursor-not-allowed disabled:opacity-35"
+                            aria-label="Program studi sebelumnya"
+                        >
+                            <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={goNext}
+                            disabled={isLast}
+                            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/18 disabled:cursor-not-allowed disabled:opacity-35"
+                            aria-label="Program studi berikutnya"
+                        >
+                            <ChevronRight className="h-5 w-5" />
+                        </button>
                         <a
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-colors"
-                            title="Buka di tab baru"
+                            className="ml-auto inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs font-black uppercase tracking-[0.14em] text-brand-primary shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-cream"
                         >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                            Buka
+                            Download Katalog
+                            <ExternalLink className="h-3.5 w-3.5" />
                         </a>
-                        <button
-                            onClick={onClose}
-                            className="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors cursor-pointer"
-                            aria-label="Tutup"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
 
-                {/* ── Embedded PDF ──────────────────────── */}
-                <div className="flex-1 bg-gray-100" style={{ minHeight: "80vh" }}>
-                    <iframe
-                        src={url}
-                        title="Katalog Mahasiswa Magang"
-                        className="w-full h-full border-0"
-                        style={{ minHeight: "80vh" }}
-                    />
+                <div className="relative flex min-h-[34rem] flex-col bg-[#f8efe3] p-4 sm:p-6">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="absolute right-5 top-5 z-20 hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-brand-primary/10 bg-white/85 text-brand-primary shadow-lg backdrop-blur transition hover:rotate-90 hover:bg-brand-primary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold lg:flex"
+                        aria-label="Tutup katalog"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
+
+                    <div className="mb-4 flex flex-wrap items-center gap-3 pr-12">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-black uppercase tracking-[0.16em] text-brand-primary shadow-sm">
+                            <BookOpen className="h-4 w-4" />
+                            {hasCatalog ? `Page ${activeItem.catalogStartPage}` : "Blank"}
+                        </div>
+                        <div className="rounded-full border border-brand-card-border bg-brand-cream px-3.5 py-2 text-xs font-semibold text-brand-brown">
+                            {hasCatalog ? `Katalog Mahasiswa ${activeItem.name}` : "Katalog belum tersedia"}
+                        </div>
+                    </div>
+
+                    <div className="relative flex-1 rounded-[1.6rem] bg-linear-to-br from-white via-brand-cream to-[#ead8c4] p-3 shadow-[inset_0_0_0_1px_rgba(107,27,27,0.08),0_28px_70px_rgba(58,13,13,0.2)]">
+                        <div className="pointer-events-none absolute bottom-4 left-1/2 top-4 z-10 hidden w-px bg-linear-to-b from-transparent via-brand-primary/14 to-transparent lg:block" />
+                        {hasCatalog ? (
+                            <iframe
+                                key={`${activeItem.name}-${activeItem.catalogStartPage}`}
+                                src={catalogPageUrl}
+                                title={`Katalog ${activeItem.name}`}
+                                className="h-[72vh] min-h-[30rem] w-full rounded-[1.2rem] border-0 bg-white shadow-[0_18px_50px_rgba(58,13,13,0.12)]"
+                                loading="lazy"
+                            />
+                        ) : (
+                            <div className="flex h-[72vh] min-h-[30rem] flex-col items-center justify-center rounded-[1.2rem] border border-dashed border-brand-primary/20 bg-white/72 p-8 text-center shadow-[0_18px_50px_rgba(58,13,13,0.08)]">
+                                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-cream text-brand-primary">
+                                    <BookOpen className="h-8 w-8" />
+                                </div>
+                                <h4 className="text-2xl font-black text-brand-heading">
+                                    Katalog belum tersedia
+                                </h4>
+                                <p className="mt-3 max-w-md text-sm leading-6 text-brand-body-muted">
+                                    Katalog Comingsoon.
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
 
-/* ── Main Component ────────────────────────────────────── */
-export function InternshipProdiGrid({ prodiList, catalogUrl }) {
-    const [showCatalog, setShowCatalog] = useState(false);
+export function InternshipProdiGrid({ prodiList, catalogUrl, activeYear }) {
+    const [selectedCatalogIndex, setSelectedCatalogIndex] = useState(null);
+    const catalogItems = useMemo(
+        () => prodiList.map((prodi) => {
+            const page = Number(prodi.catalogStartPage);
+
+            return {
+                ...prodi,
+                catalogStartPage: Number.isFinite(page) && page > 0 ? page : null,
+            };
+        }),
+        [prodiList],
+    );
+    const showCatalog = selectedCatalogIndex !== null;
+    const firstCatalogIndex = catalogItems.findIndex((item) => item.catalogStartPage);
+
+    const openCatalog = (index = 0) => {
+        if (!catalogUrl || catalogItems.length === 0) return;
+        setSelectedCatalogIndex(index >= 0 ? index : 0);
+    };
 
     return (
         <>
@@ -92,7 +266,8 @@ export function InternshipProdiGrid({ prodiList, catalogUrl }) {
                         </h2>
                         {catalogUrl && (
                             <button
-                                onClick={() => setShowCatalog(true)}
+                                type="button"
+                                onClick={() => openCatalog(firstCatalogIndex)}
                                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-semibold hover:bg-brand-hover transition-colors shadow-sm hover:shadow-md shrink-0 cursor-pointer"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,6 +285,8 @@ export function InternshipProdiGrid({ prodiList, catalogUrl }) {
                                 kub={prodi.kub}
                                 nonKub={prodi.nonKub}
                                 bumn={prodi.bumn}
+                                catalogStartPage={prodi.catalogStartPage}
+                                onClick={() => openCatalog(index)}
                             />
                         ))}
                     </div>
@@ -119,7 +296,11 @@ export function InternshipProdiGrid({ prodiList, catalogUrl }) {
             {showCatalog && catalogUrl && (
                 <CatalogModal
                     url={catalogUrl}
-                    onClose={() => setShowCatalog(false)}
+                    items={catalogItems}
+                    activeIndex={selectedCatalogIndex}
+                    activeYear={activeYear}
+                    onSelect={setSelectedCatalogIndex}
+                    onClose={() => setSelectedCatalogIndex(null)}
                 />
             )}
         </>

@@ -104,11 +104,18 @@ class LandingPagesTest extends TestCase
         ]);
 
         $year->majorStats()->create([
-            'name' => 'Informatika',
+            'name' => 'Manajemen',
             'kub' => 10,
             'non_kub' => 6,
             'bumn' => 4,
             'sort_order' => 1,
+        ]);
+        $year->majorStats()->create([
+            'name' => 'Teknik Informatika',
+            'kub' => 9,
+            'non_kub' => 5,
+            'bumn' => 3,
+            'sort_order' => 2,
         ]);
 
         $this->get('/internship-program')
@@ -119,8 +126,11 @@ class LandingPagesTest extends TestCase
                 ->where('internshipData.2025.summary.kub', 120)
                 ->where('internshipData.2025.summary.nonKub', 80)
                 ->where('internshipData.2025.summary.bumn', 35)
-                ->where('internshipData.2025.prodi.0.name', 'Informatika')
+                ->where('internshipData.2025.prodi.0.name', 'Manajemen')
                 ->where('internshipData.2025.prodi.0.bumn', 4)
+                ->where('internshipData.2025.prodi.0.catalogStartPage', 13)
+                ->where('internshipData.2025.prodi.1.name', 'Teknik Informatika')
+                ->where('internshipData.2025.prodi.1.catalogStartPage', null)
                 ->where('bannerImage', $this->publicAsset('banners/internship.jpg'))
             );
     }
