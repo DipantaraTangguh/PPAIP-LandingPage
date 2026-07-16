@@ -4,6 +4,7 @@ namespace App\Services\Landing;
 
 use App\Models\PageContent;
 use App\Models\PractitionerTeachingMajor;
+use App\Models\PractitionerTeachingPractitioner;
 use App\Support\PublicAssetUrl;
 
 class PractitionerTeachingPageData
@@ -26,7 +27,7 @@ class PractitionerTeachingPageData
 
     public function detail(string $slug): array
     {
-        $prodi = PractitionerTeachingMajor::with('semesters.courses')
+        $prodi = PractitionerTeachingMajor::with('semesters.courses.practitioner')
             ->where('slug', $slug)
             ->first();
 
@@ -43,6 +44,9 @@ class PractitionerTeachingPageData
             $courses = $semester->courses->map(fn ($course) => [
                 'name' => $course->name,
                 'praktisi' => (bool) $course->is_practitioner,
+                'practitioner' => $course->is_practitioner
+                    ? $this->mapPractitioner($course->practitioner)
+                    : null,
             ])->values()->all();
 
             return [
@@ -65,6 +69,21 @@ class PractitionerTeachingPageData
                     : 0,
             ],
             'semesters' => $semesters,
+        ];
+    }
+
+    private function mapPractitioner(?PractitionerTeachingPractitioner $practitioner): ?array
+    {
+        if (! $practitioner) {
+            return null;
+        }
+
+        return [
+            'photo' => $this->asset->resolve($practitioner->photo),
+            'name' => $practitioner->name,
+            'field' => $practitioner->field,
+            'experience' => $practitioner->experience,
+            'bio' => $practitioner->bio,
         ];
     }
 

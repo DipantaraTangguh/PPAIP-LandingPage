@@ -12,6 +12,7 @@ use App\Models\Mission;
 use App\Models\PageContent;
 use App\Models\PractitionerTeachingCourse;
 use App\Models\PractitionerTeachingMajor;
+use App\Models\PractitionerTeachingPractitioner;
 use App\Models\PractitionerTeachingSemester;
 use App\Models\Program;
 use App\Models\TeamMember;
@@ -264,12 +265,22 @@ class LandingPagesTest extends TestCase
             'sort_order' => 1,
         ]);
 
-        PractitionerTeachingCourse::query()->create([
+        $course = PractitionerTeachingCourse::query()->create([
             'practitioner_teaching_semester_id' => $semester->id,
             'name' => 'Strategic Communication',
             'is_practitioner' => true,
             'sort_order' => 1,
         ]);
+
+        PractitionerTeachingPractitioner::query()->create([
+            'practitioner_teaching_course_id' => $course->id,
+            'photo' => 'practitioners/strategic-communication.jpg',
+            'name' => 'Dr. Rina Permata',
+            'field' => 'Komunikasi Strategis',
+            'experience' => '12 tahun di industri komunikasi korporat.',
+            'bio' => 'Membawa pengalaman kampanye komunikasi dan stakeholder engagement ke dalam kelas.',
+        ]);
+
         PractitionerTeachingCourse::query()->create([
             'practitioner_teaching_semester_id' => $semester->id,
             'name' => 'Media Research',
@@ -299,6 +310,11 @@ class LandingPagesTest extends TestCase
                 ->where('detail.stats.praktisiPct', 50)
                 ->where('detail.semesters.0.title', 'Semester 5')
                 ->where('detail.semesters.0.courses.0.praktisi', true)
+                ->where('detail.semesters.0.courses.0.practitioner.photo', $this->publicAsset('practitioners/strategic-communication.jpg'))
+                ->where('detail.semesters.0.courses.0.practitioner.name', 'Dr. Rina Permata')
+                ->where('detail.semesters.0.courses.0.practitioner.field', 'Komunikasi Strategis')
+                ->where('detail.semesters.0.courses.0.practitioner.experience', '12 tahun di industri komunikasi korporat.')
+                ->where('detail.semesters.0.courses.0.practitioner.bio', 'Membawa pengalaman kampanye komunikasi dan stakeholder engagement ke dalam kelas.')
             );
     }
 

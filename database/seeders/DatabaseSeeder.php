@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
             throw new RuntimeException('ADMIN_EMAIL must contain a valid email address.');
         }
 
-        if (! is_string($password) || strlen($password) < 12) {
-            throw new RuntimeException('ADMIN_PASSWORD must contain at least 12 characters.');
+        if (! is_string($password) || strlen($password) < 8) {
+            throw new RuntimeException('ADMIN_PASSWORD must contain at least 8 characters.');
         }
 
         User::updateOrCreate(

@@ -2,10 +2,14 @@
 
 namespace App\Filament\Admin\Resources\PractitionerTeachingMajors\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -59,7 +63,44 @@ class PractitionerTeachingMajorForm
                                     ->defaultItems(0)
                                     ->schema([
                                         TextInput::make('name')->required()->maxLength(150)->columnSpan(2),
-                                        Toggle::make('is_practitioner')->label('Praktisi'),
+                                        Toggle::make('is_practitioner')
+                                            ->label('Praktisi')
+                                            ->live(),
+                                        Fieldset::make('Profil Dosen Praktisi')
+                                            ->relationship('practitioner')
+                                            ->visible(fn (Get $get): bool => (bool) $get('is_practitioner'))
+                                            ->columns(2)
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                FileUpload::make('photo')
+                                                    ->label('Foto')
+                                                    ->image()
+                                                    ->disk('public')
+                                                    ->directory('practitioner-teaching/practitioners')
+                                                    ->imageEditor()
+                                                    ->automaticallyResizeImagesMode('contain')
+                                                    ->automaticallyResizeImagesToWidth('1000')
+                                                    ->automaticallyResizeImagesToHeight('1000')
+                                                    ->automaticallyUpscaleImagesWhenResizing(false)
+                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+                                                    ->maxSize(4096)
+                                                    ->columnSpanFull(),
+                                                TextInput::make('name')
+                                                    ->label('Nama Praktisi')
+                                                    ->maxLength(150),
+                                                TextInput::make('field')
+                                                    ->label('Bidang')
+                                                    ->maxLength(150),
+                                                TextInput::make('experience')
+                                                    ->label('Pengalaman')
+                                                    ->maxLength(255)
+                                                    ->columnSpanFull(),
+                                                Textarea::make('bio')
+                                                    ->label('Bio Singkat')
+                                                    ->rows(3)
+                                                    ->maxLength(1200)
+                                                    ->columnSpanFull(),
+                                            ]),
                                     ]),
                             ]),
                     ]),

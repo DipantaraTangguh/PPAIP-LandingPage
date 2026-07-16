@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "@inertiajs/react";
-import { BookOpen, Users, Percent, ArrowLeft } from "lucide-react";
+import { BookOpen, Users, Percent, ArrowLeft, X, Award, Briefcase, Quote, Sparkles } from "lucide-react";
 
+import Modal from "@/Components/Modal";
 import Seo from "@/Components/Seo";
 import {
     PublicLayout,
@@ -9,6 +11,8 @@ import {
 import { SectionWrapper } from "@/Components/Elements";
 
 export default function PractitionerTeachingMajor({ slug, detail, aboutDescription = "", bannerImage = "/assets/praktisi-mengajar.png" }) {
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
     if (!detail) {
         return <ProdiNotFound slug={slug} />;
     }
@@ -61,7 +65,11 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
                         </h2>
                         <div className="flex flex-col gap-4">
                             {semesters.map((sem) => (
-                                <SemesterCard key={sem.title} semester={sem} />
+                                <SemesterCard
+                                    key={sem.title}
+                                    semester={sem}
+                                    onSelectPractitioner={setSelectedCourse}
+                                />
                             ))}
                         </div>
                     </SectionWrapper>
@@ -69,6 +77,11 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
 
                 <InfoCard title="Keterangan lainnya" description={aboutDescription} />
             </PublicLayout>
+
+            <PractitionerProfileModal
+                course={selectedCourse}
+                onClose={() => setSelectedCourse(null)}
+            />
         </>
     );
 }
@@ -92,7 +105,7 @@ function StatCard({ label, value, suffix, icon: Icon }) {
     );
 }
 
-function SemesterCard({ semester }) {
+function SemesterCard({ semester, onSelectPractitioner }) {
     const { title, praktisiCount, courses } = semester;
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -110,7 +123,11 @@ function SemesterCard({ semester }) {
             <div className="px-5 py-5">
                 <div className="flex flex-wrap gap-2">
                     {courses.map((course, i) => (
-                        <CoursePill key={i} course={course} />
+                        <CoursePill
+                            key={i}
+                            course={course}
+                            onSelectPractitioner={onSelectPractitioner}
+                        />
                     ))}
                 </div>
             </div>
@@ -118,13 +135,178 @@ function SemesterCard({ semester }) {
     );
 }
 
-function CoursePill({ course }) {
+function CoursePill({ course, onSelectPractitioner }) {
     const base =
         "inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs md:text-sm whitespace-normal break-words text-center max-w-full transition-colors duration-200";
-    const styles = course.praktisi
-        ? "bg-brand-orange text-white font-medium shadow-sm"
-        : "bg-gray-100 text-gray-700 hover:bg-gray-200";
-    return <span className={`${base} ${styles}`}>{course.name}</span>;
+
+    if (!course.praktisi) {
+        return (
+            <span className={`${base} bg-gray-100 text-gray-700 hover:bg-gray-200`}>
+                {course.name}
+            </span>
+        );
+    }
+
+    return (
+        <button
+            type="button"
+            onClick={() => onSelectPractitioner(course)}
+            className={`${base} bg-brand-orange text-white font-medium shadow-sm hover:bg-brand-rust focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2`}
+            aria-label={`Lihat profil praktisi untuk ${course.name}`}
+        >
+            {course.name}
+        </button>
+    );
+}
+
+function PractitionerProfileModal({ course, onClose }) {
+    const practitioner = course?.practitioner ?? {};
+    const displayName = practitioner.name || "Profil praktisi belum tersedia";
+    const field = practitioner.field || "Bidang belum diisi";
+    const experience = practitioner.experience || "Pengalaman belum diisi";
+    const bio =
+        practitioner.bio ||
+        "Data bio praktisi untuk mata kuliah ini belum tersedia. Silakan lengkapi melalui admin Filament.";
+    const initial = displayName.trim().charAt(0).toUpperCase() || "P";
+
+    return (
+        <Modal show={Boolean(course)} onClose={onClose} maxWidth="4xl">
+            <div className="relative overflow-hidden bg-brand-night text-white">
+                <div className="pointer-events-none absolute -left-24 -top-28 h-72 w-72 rounded-full bg-brand-gold/25 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-32 right-8 h-80 w-80 rounded-full bg-brand-copper/25 blur-3xl" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-linear-to-r from-brand-gold via-brand-copper to-brand-gold" />
+
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-dark/10 bg-white text-brand-dark shadow-[0_14px_35px_rgba(15,23,42,0.22)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-dark hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
+                    aria-label="Tutup popup profil praktisi"
+                >
+                    <X className="h-5.5 w-5.5" strokeWidth={2.4} />
+                </button>
+
+                <div className="relative grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
+                    <div className="relative min-h-[360px] overflow-hidden p-6 sm:p-8">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,178,58,0.22),transparent_34%),linear-gradient(145deg,rgba(128,35,36,0.74),rgba(15,23,42,0.18))]" />
+                        <div className="relative flex h-full flex-col justify-between gap-6">
+                            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold backdrop-blur-md">
+                                <Sparkles className="h-3.5 w-3.5" />
+                                Dosen Praktisi
+                            </div>
+
+                            <div className="relative mx-auto w-full max-w-[310px]">
+                                <div className="absolute -inset-3 rounded-[2rem] bg-linear-to-br from-brand-gold/45 via-white/10 to-brand-copper/35 blur-xl" />
+                                <div className="relative overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/12 p-2 shadow-2xl backdrop-blur-md">
+                                    {practitioner.photo ? (
+                                        <img
+                                            src={practitioner.photo}
+                                            alt={`Foto ${displayName}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
+                                        />
+                                    ) : (
+                                        <div className="flex aspect-[4/5] w-full items-center justify-center rounded-[1.4rem] bg-linear-to-br from-brand-cream via-white to-brand-gold/35 text-8xl font-black text-brand-dark">
+                                            {initial}
+                                        </div>
+                                    )}
+                                    <div className="absolute inset-x-2 bottom-2 rounded-b-[1.4rem] bg-linear-to-t from-brand-night/85 to-transparent px-5 pb-5 pt-16">
+                                        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
+                                            Industry Insight
+                                        </p>
+                                        <p className="mt-1 text-sm text-white/80">
+                                            Membawa konteks real business langsung ke kelas.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="rounded-2xl border border-white/14 bg-white/8 p-4 backdrop-blur-md">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
+                                    Mata Kuliah
+                                </p>
+                                <p className="mt-1 text-base font-bold leading-snug text-white">
+                                    {course?.name || "Mata kuliah praktisi"}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative bg-white px-6 py-8 text-gray-900 sm:px-8 lg:px-10">
+                        <div className="pointer-events-none absolute right-0 top-0 h-36 w-36 rounded-bl-full bg-brand-cream/80" />
+                        <div className="relative">
+                            <p className="inline-flex items-center gap-2 rounded-full bg-brand-dark/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-dark">
+                                <Award className="h-3.5 w-3.5" />
+                                Profil Praktisi
+                            </p>
+
+                            <h3 className="mt-5 pr-10 text-3xl font-black leading-tight text-brand-night sm:text-4xl">
+                                {displayName}
+                            </h3>
+                            <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-500">
+                                Praktisi industri yang membantu mahasiswa melihat teori sebagai skill nyata, bukan sekadar materi kelas.
+                            </p>
+
+                            <div className="mt-7 grid gap-4 sm:grid-cols-2">
+                                <ProfileField
+                                    icon={Briefcase}
+                                    label="Bidang"
+                                    value={field}
+                                />
+                                <ProfileField
+                                    icon={Award}
+                                    label="Pengalaman"
+                                    value={experience}
+                                />
+                            </div>
+
+                            <div className="mt-6 rounded-[1.4rem] border border-brand-dark/10 bg-linear-to-br from-brand-cream/75 via-white to-white p-5 shadow-sm">
+                                <div className="flex items-start gap-3">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-dark text-brand-gold">
+                                        <Quote className="h-5 w-5" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-dark/55">
+                                            Bio Singkat
+                                        </p>
+                                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                                            {bio}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 flex flex-wrap gap-2">
+                                <span className="rounded-full bg-brand-dark px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                                    Real Case
+                                </span>
+                                <span className="rounded-full border border-brand-copper/35 bg-brand-copper/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-dark">
+                                    Industry Mentoring
+                                </span>
+                                <span className="rounded-full border border-brand-gold/45 bg-brand-gold/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-dark">
+                                    Applied Learning
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Modal>
+    );
+}
+
+function ProfileField({ icon: Icon, label, value }) {
+    return (
+        <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-brand-dark/8 text-brand-dark">
+                <Icon className="h-5 w-5" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400">
+                {label}
+            </p>
+            <p className="mt-2 text-sm font-bold leading-relaxed text-gray-900">{value}</p>
+        </div>
+    );
 }
 
 function ProdiNotFound({ slug }) {

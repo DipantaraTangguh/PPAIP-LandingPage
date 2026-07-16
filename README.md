@@ -80,7 +80,7 @@ ADMIN_PASSWORD="use-a-strong-password"
 
 Catatan penting:
 
-- `ADMIN_PASSWORD` minimal 12 karakter.
+- `ADMIN_PASSWORD` minimal 8 karakter.
 - Jangan pakai credential contoh di production.
 - Kalau `ADMIN_EMAIL` atau `ADMIN_PASSWORD` kosong, akun admin akan dilewati.
 - Menjalankan seeder ulang akan update admin dengan email yang sama.

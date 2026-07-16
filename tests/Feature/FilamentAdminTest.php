@@ -10,6 +10,10 @@ use App\Filament\Admin\Resources\Programs\ProgramResource;
 use App\Models\IndustryChallengeClass;
 use App\Models\InternshipYear;
 use App\Models\KubTalk;
+use App\Models\PractitionerTeachingCourse;
+use App\Models\PractitionerTeachingMajor;
+use App\Models\PractitionerTeachingPractitioner;
+use App\Models\PractitionerTeachingSemester;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -41,6 +45,27 @@ class FilamentAdminTest extends TestCase
         $challengeClass = IndustryChallengeClass::query()->create([
             'title' => 'Industry Challenge Test',
             'company_name' => 'PT Test Industri',
+        ]);
+        $practitionerMajor = PractitionerTeachingMajor::query()->create([
+            'name' => 'Ilmu Komunikasi',
+            'slug' => 'ilmu-komunikasi',
+            'sort_order' => 1,
+        ]);
+        $practitionerSemester = PractitionerTeachingSemester::query()->create([
+            'practitioner_teaching_major_id' => $practitionerMajor->id,
+            'title' => 'Semester 5',
+            'sort_order' => 1,
+        ]);
+        $practitionerCourse = PractitionerTeachingCourse::query()->create([
+            'practitioner_teaching_semester_id' => $practitionerSemester->id,
+            'name' => 'Strategic Communication',
+            'is_practitioner' => true,
+            'sort_order' => 1,
+        ]);
+        PractitionerTeachingPractitioner::query()->create([
+            'practitioner_teaching_course_id' => $practitionerCourse->id,
+            'name' => 'Dr. Rina Permata',
+            'field' => 'Komunikasi Strategis',
         ]);
 
         $this->actingAs($admin)
@@ -87,5 +112,9 @@ class FilamentAdminTest extends TestCase
                 ->get($path)
                 ->assertOk();
         }
+
+        $this->actingAs($admin)
+            ->get("/admin/practitioner-teaching-majors/{$practitionerMajor->id}/edit")
+            ->assertOk();
     }
 }

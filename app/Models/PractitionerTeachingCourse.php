@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PractitionerTeachingCourse extends Model
 {
@@ -16,5 +17,10 @@ class PractitionerTeachingCourse extends Model
     public function semester(): BelongsTo
     {
         return $this->belongsTo(PractitionerTeachingSemester::class, 'practitioner_teaching_semester_id');
+    }
+
+    public function practitioner(): HasOne
+    {
+        return $this->hasOne(PractitionerTeachingPractitioner::class, 'practitioner_teaching_course_id');
     }
 }
