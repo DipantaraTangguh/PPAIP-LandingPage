@@ -11,11 +11,6 @@ class HandleInertiaRequests extends Middleware
 {
     protected $rootView = 'app';
 
-    public function version(Request $request): ?string
-    {
-        return parent::version($request);
-    }
-
     public function share(Request $request): array
     {
         $pageSeo = config('seo.pages', [])[$request->route()?->getName()]
@@ -23,9 +18,6 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
-            'auth' => [
-                'user' => $request->user(),
-            ],
             'seo' => [
                 'siteName' => config('app.name'),
                 'siteUrl' => rtrim(config('app.url'), '/'),

@@ -14,10 +14,6 @@ class SearchEngineTest extends TestCase
     {
         $this->assertFileExists(public_path('favicon.ico'));
         $this->assertGreaterThan(0, filesize(public_path('favicon.ico')));
-
-        $this->get('/favicon.ico')
-            ->assertOk()
-            ->assertHeader('Content-Type', 'image/x-icon');
     }
 
     public function test_sitemap_contains_public_pages_and_practitioner_details(): void
@@ -48,13 +44,6 @@ class SearchEngineTest extends TestCase
             ->assertSee("Allow: /\n", false)
             ->assertSee("Disallow: /admin\n", false)
             ->assertSee('Sitemap: '.route('sitemap'), false);
-    }
-
-    public function test_private_pages_are_not_indexable(): void
-    {
-        $this->get('/login')
-            ->assertOk()
-            ->assertSee('name="robots" content="noindex, nofollow"', false);
     }
 
     public function test_unknown_practitioner_detail_returns_not_found(): void

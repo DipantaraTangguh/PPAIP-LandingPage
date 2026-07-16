@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useEffect, useRef, useState } from "react";
 import {
     Briefcase,
     Monitor,
@@ -106,46 +105,28 @@ function CertificationRow({ cert, index }) {
 }
 
 function Modal({ prodi, onClose }) {
-    const isOpen = prodi !== null;
-    const focusTrapRef = useFocusTrap(isOpen);
+    const dialogRef = useRef(null);
 
     useEffect(() => {
-        if (!prodi) return;
-        const fn = (e) => e.key === "Escape" && onClose();
-        document.addEventListener("keydown", fn);
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.removeEventListener("keydown", fn);
-            document.body.style.overflow = "";
-        };
-    }, [prodi, onClose]);
+        if (prodi) dialogRef.current?.showModal();
+    }, [prodi]);
 
     if (!prodi) return null;
     const available = prodi.certifications.filter((c) => c.available).length;
 
     return (
-        <div
-            className="fixed inset-0 flex items-center justify-center p-4 animate-fade-in"
+        <dialog
+            ref={dialogRef}
+            onClose={onClose}
+            onClick={(e) => e.target === e.currentTarget && onClose()}
+            aria-labelledby="certification-modal-title"
+            className="relative m-auto w-full overflow-hidden rounded-2xl bg-surface-warm p-0 open:flex flex-col animate-pop-in backdrop:bg-black/50 backdrop:backdrop-blur-[6px]"
             style={{
-                zIndex: 9999,
-                background: "rgba(0,0,0,0.5)",
-                backdropFilter: "blur(6px)",
+                maxWidth: 660,
+                maxHeight: "88vh",
+                boxShadow: "0 22px 60px rgba(15,23,42,0.28)",
             }}
-            onClick={onClose}
         >
-            <div
-                ref={focusTrapRef}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="certification-modal-title"
-                className="relative w-full overflow-hidden rounded-2xl bg-surface-warm flex flex-col animate-pop-in"
-                style={{
-                    maxWidth: 660,
-                    maxHeight: "88vh",
-                    boxShadow: "0 22px 60px rgba(15,23,42,0.28)",
-                }}
-                onClick={(e) => e.stopPropagation()}
-            >
                 <div className="relative shrink-0 overflow-hidden border-b border-brand-deep/10 bg-brand-dark px-5 py-6 text-white sm:px-8 sm:py-8">
                     <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-white/60">
                         Program Studi
@@ -191,8 +172,7 @@ function Modal({ prodi, onClose }) {
                     Klik <strong className="text-brand-dark">Daftar</strong>{" "}
                     untuk mendaftar sertifikasi yang tersedia
                 </div>
-            </div>
-        </div>
+        </dialog>
     );
 }
 

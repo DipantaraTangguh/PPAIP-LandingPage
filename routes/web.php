@@ -1,36 +1,20 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\CertificationController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\IndustryChallengeClassController;
-use App\Http\Controllers\InternshipController;
-use App\Http\Controllers\KubTalkController;
-use App\Http\Controllers\PractitionerTeachingController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SearchEngineController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/favicon.ico', function () {
-    abort_unless(file_exists(public_path('favicon.ico')), 404);
-
-    return response()->file(public_path('favicon.ico'), [
-        'Content-Type' => 'image/x-icon',
-    ]);
-})->name('favicon');
-
-Route::get('/', HomeController::class)->name('home');
-Route::get('/internship-program', InternshipController::class)->name('internship-program');
-Route::get('/practitioner-teaching', [PractitionerTeachingController::class, 'index'])->name('practitioner-teaching');
-Route::get('/practitioner-teaching/{slug}', [PractitionerTeachingController::class, 'show'])
+Route::get('/', [LandingController::class, 'home'])->name('home');
+Route::get('/internship-program', [LandingController::class, 'internship'])->name('internship-program');
+Route::get('/practitioner-teaching', [LandingController::class, 'practitionerTeaching'])->name('practitioner-teaching');
+Route::get('/practitioner-teaching/{slug}', [LandingController::class, 'practitionerTeachingDetail'])
     ->where('slug', '[a-z0-9-]+')
     ->name('practitioner-teaching.detail');
-Route::get('/kub-talk', KubTalkController::class)->name('kub-talk');
-Route::get('/industry-challenge-class', IndustryChallengeClassController::class)
+Route::get('/kub-talk', [LandingController::class, 'kubTalk'])->name('kub-talk');
+Route::get('/industry-challenge-class', [LandingController::class, 'industryChallengeClass'])
     ->name('industry-challenge-class');
-Route::get('/student-certification', CertificationController::class)->name('student-certification');
-Route::get('/about', AboutController::class)->name('about');
+Route::get('/student-certification', [LandingController::class, 'certification'])->name('student-certification');
+Route::get('/about', [LandingController::class, 'about'])->name('about');
 
 if (app()->environment('testing')) {
     Route::get('/__test/forbidden', fn () => abort(403));
@@ -39,15 +23,3 @@ if (app()->environment('testing')) {
 
 Route::get('/sitemap.xml', [SearchEngineController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SearchEngineController::class, 'robots'])->name('robots');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';

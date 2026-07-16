@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
     BookOpen,
     ChevronLeft,
@@ -7,7 +7,6 @@ import {
     Sparkles,
     X,
 } from "lucide-react";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { SectionWrapper } from "../Elements";
 import { InternshipProdiCard } from "../Fragments";
 
@@ -29,7 +28,7 @@ function CatalogModal({
     onSelect,
     onClose,
 }) {
-    const modalRef = useFocusTrap(true);
+    const dialogRef = useRef(null);
     const activeItem = items[activeIndex] || items[0];
     const hasCatalog = Boolean(activeItem?.catalogStartPage);
     const catalogPageUrl = buildCatalogPageUrl(url, activeItem?.catalogStartPage);
@@ -37,22 +36,8 @@ function CatalogModal({
     const isLast = activeIndex >= items.length - 1;
 
     useEffect(() => {
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-
-        const closeOnEscape = (event) => {
-            if (event.key === "Escape") {
-                onClose();
-            }
-        };
-
-        window.addEventListener("keydown", closeOnEscape);
-
-        return () => {
-            document.body.style.overflow = previousOverflow;
-            window.removeEventListener("keydown", closeOnEscape);
-        };
-    }, [onClose]);
+        dialogRef.current?.showModal();
+    }, []);
 
     const goPrev = () => {
         if (!isFirst) {
@@ -67,19 +52,13 @@ function CatalogModal({
     };
 
     return (
-        <div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-night/80 p-2 backdrop-blur-xl animate-catalog-fade-in sm:p-4 md:p-6"
-            onClick={onClose}
-            role="presentation"
+        <dialog
+            ref={dialogRef}
+            onClose={onClose}
+            onClick={(e) => e.target === e.currentTarget && onClose()}
+            aria-labelledby="student-catalog-title"
+            className="relative m-auto open:grid max-h-[95vh] w-full max-w-7xl overflow-hidden rounded-[2rem] border border-white/15 bg-brand-night p-0 shadow-[0_40px_140px_rgba(0,0,0,0.55)] animate-catalog-slide-up lg:grid-cols-[0.82fr_1.35fr] backdrop:bg-brand-night/80 backdrop:backdrop-blur-xl"
         >
-            <div
-                ref={modalRef}
-                className="relative grid max-h-[95vh] w-full max-w-7xl overflow-hidden rounded-[2rem] border border-white/15 bg-brand-night shadow-[0_40px_140px_rgba(0,0,0,0.55)] animate-catalog-slide-up lg:grid-cols-[0.82fr_1.35fr]"
-                onClick={(e) => e.stopPropagation()}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="student-catalog-title"
-            >
                 <div className="relative flex min-h-[36rem] flex-col overflow-hidden bg-linear-to-br from-brand-primary via-brand-deep to-brand-night p-6 text-white sm:p-8">
                     <div className="pointer-events-none absolute -left-24 top-8 h-64 w-64 rounded-full bg-brand-gold/18 blur-3xl" />
                     <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 translate-x-1/3 translate-y-1/3 rounded-full bg-brand-copper/30 blur-3xl" />
@@ -230,8 +209,7 @@ function CatalogModal({
                         )}
                     </div>
                 </div>
-            </div>
-        </div>
+        </dialog>
     );
 }
 
