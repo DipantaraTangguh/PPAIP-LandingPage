@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,10 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $company_logo
  * @property string|null $speaker_name
  * @property string|null $speaker_title
- * @property \Carbon\Carbon|null $event_date
+ * @property Carbon|null $event_date
  * @property int $sort_order
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class KubTalk extends Model
 {

@@ -4,16 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @php
-            $privatePage = request()->is(
-                'admin*',
-                'dashboard',
-                'profile*',
-                'login',
-                'forgot-password',
-                'reset-password*',
-                'verify-email*',
-                'confirm-password',
-            );
             $siteName = config('app.name', 'PPAIP Universitas Bakrie');
             $seo = data_get($page, 'props.seo', config('seo.default'));
             $pageTitle = $seo['title'] ?? $siteName;
@@ -29,7 +19,7 @@
 
         <title inertia>{{ $fullTitle }}</title>
         <meta inertia="description" name="description" content="{{ $defaultDescription }}">
-        <meta inertia="robots" name="robots" content="{{ $privatePage ? 'noindex, nofollow' : 'index, follow' }}">
+        <meta inertia="robots" name="robots" content="index, follow">
         <link inertia="canonical" rel="canonical" href="{{ url()->current() }}">
         <meta inertia="og:type" property="og:type" content="website">
         <meta inertia="og:site_name" property="og:site_name" content="{{ $siteName }}">
@@ -49,7 +39,6 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @routes
         @viteReactRefresh
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead

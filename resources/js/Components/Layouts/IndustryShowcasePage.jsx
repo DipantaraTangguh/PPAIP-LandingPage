@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
     ArrowUpRight,
     Building2,
@@ -309,14 +308,16 @@ function Lightbox({ gallery, index, onClose, showcaseLabel, dialogLabel }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const item = index === null ? null : gallery[index];
     const images = item?.images || [];
-    const isOpen = index !== null;
-    const focusTrapRef = useFocusTrap(isOpen);
+    const dialogRef = useRef(null);
+
+    useEffect(() => {
+        if (item) dialogRef.current?.showModal();
+    }, [item]);
 
     useEffect(() => {
         if (!item) return;
 
         const handleKeyDown = (event) => {
-            if (event.key === "Escape") onClose();
             if (event.key === "ArrowLeft" && images.length > 1) {
                 setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
             }
@@ -325,14 +326,10 @@ function Lightbox({ gallery, index, onClose, showcaseLabel, dialogLabel }) {
             }
         };
 
-        document.body.style.overflow = "hidden";
         window.addEventListener("keydown", handleKeyDown);
 
-        return () => {
-            document.body.style.overflow = "";
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [images.length, item, onClose]);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [images.length, item]);
 
     if (!item) return null;
 
@@ -350,23 +347,14 @@ function Lightbox({ gallery, index, onClose, showcaseLabel, dialogLabel }) {
     const imageProgress = images.length > 0 ? ((currentImageIndex + 1) / images.length) * 100 : 100;
 
     return (
-        <div
-            className="fixed inset-0 flex items-center justify-center p-3 md:p-6 animate-kub-fade-in bg-kub-lightbox-backdrop"
-            style={{
-                zIndex: 9999,
-                backdropFilter: "blur(16px)",
-            }}
-            onClick={onClose}
+        <dialog
+            ref={dialogRef}
+            onClose={onClose}
+            onClick={(e) => e.target === e.currentTarget && onClose()}
+            aria-labelledby="showcase-dialog-title"
+            className="relative m-auto open:grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-brand-night p-0 shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise backdrop-kub-lightbox"
+            style={{ maxHeight: "92vh" }}
         >
-            <div
-                ref={focusTrapRef}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="showcase-dialog-title"
-                className="relative grid w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/18 bg-brand-night shadow-[0_40px_140px_rgba(0,0,0,0.55)] md:grid-cols-[1.35fr_.85fr] md:overflow-hidden animate-kub-modal-rise"
-                style={{ maxHeight: "92vh" }}
-                onClick={(e) => e.stopPropagation()}
-            >
                 <div className="pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full bg-brand-gold/25 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-28 right-10 h-80 w-80 rounded-full bg-brand-copper/20 blur-3xl" />
                 <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10" />
@@ -534,8 +522,7 @@ function Lightbox({ gallery, index, onClose, showcaseLabel, dialogLabel }) {
                 >
                     <X className="w-5 h-5" strokeWidth={2} />
                 </button>
-            </div>
-        </div>
+        </dialog>
     );
 }
 
