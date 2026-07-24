@@ -1,16 +1,30 @@
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
-import { BookOpen, Users, Percent, ArrowLeft, X, Award, Briefcase, Quote, Sparkles, Rocket, Building2 } from "lucide-react";
+import {
+    BookOpen,
+    Users,
+    Percent,
+    ArrowLeft,
+    X,
+    Award,
+    Briefcase,
+    Quote,
+    Sparkles,
+    Rocket,
+    Building2,
+} from "lucide-react";
 
 import Modal from "@/Components/Modal";
 import Seo from "@/Components/Seo";
-import {
-    PublicLayout,
-    InfoCard,
-} from "@/Components/Layouts";
+import { PublicLayout, InfoCard } from "@/Components/Layouts";
 import { SectionWrapper } from "@/Components/Elements";
 
-export default function PractitionerTeachingMajor({ slug, detail, aboutDescription = "", bannerImage = "/assets/praktisi-mengajar.png" }) {
+export default function PractitionerTeachingMajor({
+    slug,
+    detail,
+    aboutDescription = "",
+    bannerImage = "/assets/praktisi-mengajar.png",
+}) {
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [selectedPblCourse, setSelectedPblCourse] = useState(null);
 
@@ -32,7 +46,8 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
                 rootClassName="min-h-screen bg-surface-muted font-sans antialiased"
                 hero={{
                     title: name,
-                    subtitle: "Menampilkan data dan statistik praktisi yang mengajar di tiap program studi",
+                    subtitle:
+                        "Menampilkan data dan statistik praktisi yang mengajar di tiap program studi",
                     backgroundImage: bannerImage,
                 }}
             >
@@ -52,9 +67,22 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
                             Statistik
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <StatCard label="Mata Kuliah" value={stats.mataKuliah} icon={BookOpen} />
-                            <StatCard label="Praktisi" value={stats.praktisi} icon={Users} />
-                            <StatCard label="% Praktisi" value={stats.praktisiPct} suffix="%" icon={Percent} />
+                            <StatCard
+                                label="Mata Kuliah"
+                                value={stats.mataKuliah}
+                                icon={BookOpen}
+                            />
+                            <StatCard
+                                label="Praktisi"
+                                value={stats.praktisi}
+                                icon={Users}
+                            />
+                            <StatCard
+                                label="% Praktisi"
+                                value={stats.praktisiPct}
+                                suffix="%"
+                                icon={Percent}
+                            />
                         </div>
                     </SectionWrapper>
                 </section>
@@ -62,7 +90,8 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
                 <section className="pb-16">
                     <SectionWrapper>
                         <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                            Kemitraan dan Pembelajaran Berbasis Proyek di Tiap Mata Kuliah
+                            Kemitraan dan Pembelajaran Berbasis Proyek di Tiap
+                            Mata Kuliah
                         </h2>
                         <div className="flex flex-wrap items-center gap-4 mb-5">
                             <span className="inline-flex items-center gap-2 text-xs md:text-sm text-gray-600">
@@ -87,7 +116,10 @@ export default function PractitionerTeachingMajor({ slug, detail, aboutDescripti
                     </SectionWrapper>
                 </section>
 
-                <InfoCard title="Keterangan lainnya" description={aboutDescription} />
+                <InfoCard
+                    title="Keterangan lainnya"
+                    description={aboutDescription}
+                />
             </PublicLayout>
 
             <PractitionerProfileModal
@@ -106,7 +138,9 @@ function StatCard({ label, value, suffix, icon: Icon }) {
     return (
         <div className="bg-brand-dark text-white rounded-xl px-5 py-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow duration-300">
             <div className="flex flex-col">
-                <span className="text-xs md:text-sm text-white/70 mb-1">{label}</span>
+                <span className="text-xs md:text-sm text-white/70 mb-1">
+                    {label}
+                </span>
                 <span className="text-3xl md:text-4xl font-bold leading-none">
                     {value}
                     {suffix && (
@@ -116,7 +150,10 @@ function StatCard({ label, value, suffix, icon: Icon }) {
                     )}
                 </span>
             </div>
-            <Icon className="w-9 h-9 text-white/85 shrink-0" strokeWidth={1.75} />
+            <Icon
+                className="w-9 h-9 text-white/85 shrink-0"
+                strokeWidth={1.75}
+            />
         </div>
     );
 }
@@ -126,7 +163,9 @@ function SemesterCard({ semester, onSelectPractitioner, onSelectPbl }) {
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="bg-brand-orange text-white px-5 py-3 flex items-center justify-between">
-                <span className="text-base md:text-lg font-semibold">{title}</span>
+                <span className="text-base md:text-lg font-semibold">
+                    {title}
+                </span>
                 <div className="flex items-baseline gap-1.5">
                     <span className="text-2xl md:text-3xl font-bold leading-none">
                         {praktisiCount}
@@ -216,7 +255,7 @@ function PractitionerProfileModal({ course, onClose }) {
                 </button>
 
                 <div className="relative grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-                    <div className="relative min-h-[360px] overflow-hidden p-6 sm:p-8">
+                    <div className="relative min-h-90 overflow-hidden p-6 sm:p-8">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,178,58,0.22),transparent_34%),linear-gradient(145deg,rgba(128,35,36,0.74),rgba(15,23,42,0.18))]" />
                         <div className="relative flex h-full flex-col justify-between gap-6">
                             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold backdrop-blur-md">
@@ -224,8 +263,8 @@ function PractitionerProfileModal({ course, onClose }) {
                                 Dosen Praktisi
                             </div>
 
-                            <div className="relative mx-auto w-full max-w-[310px]">
-                                <div className="absolute -inset-3 rounded-[2rem] bg-linear-to-br from-brand-gold/45 via-white/10 to-brand-copper/35 blur-xl" />
+                            <div className="relative mx-auto w-full max-w-77.5">
+                                <div className="absolute -inset-3 rounded-4xl bg-linear-to-br from-brand-gold/45 via-white/10 to-brand-copper/35 blur-xl" />
                                 <div className="relative overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/12 p-2 shadow-2xl backdrop-blur-md">
                                     {practitioner.photo ? (
                                         <img
@@ -233,10 +272,10 @@ function PractitionerProfileModal({ course, onClose }) {
                                             alt={`Foto ${displayName}`}
                                             loading="lazy"
                                             decoding="async"
-                                            className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
+                                            className="aspect-4/5 w-full rounded-[1.4rem] object-cover"
                                         />
                                     ) : (
-                                        <div className="flex aspect-[4/5] w-full items-center justify-center rounded-[1.4rem] bg-linear-to-br from-brand-cream via-white to-brand-gold/35 text-8xl font-black text-brand-dark">
+                                        <div className="flex aspect-4/5 w-full items-center justify-center rounded-[1.4rem] bg-linear-to-br from-brand-cream via-white to-brand-gold/35 text-8xl font-black text-brand-dark">
                                             {initial}
                                         </div>
                                     )}
@@ -245,7 +284,8 @@ function PractitionerProfileModal({ course, onClose }) {
                                             Industry Insight
                                         </p>
                                         <p className="mt-1 text-sm text-white/80">
-                                            Membawa konteks real business langsung ke kelas.
+                                            Membawa konteks real business
+                                            langsung ke kelas.
                                         </p>
                                     </div>
                                 </div>
@@ -274,7 +314,9 @@ function PractitionerProfileModal({ course, onClose }) {
                                 {displayName}
                             </h3>
                             <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-500">
-                                Praktisi industri yang membantu mahasiswa melihat teori sebagai skill nyata, bukan sekadar materi kelas.
+                                Praktisi industri yang membantu mahasiswa
+                                melihat teori sebagai skill nyata, bukan sekadar
+                                materi kelas.
                             </p>
 
                             <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -352,16 +394,16 @@ function PblProjectModal({ course, onClose }) {
                 </button>
 
                 <div className="relative grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-                    <div className="relative min-h-[360px] overflow-hidden p-6 sm:p-8">
+                    <div className="relative  overflow-hidden p-6 sm:p-8">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.22),transparent_34%),linear-gradient(145deg,rgba(3,105,161,0.74),rgba(15,23,42,0.18))]" />
                         <div className="relative flex h-full flex-col justify-between gap-6">
-                            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 backdrop-blur-md">
+                            <div className="inline-flex w-fitmin-h-[360px] items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 backdrop-blur-md">
                                 <Rocket className="h-3.5 w-3.5" />
                                 Project Based Learning
                             </div>
 
-                            <div className="relative mx-auto w-full max-w-[310px]">
-                                <div className="absolute -inset-3 rounded-[2rem] bg-linear-to-br from-sky-400/45 via-white/10 to-sky-600/35 blur-xl" />
+                            <div className="relative mx-auto w-full max-w-77.5">
+                                <div className="absolute -inset-3 rounded-4xl bg-linear-to-br from-sky-400/45 via-white/10 to-sky-600/35 blur-xl" />
                                 <div className="relative overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/12 p-2 shadow-2xl backdrop-blur-md">
                                     {project.photo ? (
                                         <img
@@ -369,10 +411,10 @@ function PblProjectModal({ course, onClose }) {
                                             alt={`Foto proyek ${title}`}
                                             loading="lazy"
                                             decoding="async"
-                                            className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
+                                            className="aspect-4/5 w-full rounded-[1.4rem] object-cover"
                                         />
                                     ) : (
-                                        <div className="flex aspect-[4/5] w-full items-center justify-center rounded-[1.4rem] bg-linear-to-br from-sky-50 via-white to-sky-200/60 text-8xl font-black text-sky-700">
+                                        <div className="flex aspect-4/5 w-full items-center justify-center rounded-[1.4rem] bg-linear-to-br from-sky-50 via-white to-sky-200/60 text-8xl font-black text-sky-700">
                                             {initial}
                                         </div>
                                     )}
@@ -381,7 +423,8 @@ function PblProjectModal({ course, onClose }) {
                                             Project Insight
                                         </p>
                                         <p className="mt-1 text-sm text-white/80">
-                                            Belajar lewat proyek nyata bersama mitra industri.
+                                            Belajar lewat proyek nyata bersama
+                                            mitra industri.
                                         </p>
                                     </div>
                                 </div>
@@ -410,7 +453,9 @@ function PblProjectModal({ course, onClose }) {
                                 {title}
                             </h3>
                             <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-500">
-                                Proyek berbasis kolaborasi industri yang membawa mahasiswa langsung menyelesaikan tantangan nyata.
+                                Proyek berbasis kolaborasi industri yang membawa
+                                mahasiswa langsung menyelesaikan tantangan
+                                nyata.
                             </p>
 
                             <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -471,13 +516,17 @@ function ProfileField({ icon: Icon, label, value, accent = "brand" }) {
 
     return (
         <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-            <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-full ${iconClass}`}>
+            <div
+                className={`mb-3 flex h-10 w-10 items-center justify-center rounded-full ${iconClass}`}
+            >
                 <Icon className="h-5 w-5" />
             </div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400">
                 {label}
             </p>
-            <p className="mt-2 text-sm font-bold leading-relaxed text-gray-900">{value}</p>
+            <p className="mt-2 text-sm font-bold leading-relaxed text-gray-900">
+                {value}
+            </p>
         </div>
     );
 }
