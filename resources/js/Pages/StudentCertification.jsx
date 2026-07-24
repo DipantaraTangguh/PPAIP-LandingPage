@@ -32,15 +32,26 @@ const PRODI_ICONS = {
 function ProdiCard({ prodi, onClick }) {
     const available = prodi.certifications.filter((c) => c.available).length;
     const total = prodi.certifications.length;
+    const comingSoon = total === 0;
     const Icon = PRODI_ICONS[prodi.name] || Briefcase;
 
     return (
         <button
             type="button"
             onClick={onClick}
-            className="group w-full cursor-pointer text-left bg-white rounded-xl border border-gray-200 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:border-brand-dark/35 hover:shadow-md transition-all duration-200 flex flex-col p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark/30"
+            className={`group w-full cursor-pointer text-left bg-white rounded-xl border shadow-[0_1px_0_rgba(15,23,42,0.04)] transition-all duration-200 flex flex-col p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark/30 ${
+                comingSoon
+                    ? "border-gray-200 opacity-75 hover:opacity-100"
+                    : "border-gray-200 hover:border-brand-dark/35 hover:shadow-md"
+            }`}
         >
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-dark/8 text-brand-dark transition-colors duration-200 group-hover:bg-brand-dark group-hover:text-white">
+            <div
+                className={`mb-5 flex h-11 w-11 items-center justify-center rounded-lg transition-colors duration-200 ${
+                    comingSoon
+                        ? "bg-gray-100 text-gray-400"
+                        : "bg-brand-dark/8 text-brand-dark group-hover:bg-brand-dark group-hover:text-white"
+                }`}
+            >
                 <Icon className="w-6 h-6" strokeWidth={2} aria-hidden="true" />
             </div>
 
@@ -49,14 +60,23 @@ function ProdiCard({ prodi, onClick }) {
             </h3>
 
             <div className="mt-auto flex items-center gap-3 flex-wrap">
-                {available > 0 && (
-                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                        {available} Tersedia
+                {comingSoon ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-md bg-gray-100 px-2.5 py-1 text-xs font-semibold text-gray-500 ring-1 ring-gray-200">
+                        <Clock3 className="h-3.5 w-3.5" strokeWidth={2} />
+                        Coming Soon
                     </span>
+                ) : (
+                    <>
+                        {available > 0 && (
+                            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
+                                {available} Tersedia
+                            </span>
+                        )}
+                        <span className="text-sm text-gray-500">
+                            {total} sertifikasi
+                        </span>
+                    </>
                 )}
-                <span className="text-sm text-gray-500">
-                    {total} sertifikasi
-                </span>
             </div>
         </button>
     );
@@ -161,8 +181,10 @@ function Modal({ prodi, onClose }) {
                         ))
                     ) : (
                         <div className="py-16 text-center text-gray-400">
-                            <p className="font-semibold">
-                                Belum ada sertifikasi
+                            <Clock3 className="mx-auto mb-3 h-8 w-8" strokeWidth={1.75} />
+                            <p className="font-semibold text-gray-500">Coming Soon</p>
+                            <p className="mt-1 text-sm">
+                                Sertifikasi untuk program studi ini akan segera hadir.
                             </p>
                         </div>
                     )}

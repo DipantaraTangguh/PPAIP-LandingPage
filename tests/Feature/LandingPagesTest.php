@@ -47,7 +47,7 @@ class LandingPagesTest extends TestCase
             'sort_order' => 1,
         ]);
         Program::query()->create([
-            'name' => 'Praktisi Mengajar',
+            'name' => 'Kemitraan dan Pembelajaran Berbasis Proyek',
             'image' => '/assets/praktisi-mengajar.png',
             'link' => '/practitioner-teaching',
             'sort_order' => 3,
@@ -81,7 +81,7 @@ class LandingPagesTest extends TestCase
                 ->where('programs.0.image', $this->publicAsset('banners/internship.jpg'))
                 ->where('programs.1.name', 'KUB Talk')
                 ->where('programs.1.image', $this->publicAsset('banners/kub-talk.jpg'))
-                ->where('programs.2.name', 'Praktisi Mengajar')
+                ->where('programs.2.name', 'Kemitraan dan Pembelajaran Berbasis Proyek')
                 ->where('programs.2.image', $this->publicAsset('banners/practitioner-teaching.jpg'))
                 ->where('programs.3.name', 'Sertifikasi Mahasiswa')
                 ->where('programs.3.image', $this->publicAsset('banners/certification.jpg'))

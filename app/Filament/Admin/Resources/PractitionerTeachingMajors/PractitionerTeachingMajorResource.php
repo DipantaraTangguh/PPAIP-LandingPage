@@ -24,7 +24,7 @@ class PractitionerTeachingMajorResource extends Resource
 
     protected static ?string $navigationLabel = 'Prodi';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Praktisi Mengajar';
+    protected static string|\UnitEnum|null $navigationGroup = 'Kemitraan dan Pembelajaran Berbasis Proyek';
 
     protected static ?string $recordTitleAttribute = 'name';
 
