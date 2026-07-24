@@ -12,20 +12,6 @@ import {
 import { PublicLayout } from "./PublicLayout";
 import Seo from "@/Components/Seo";
 
-const DEFAULT_PAGE_CONTENT = {
-    title: "Program Industri",
-    seoDescription:
-        "Program kolaborasi industri Universitas Bakrie.",
-    heroSubtitle:
-        "Kolaborasi pembelajaran bersama mitra industri.",
-    sessionLabel: "Sesi Program",
-    showcaseLabel: "Program Showcase",
-    galleryTitle: "Dokumentasi Program",
-    galleryDescription:
-        "Rangkaian kegiatan yang menghubungkan mahasiswa dengan industri.",
-    emptyMessage: "Belum ada dokumentasi program",
-};
-
 function MarqueeGroup({ logoSet }) {
     return (
         <div className="flex shrink-0 items-center gap-16 pr-16">
@@ -533,10 +519,9 @@ export function IndustryShowcasePage({
     gallery = [],
     bannerImage = "/assets/bakrie-banner.jpg",
     stats = {},
-    pageContent = {},
+    pageContent: content = {},
     stagesSlot = null,
 }) {
-    const content = { ...DEFAULT_PAGE_CONTENT, ...pageContent };
     const [lightbox, setLightbox] = useState(null);
     const lightboxTriggerRef = useRef(null);
 
