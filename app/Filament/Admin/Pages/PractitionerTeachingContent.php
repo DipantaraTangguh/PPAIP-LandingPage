@@ -19,13 +19,13 @@ class PractitionerTeachingContent extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
-    protected static ?string $title = 'Konten Praktisi Mengajar';
+    protected static ?string $title = 'Konten Kemitraan dan Pembelajaran Berbasis Proyek';
 
     protected static ?string $navigationLabel = 'Konten Halaman';
 
     protected static ?string $slug = 'practitioner-teaching-content';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Praktisi Mengajar';
+    protected static string|\UnitEnum|null $navigationGroup = 'Kemitraan dan Pembelajaran Berbasis Proyek';
 
     protected static ?int $navigationSort = 0;
 
@@ -57,13 +57,13 @@ class PractitionerTeachingContent extends Page
                             ->automaticallyUpscaleImagesWhenResizing(false)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                             ->maxSize(8192)
-                            ->helperText('Banner di bagian atas halaman Praktisi Mengajar. Kosongkan untuk memakai gambar bawaan.')
+                            ->helperText('Banner di bagian atas halaman Kemitraan dan Pembelajaran Berbasis Proyek. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
                     ]),
                 Section::make('Deskripsi')
                     ->schema([
                         Textarea::make('about_description')
-                            ->label('Deskripsi Halaman Praktisi Mengajar')
+                            ->label('Deskripsi Halaman Kemitraan dan Pembelajaran Berbasis Proyek')
                             ->rows(8)
                             ->maxLength(10000)
                             ->columnSpanFull(),
@@ -85,6 +85,6 @@ class PractitionerTeachingContent extends Page
         PageContent::put('praktisi_mengajar.about_description', $data['about_description'] ?? null);
         PageContent::put('praktisi_mengajar.banner_image', $data['banner_image'] ?? null);
 
-        Notification::make()->title('Konten praktisi mengajar tersimpan')->success()->send();
+        Notification::make()->title('Konten kemitraan dan pembelajaran berbasis proyek tersimpan')->success()->send();
     }
 }

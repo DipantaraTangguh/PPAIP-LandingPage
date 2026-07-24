@@ -3,14 +3,14 @@
 return [
     'default' => [
         'title' => 'PPAIP Universitas Bakrie',
-        'description' => 'Program PPAIP Universitas Bakrie menghubungkan mahasiswa dengan pengalaman industri melalui magang, praktisi mengajar, sertifikasi, dan KUB Talk.',
+        'description' => 'Program PPAIP Universitas Bakrie menghubungkan mahasiswa dengan pengalaman industri melalui magang, kemitraan dan pembelajaran berbasis proyek, sertifikasi, dan KUB Talk.',
         'image' => '/assets/bakrie-banner.jpg',
     ],
 
     'pages' => [
         'home' => [
             'title' => 'Experience The Real Things',
-            'description' => 'Temukan program industri Universitas Bakrie melalui internship, praktisi mengajar, sertifikasi mahasiswa, dan KUB Talk.',
+            'description' => 'Temukan program industri Universitas Bakrie melalui internship, kemitraan dan pembelajaran berbasis proyek, sertifikasi mahasiswa, dan KUB Talk.',
             'image' => '/assets/bakrie-hero.jpg',
         ],
         'internship-program' => [
@@ -19,12 +19,12 @@ return [
             'image' => '/assets/internship-program.png',
         ],
         'practitioner-teaching' => [
-            'title' => 'Praktisi Mengajar',
-            'description' => 'Jelajahi program Praktisi Mengajar Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas.',
+            'title' => 'Kemitraan dan Pembelajaran Berbasis Proyek',
+            'description' => 'Jelajahi program Kemitraan dan Pembelajaran Berbasis Proyek Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas.',
             'image' => '/assets/praktisi-mengajar.png',
         ],
         'practitioner-teaching.detail' => [
-            'title' => 'Praktisi Mengajar',
+            'title' => 'Kemitraan dan Pembelajaran Berbasis Proyek',
             'description' => 'Lihat mata kuliah dan keterlibatan praktisi industri pada program studi Universitas Bakrie.',
             'image' => '/assets/praktisi-mengajar.png',
         ],

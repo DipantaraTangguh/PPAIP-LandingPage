@@ -15,14 +15,14 @@ export default function PractitionerTeaching({ majorStats = [], aboutDescription
   return (
     <>
       <Seo
-        title="Praktisi Mengajar"
-        description="Jelajahi program Praktisi Mengajar Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas."
+        title="Kemitraan dan Pembelajaran Berbasis Proyek"
+        description="Jelajahi program Kemitraan dan Pembelajaran Berbasis Proyek Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas."
         image={bannerImage}
       />
 
       <PublicLayout
         hero={{
-          title: 'Praktisi Mengajar',
+          title: 'Kemitraan dan Pembelajaran Berbasis Proyek',
           subtitle: 'Menampilkan data statistik praktisi yang mengajar di tiap program studi',
           backgroundImage: bannerImage,
         }}

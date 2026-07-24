@@ -59,12 +59,15 @@ class PractitionerTeachingMajorForm
                                     ->label('Mata Kuliah')
                                     ->orderColumn('sort_order')
                                     ->reorderable()
-                                    ->columns(3)
+                                    ->columns(4)
                                     ->defaultItems(0)
                                     ->schema([
                                         TextInput::make('name')->required()->maxLength(150)->columnSpan(2),
                                         Toggle::make('is_practitioner')
                                             ->label('Praktisi')
+                                            ->live(),
+                                        Toggle::make('is_pbl')
+                                            ->label('PBL')
                                             ->live(),
                                         Fieldset::make('Profil Dosen Praktisi')
                                             ->relationship('practitioner')
@@ -97,6 +100,41 @@ class PractitionerTeachingMajorForm
                                                     ->columnSpanFull(),
                                                 Textarea::make('bio')
                                                     ->label('Bio Singkat')
+                                                    ->rows(3)
+                                                    ->maxLength(1200)
+                                                    ->columnSpanFull(),
+                                            ]),
+                                        Fieldset::make('Profil Proyek PBL')
+                                            ->relationship('pbl')
+                                            ->visible(fn (Get $get): bool => (bool) $get('is_pbl'))
+                                            ->columns(2)
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                FileUpload::make('photo')
+                                                    ->label('Foto')
+                                                    ->image()
+                                                    ->disk('public')
+                                                    ->directory('practitioner-teaching/pbls')
+                                                    ->imageEditor()
+                                                    ->automaticallyResizeImagesMode('contain')
+                                                    ->automaticallyResizeImagesToWidth('1000')
+                                                    ->automaticallyResizeImagesToHeight('1000')
+                                                    ->automaticallyUpscaleImagesWhenResizing(false)
+                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+                                                    ->maxSize(4096)
+                                                    ->columnSpanFull(),
+                                                TextInput::make('title')
+                                                    ->label('Judul Proyek')
+                                                    ->maxLength(150),
+                                                TextInput::make('partner')
+                                                    ->label('Mitra Industri')
+                                                    ->maxLength(150),
+                                                TextInput::make('focus')
+                                                    ->label('Fokus Proyek')
+                                                    ->maxLength(150)
+                                                    ->columnSpanFull(),
+                                                Textarea::make('description')
+                                                    ->label('Deskripsi Proyek')
                                                     ->rows(3)
                                                     ->maxLength(1200)
                                                     ->columnSpanFull(),

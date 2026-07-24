@@ -88,9 +88,9 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 11,
                 'key' => 'industry_challenge_class.banner_image',
-                'value' => 'banners/01KTK6NMWX10XN7BQTY7WVYZGA.jpg',
+                'value' => 'banners/01KY9EKE6WPX2WBQ9HT2BTHPR1.jpg',
                 'created_at' => '2026-06-14 00:00:00',
-                'updated_at' => '2026-06-14 00:00:00',
+                'updated_at' => '2026-07-24 13:00:00',
             ],
             [
                 'id' => 12,
@@ -98,6 +98,27 @@ class CmsContentSeeder extends Seeder
                 'value' => '500+',
                 'created_at' => '2026-06-14 00:00:00',
                 'updated_at' => '2026-06-14 00:00:00',
+            ],
+            [
+                'id' => 13,
+                'key' => 'praktisi_mengajar.banner_image',
+                'value' => 'banners/01KY9BBRKCGH2HE2E3T880JB6X.jpg',
+                'created_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-07-24 13:00:00',
+            ],
+            [
+                'id' => 14,
+                'key' => 'internship_program.banner_image',
+                'value' => 'banners/01KY9EHSFT5BNAWAN0N69THWYR.jpg',
+                'created_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-07-24 13:00:00',
+            ],
+            [
+                'id' => 15,
+                'key' => 'sertifikasi.banner_image',
+                'value' => 'banners/01KY9EJPEWYM3JBFBTK25MA8Y3.jpg',
+                'created_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-07-24 13:00:00',
             ],
         ]);
 
@@ -248,7 +269,7 @@ class CmsContentSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Praktisi Mengajar',
+                'name' => 'Kemitraan dan Pembelajaran Berbasis Proyek',
                 'image' => '/assets/praktisi-mengajar.png',
                 'link' => '/practitioner-teaching',
                 'sort_order' => 1,
@@ -306,7 +327,7 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 3,
                 'question' => 'Program apa saja yang paling dekat dengan dunia kerja?',
-                'answer' => 'Internship Program, Praktisi Mengajar, Sertifikasi Mahasiswa, dan KUB Talk menjadi jalur utama untuk menghubungkan mahasiswa dengan industri, termasuk jejaring Kelompok Usaha Bakrie, BUMN, dan mitra eksternal.',
+                'answer' => 'Internship Program, Kemitraan dan Pembelajaran Berbasis Proyek, Sertifikasi Mahasiswa, dan KUB Talk menjadi jalur utama untuk menghubungkan mahasiswa dengan industri, termasuk jejaring Kelompok Usaha Bakrie, BUMN, dan mitra eksternal.',
                 'sort_order' => 2,
                 'created_at' => '2026-06-05 03:20:00',
                 'updated_at' => '2026-06-05 03:20:00',
@@ -1318,6 +1339,7 @@ class CmsContentSeeder extends Seeder
 
         // Table: practitioner_teaching_courses
         DB::table('practitioner_teaching_practitioners')->truncate();
+        DB::table('practitioner_teaching_pbls')->truncate();
         DB::table('practitioner_teaching_courses')->truncate();
         DB::table('practitioner_teaching_courses')->insert([
             [
@@ -8473,6 +8495,39 @@ class CmsContentSeeder extends Seeder
             ],
         ]);
 
+        // Normalize praktisi/PBL mix per semester: instead of trusting the
+        // hand-authored is_practitioner values above (uneven, some
+        // semesters had none), deterministically mark ~2-3 courses per
+        // semester as praktisi and ~2-3 as PBL, rest stay neutral.
+        DB::table('practitioner_teaching_courses')
+            ->orderBy('sort_order')
+            ->get(['id', 'practitioner_teaching_semester_id', 'sort_order'])
+            ->groupBy('practitioner_teaching_semester_id')
+            ->each(function ($courses, $semesterId) {
+                $ordered = $courses->sortBy('sort_order')->values();
+                $practitionerCount = min(2 + ($semesterId % 2), $ordered->count());
+                $pblCount = min(2 + (($semesterId + 1) % 2), max(0, $ordered->count() - $practitionerCount));
+
+                $practitionerIds = $ordered->slice(0, $practitionerCount)->pluck('id');
+                $pblIds = $ordered->slice($practitionerCount, $pblCount)->pluck('id');
+
+                DB::table('practitioner_teaching_courses')
+                    ->whereIn('id', $ordered->pluck('id'))
+                    ->update(['is_practitioner' => false, 'is_pbl' => false]);
+
+                if ($practitionerIds->isNotEmpty()) {
+                    DB::table('practitioner_teaching_courses')
+                        ->whereIn('id', $practitionerIds)
+                        ->update(['is_practitioner' => true]);
+                }
+
+                if ($pblIds->isNotEmpty()) {
+                    DB::table('practitioner_teaching_courses')
+                        ->whereIn('id', $pblIds)
+                        ->update(['is_pbl' => true]);
+                }
+            });
+
         $dummyPractitioners = [
             [
                 'name' => 'Dr. Andi Pratama',
@@ -8524,6 +8579,58 @@ class CmsContentSeeder extends Seeder
         $practitionerProfiles
             ->chunk(100)
             ->each(fn ($chunk) => DB::table('practitioner_teaching_practitioners')->insert($chunk->all()));
+
+        $dummyPbls = [
+            [
+                'title' => 'Kampanye Digital Marketing UMKM Lokal',
+                'partner' => 'PT Kreasi Digital Nusantara',
+                'focus' => 'Digital Marketing & Brand Strategy',
+            ],
+            [
+                'title' => 'Purwarupa Aplikasi Manajemen Rantai Pasok',
+                'partner' => 'PT Logistik Cerdas Indonesia',
+                'focus' => 'Product Development & Supply Chain',
+            ],
+            [
+                'title' => 'Audit Keberlanjutan Proses Produksi',
+                'partner' => 'PT Industri Hijau Bakrie',
+                'focus' => 'Sustainability & Process Improvement',
+            ],
+            [
+                'title' => 'Riset Perilaku Konsumen Sektor Ritel',
+                'partner' => 'PT Ritel Maju Bersama',
+                'focus' => 'Consumer Research & Data Analytics',
+            ],
+            [
+                'title' => 'Perancangan Sistem Informasi Layanan Publik',
+                'partner' => 'Dinas Komunikasi dan Informatika',
+                'focus' => 'Sistem Informasi & Layanan Publik',
+            ],
+        ];
+
+        $pblProfiles = DB::table('practitioner_teaching_courses')
+            ->where('is_pbl', true)
+            ->orderBy('id')
+            ->get(['id', 'name'])
+            ->values()
+            ->map(function ($course, int $index) use ($dummyPbls): array {
+                $profile = $dummyPbls[$index % count($dummyPbls)];
+
+                return [
+                    'practitioner_teaching_course_id' => $course->id,
+                    'photo' => null,
+                    'title' => $profile['title'],
+                    'partner' => $profile['partner'],
+                    'focus' => $profile['focus'],
+                    'description' => "Mahasiswa pada mata kuliah {$course->name} mengerjakan proyek \"{$profile['title']}\" bersama {$profile['partner']}, menerapkan konsep kelas pada tantangan nyata industri.",
+                    'created_at' => '2026-07-24 13:00:00',
+                    'updated_at' => '2026-07-24 13:00:00',
+                ];
+            });
+
+        $pblProfiles
+            ->chunk(100)
+            ->each(fn ($chunk) => DB::table('practitioner_teaching_pbls')->insert($chunk->all()));
 
         // Table: kub_talks
         DB::table('kub_talks')->truncate();
@@ -8581,29 +8688,25 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
             ],
         ]);
 
-        // Starter-nya sengaja sama dengan KUB Talk supaya halaman baru langsung terisi.
+        // Table: industry_challenge_classes
         DB::table('industry_challenge_classes')->truncate();
-        DB::table('industry_challenge_classes')->insert(
-            DB::table('kub_talks')
-                ->orderBy('sort_order')
-                ->orderBy('id')
-                ->get()
-                ->map(fn (object $talk) => [
-                    'image' => $talk->image,
-                    'images' => $talk->images,
-                    'title' => $talk->title,
-                    'description' => $talk->description,
-                    'company_name' => $talk->company_name,
-                    'company_logo' => $talk->company_logo,
-                    'speaker_name' => $talk->speaker_name,
-                    'speaker_title' => $talk->speaker_title,
-                    'event_date' => $talk->event_date,
-                    'sort_order' => $talk->sort_order,
-                    'created_at' => '2026-06-14 00:00:00',
-                    'updated_at' => '2026-06-14 00:00:00',
-                ])
-                ->all(),
-        );
+        DB::table('industry_challenge_classes')->insert([
+            [
+                'id' => 4,
+                'image' => null,
+                'images' => '["industry-challenge-classes\\/01KY9HGDA6BQGANY1WETK52413.png","industry-challenge-classes\\/01KY9HH36N9F0DYQ1YA1W78BFK.png"]',
+                'title' => 'Industry Challenge Class with PT Kaltim Prima Coal (KPC)',
+                'description' => 'Sebagai wujud sinergi nyata antara dunia akademik dan industri pertambangan, Universitas Bakrie bersama PT Kaltim Prima Coal menggelar program Industry Challenge Class yang berhasil mengantarkan tiga mahasiswa terbaiknya—Moh Kheiko Harieson, Ulli Alfiana, dan Ivanka Saskia—untuk terjun langsung menghadapi tantangan dunia kerja profesional. Keberhasilan mereka lolos dalam program seleksi ini tidak hanya menjadi bukti kebanggaan bagi civitas akademika, tetapi juga menjadi wadah strategis bagi para mahasiswa untuk mengaplikasikan ilmu, mengasah inovasi, serta menguatkan kolaborasi nyata yang siap memberikan kontribusi positif bagi industri nasional.',
+                'company_name' => 'PT Kaltim Prima Coal (KPC)',
+                'company_logo' => 'industry-challenge-classes/logos/01KY9HGDA9K100RRXATD19ZQS5.png',
+                'speaker_name' => 'Kiagus Nirwan',
+                'speaker_title' => 'Senior Drill and Blast Engineer at PT. Kaltim Prima Coal',
+                'event_date' => '2026-07-21',
+                'sort_order' => 0,
+                'created_at' => '2026-07-24 07:47:45',
+                'updated_at' => '2026-07-24 07:48:07',
+            ],
+        ]);
 
         // Table: certification_majors
         DB::table('certification_majors')->truncate();
@@ -8920,6 +9023,12 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
             ],
         ]);
 
+        // Only Sistem Informasi keeps real certification data for now; the
+        // rest show the "coming soon" state on the certification page.
+        DB::table('certifications')
+            ->where('certification_major_id', '!=', 5)
+            ->delete();
+
         // Table: team_members
         DB::table('team_members')->truncate();
         DB::table('team_members')->insert([
@@ -9006,7 +9115,7 @@ Melalui sesi yang luar biasa ini, kita jadi lebih paham mengenai budaya kerja, t
             [
                 'id' => 2,
                 'icon' => 'GraduationCap',
-                'title' => 'Praktisi Mengajar',
+                'title' => 'Kemitraan dan Pembelajaran Berbasis Proyek',
                 'description' => 'Menghadirkan praktisi industri sebagai pengajar untuk memperkaya pengalaman pembelajaran mahasiswa di setiap program studi.',
                 'sort_order' => 1,
                 'created_at' => '2026-06-05 03:20:00',

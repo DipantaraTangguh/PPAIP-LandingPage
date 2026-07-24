@@ -4,6 +4,7 @@ namespace App\Services\Landing;
 
 use App\Models\PageContent;
 use App\Models\PractitionerTeachingMajor;
+use App\Models\PractitionerTeachingPbl;
 use App\Models\PractitionerTeachingPractitioner;
 use App\Support\PublicAssetUrl;
 
@@ -27,7 +28,7 @@ class PractitionerTeachingPageData
 
     public function detail(string $slug): array
     {
-        $prodi = PractitionerTeachingMajor::with('semesters.courses.practitioner')
+        $prodi = PractitionerTeachingMajor::with('semesters.courses.practitioner', 'semesters.courses.pbl')
             ->where('slug', $slug)
             ->first();
 
@@ -46,6 +47,10 @@ class PractitionerTeachingPageData
                 'praktisi' => (bool) $course->is_practitioner,
                 'practitioner' => $course->is_practitioner
                     ? $this->mapPractitioner($course->practitioner)
+                    : null,
+                'pbl' => (bool) $course->is_pbl,
+                'project' => $course->is_pbl
+                    ? $this->mapPbl($course->pbl)
                     : null,
             ])->values()->all();
 
@@ -84,6 +89,21 @@ class PractitionerTeachingPageData
             'field' => $practitioner->field,
             'experience' => $practitioner->experience,
             'bio' => $practitioner->bio,
+        ];
+    }
+
+    private function mapPbl(?PractitionerTeachingPbl $pbl): ?array
+    {
+        if (! $pbl) {
+            return null;
+        }
+
+        return [
+            'photo' => $this->asset->resolve($pbl->photo),
+            'title' => $pbl->title,
+            'partner' => $pbl->partner,
+            'focus' => $pbl->focus,
+            'description' => $pbl->description,
         ];
     }
 
