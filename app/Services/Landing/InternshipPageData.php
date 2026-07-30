@@ -10,10 +10,12 @@ class InternshipPageData
 {
     private const CATALOG_START_PAGES = [
         'Ilmu & Teknologi Pangan' => 2,
-        'Manajemen' => 13,
-        'Teknik Sipil' => 113,
-        'Akuntansi' => 127,
-        'Ilmu Komunikasi' => 174,
+        'Manajemen' => 123,
+        'Teknik Sipil' => 24,
+        'Akuntansi' => 213,
+        'Ilmu Komunikasi' => 248,
+        'Teknik Lingkungan' => 13,
+        'Sistem Informasi' => 65,
     ];
 
     public function __construct(private readonly PublicAssetUrl $asset) {}
@@ -49,7 +51,7 @@ class InternshipPageData
             'bannerImage' => $this->asset->resolve(
                 PageContent::get('internship_program.banner_image', '/assets/internship-program.png'),
             ),
-            'catalogUrl' => '/storage/student-catalog/Repository Magang 2025 UBakrie.pdf',
+            'catalogUrl' => '/storage/student-catalog/Repository-Magang-Final.pdf',
         ];
     }
 }

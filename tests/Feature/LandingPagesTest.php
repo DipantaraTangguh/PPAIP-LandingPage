@@ -129,7 +129,7 @@ class LandingPagesTest extends TestCase
                 ->where('internshipData.2025.summary.bumn', 35)
                 ->where('internshipData.2025.prodi.0.name', 'Manajemen')
                 ->where('internshipData.2025.prodi.0.bumn', 4)
-                ->where('internshipData.2025.prodi.0.catalogStartPage', 13)
+                ->where('internshipData.2025.prodi.0.catalogStartPage', 123)
                 ->where('internshipData.2025.prodi.1.name', 'Teknik Informatika')
                 ->where('internshipData.2025.prodi.1.catalogStartPage', null)
                 ->where('bannerImage', $this->publicAsset('banners/internship.jpg'))

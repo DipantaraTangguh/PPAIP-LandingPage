@@ -8528,105 +8528,61 @@ class CmsContentSeeder extends Seeder
                 }
             });
 
-        $dummyPractitioners = [
-            [
-                'name' => 'Dr. Andi Pratama',
-                'field' => 'Strategi Bisnis dan Transformasi Digital',
-                'experience' => '15 tahun memimpin proyek transformasi di sektor teknologi dan jasa.',
-            ],
-            [
-                'name' => 'Rina Permatasari, M.M.',
-                'field' => 'Brand Management dan Komunikasi Korporat',
-                'experience' => '12 tahun menangani strategi merek, kampanye publik, dan relasi industri.',
-            ],
-            [
-                'name' => 'Budi Santoso, S.T.',
-                'field' => 'Operasional, Manufaktur, dan Manajemen Mutu',
-                'experience' => 'Lebih dari 14 tahun mengelola proses operasional dan peningkatan kualitas.',
-            ],
-            [
-                'name' => 'Maya Lestari, M.Ak.',
-                'field' => 'Keuangan Korporat dan Audit',
-                'experience' => '10 tahun berpengalaman dalam audit, pelaporan keuangan, dan tata kelola.',
-            ],
-            [
-                'name' => 'Fajar Nugroho, M.T.',
-                'field' => 'Data, Teknologi, dan Inovasi Produk',
-                'experience' => '13 tahun membangun solusi berbasis data untuk produk dan layanan digital.',
-            ],
+        // Single template taken from the practitioner profile manually
+        // entered via Filament (Ilmu & Teknologi Pangan / Bahasa Inggris I),
+        // reused verbatim across every praktisi-flagged course.
+        $practitionerTemplate = [
+            'photo' => 'practitioner-teaching/practitioners/01KYK5WA1525WYRQ3DQB1QZDWC.jpg',
+            'name' => 'Dr. Rizki Maryam Astuti, S.Si., M.Si.',
+            'field' => 'Ilmu Pangan',
+            'experience' => 'Lebih dari 14 tahun mengelola proses Ilmu Pangan dan peningkatan kualitas.',
+            'bio' => 'Dr. Rizki Maryam Astuti, S.Si., M.Si. adalah dosen praktisi industri yang berbagi pengalaman profesional pada mata kuliah Ilmu Pangan. Materi yang dibawakan berfokus pada studi kasus, praktik kerja, dan keterampilan yang relevan dengan kebutuhan industri.',
         ];
 
         $practitionerProfiles = DB::table('practitioner_teaching_courses')
             ->where('is_practitioner', true)
             ->orderBy('id')
-            ->get(['id', 'name'])
-            ->values()
-            ->map(function ($course, int $index) use ($dummyPractitioners): array {
-                $profile = $dummyPractitioners[$index % count($dummyPractitioners)];
-
-                return [
-                    'practitioner_teaching_course_id' => $course->id,
-                    'photo' => '/assets/praktisi-mengajar.png',
-                    'name' => $profile['name'],
-                    'field' => $profile['field'],
-                    'experience' => $profile['experience'],
-                    'bio' => "{$profile['name']} adalah praktisi industri yang berbagi pengalaman profesional pada mata kuliah {$course->name}. Materi yang dibawakan berfokus pada studi kasus, praktik kerja, dan keterampilan yang relevan dengan kebutuhan industri.",
-                    'created_at' => '2026-06-19 15:30:00',
-                    'updated_at' => '2026-06-19 15:30:00',
-                ];
-            });
+            ->get(['id'])
+            ->map(fn ($course) => [
+                'practitioner_teaching_course_id' => $course->id,
+                'photo' => $practitionerTemplate['photo'],
+                'name' => $practitionerTemplate['name'],
+                'field' => $practitionerTemplate['field'],
+                'experience' => $practitionerTemplate['experience'],
+                'bio' => $practitionerTemplate['bio'],
+                'created_at' => '2026-06-19 15:30:00',
+                'updated_at' => '2026-07-28 01:38:56',
+            ]);
 
         $practitionerProfiles
             ->chunk(100)
             ->each(fn ($chunk) => DB::table('practitioner_teaching_practitioners')->insert($chunk->all()));
 
-        $dummyPbls = [
-            [
-                'title' => 'Kampanye Digital Marketing UMKM Lokal',
-                'partner' => 'PT Kreasi Digital Nusantara',
-                'focus' => 'Digital Marketing & Brand Strategy',
-            ],
-            [
-                'title' => 'Purwarupa Aplikasi Manajemen Rantai Pasok',
-                'partner' => 'PT Logistik Cerdas Indonesia',
-                'focus' => 'Product Development & Supply Chain',
-            ],
-            [
-                'title' => 'Audit Keberlanjutan Proses Produksi',
-                'partner' => 'PT Industri Hijau Bakrie',
-                'focus' => 'Sustainability & Process Improvement',
-            ],
-            [
-                'title' => 'Riset Perilaku Konsumen Sektor Ritel',
-                'partner' => 'PT Ritel Maju Bersama',
-                'focus' => 'Consumer Research & Data Analytics',
-            ],
-            [
-                'title' => 'Perancangan Sistem Informasi Layanan Publik',
-                'partner' => 'Dinas Komunikasi dan Informatika',
-                'focus' => 'Sistem Informasi & Layanan Publik',
-            ],
+        // Single template taken from the PBL profile manually entered via
+        // Filament (Ilmu & Teknologi Pangan / Kalkulus I), reused verbatim
+        // across every PBL-flagged course.
+        $pblTemplate = [
+            'photo' => 'practitioner-teaching/pbls/01KYK69HZR3972HFR2HR4C7YX6.jpg',
+            'title' => 'Mikrobiologi dan Fermentasi Pangan',
+            'partner' => 'PT Santos Jaya Abadi',
+            'focus' => 'Fermentasi',
+            'description' => 'Di balik setiap produk pangan yang kita konsumsi, terdapat ekosistem mikroskopis yang bekerja secara diam-diam. Dalam dunia ilmu pangan, mikroorganisme tidak melulu menjadi musuh yang menyebabkan pembusukan. Sebaliknya, mereka memainkan peran sentral yang bisa direkayasa untuk pengolahan, pengawetan, hingga penciptaan inovasi makanan masa depan.',
         ];
 
         $pblProfiles = DB::table('practitioner_teaching_courses')
             ->where('is_pbl', true)
             ->orderBy('id')
-            ->get(['id', 'name'])
-            ->values()
-            ->map(function ($course, int $index) use ($dummyPbls): array {
-                $profile = $dummyPbls[$index % count($dummyPbls)];
-
-                return [
-                    'practitioner_teaching_course_id' => $course->id,
-                    'photo' => null,
-                    'title' => $profile['title'],
-                    'partner' => $profile['partner'],
-                    'focus' => $profile['focus'],
-                    'description' => "Mahasiswa pada mata kuliah {$course->name} mengerjakan proyek \"{$profile['title']}\" bersama {$profile['partner']}, menerapkan konsep kelas pada tantangan nyata industri.",
-                    'created_at' => '2026-07-24 13:00:00',
-                    'updated_at' => '2026-07-24 13:00:00',
-                ];
-            });
+            ->get(['id'])
+            ->map(fn ($course) => [
+                'practitioner_teaching_course_id' => $course->id,
+                'photo' => $pblTemplate['photo'],
+                'title' => $pblTemplate['title'],
+                'partner' => $pblTemplate['partner'],
+                'focus' => $pblTemplate['focus'],
+                'description' => $pblTemplate['description'],
+                'created_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-07-28 01:44:10',
+            ]);
 
         $pblProfiles
             ->chunk(100)
