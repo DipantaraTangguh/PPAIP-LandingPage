@@ -74,9 +74,9 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 9,
                 'key' => 'kub_talk.banner_image',
-                'value' => 'banners/01KTK6NMWX10XN7BQTY7WVYZGA.jpg',
+                'value' => 'banners/01KZAHW6QJZ5FKB3G02P3X9H6F.jpg',
                 'created_at' => '2026-06-05 03:20:00',
-                'updated_at' => '2026-06-08 08:47:59',
+                'updated_at' => '2026-08-06 10:29:00',
             ],
             [
                 'id' => 10,
@@ -88,9 +88,9 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 11,
                 'key' => 'industry_challenge_class.banner_image',
-                'value' => 'banners/01KY9EKE6WPX2WBQ9HT2BTHPR1.jpg',
+                'value' => 'banners/01KZAHXECV3J7343K8KWSK4RQZ.jpg',
                 'created_at' => '2026-06-14 00:00:00',
-                'updated_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-08-06 10:29:00',
             ],
             [
                 'id' => 12,
@@ -102,23 +102,23 @@ class CmsContentSeeder extends Seeder
             [
                 'id' => 13,
                 'key' => 'praktisi_mengajar.banner_image',
-                'value' => 'banners/01KY9BBRKCGH2HE2E3T880JB6X.jpg',
+                'value' => 'banners/01KZAHSVJ1Q6ETVXDTVEH6WV1S.png',
                 'created_at' => '2026-07-24 13:00:00',
-                'updated_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-08-06 10:27:00',
             ],
             [
                 'id' => 14,
                 'key' => 'internship_program.banner_image',
-                'value' => 'banners/01KY9EHSFT5BNAWAN0N69THWYR.jpg',
+                'value' => 'banners/01KZAHRQNBTTN03EB12NRFZ3DB.png',
                 'created_at' => '2026-07-24 13:00:00',
-                'updated_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-08-06 10:27:00',
             ],
             [
                 'id' => 15,
                 'key' => 'sertifikasi.banner_image',
-                'value' => 'banners/01KY9EJPEWYM3JBFBTK25MA8Y3.jpg',
+                'value' => 'banners/01KZAHTZYMCDJN9ZK9S7YNZYHY.jpg',
                 'created_at' => '2026-07-24 13:00:00',
-                'updated_at' => '2026-07-24 13:00:00',
+                'updated_at' => '2026-08-06 10:28:00',
             ],
         ]);
 
