@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\PractitionerTeachingMajors\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Support\ImageUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -75,18 +75,8 @@ class PractitionerTeachingMajorForm
                                             ->columns(2)
                                             ->columnSpanFull()
                                             ->schema([
-                                                FileUpload::make('photo')
+                                                ImageUpload::make('photo', 'practitioner-teaching/practitioners')
                                                     ->label('Foto')
-                                                    ->image()
-                                                    ->disk('public')
-                                                    ->directory('practitioner-teaching/practitioners')
-                                                    ->imageEditor()
-                                                    ->automaticallyResizeImagesMode('contain')
-                                                    ->automaticallyResizeImagesToWidth('1000')
-                                                    ->automaticallyResizeImagesToHeight('1000')
-                                                    ->automaticallyUpscaleImagesWhenResizing(false)
-                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                                                    ->maxSize(4096)
                                                     ->columnSpanFull(),
                                                 TextInput::make('name')
                                                     ->label('Nama Praktisi')
@@ -110,18 +100,8 @@ class PractitionerTeachingMajorForm
                                             ->columns(2)
                                             ->columnSpanFull()
                                             ->schema([
-                                                FileUpload::make('photo')
+                                                ImageUpload::make('photo', 'practitioner-teaching/pbls')
                                                     ->label('Foto')
-                                                    ->image()
-                                                    ->disk('public')
-                                                    ->directory('practitioner-teaching/pbls')
-                                                    ->imageEditor()
-                                                    ->automaticallyResizeImagesMode('contain')
-                                                    ->automaticallyResizeImagesToWidth('1000')
-                                                    ->automaticallyResizeImagesToHeight('1000')
-                                                    ->automaticallyUpscaleImagesWhenResizing(false)
-                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                                                    ->maxSize(4096)
                                                     ->columnSpanFull(),
                                                 TextInput::make('title')
                                                     ->label('Judul Proyek')
