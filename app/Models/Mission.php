@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
 
 class Mission extends Model
 {
-    protected $fillable = ['statement', 'sort_order'];
+    use HasSortOrder;
 
-    public function scopeOrdered(Builder $query): Builder
-    {
-        return $query->orderBy('sort_order')->orderBy('id');
-    }
+    protected $fillable = ['statement', 'sort_order'];
 }

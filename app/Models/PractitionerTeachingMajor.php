@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PractitionerTeachingMajor extends Model
 {
+    use HasSortOrder;
+
     protected $table = 'practitioner_teaching_majors';
 
     protected $fillable = ['name', 'slug', 'sort_order'];
@@ -15,10 +17,5 @@ class PractitionerTeachingMajor extends Model
     public function semesters(): HasMany
     {
         return $this->hasMany(PractitionerTeachingSemester::class, 'practitioner_teaching_major_id')->orderBy('sort_order')->orderBy('id');
-    }
-
-    public function scopeOrdered(Builder $query): Builder
-    {
-        return $query->orderBy('sort_order')->orderBy('id');
     }
 }
