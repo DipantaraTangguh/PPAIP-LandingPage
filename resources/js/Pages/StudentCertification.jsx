@@ -217,8 +217,6 @@ export default function StudentCertification({
     return (
         <>
             <Seo
-                title="Sertifikasi Mahasiswa"
-                description="Temukan program sertifikasi profesional untuk mahasiswa Universitas Bakrie berdasarkan program studi dan ketersediaan pendaftaran."
                 image={bannerImage}
             />
 
