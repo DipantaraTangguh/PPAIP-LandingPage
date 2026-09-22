@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
 
 class IndustryChallengeClass extends Model
 {
+    use HasSortOrder;
+
     protected $fillable = [
         'image',
         'images',
@@ -24,9 +26,4 @@ class IndustryChallengeClass extends Model
         'event_date' => 'date',
         'images' => 'array',
     ];
-
-    public function scopeOrdered(Builder $query): Builder
-    {
-        return $query->orderBy('sort_order')->orderBy('id');
-    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSortOrder;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class KubTalk extends Model
 {
+    use HasSortOrder;
+
     protected $fillable = [
         'image',
         'images',
@@ -40,9 +42,4 @@ class KubTalk extends Model
         'event_date' => 'date',
         'images' => 'array',
     ];
-
-    public function scopeOrdered(Builder $query): Builder
-    {
-        return $query->orderBy('sort_order')->orderBy('id');
-    }
 }
