@@ -51,4 +51,19 @@ class SearchEngineTest extends TestCase
         $this->get('/practitioner-teaching/not-registered')
             ->assertNotFound();
     }
+
+    public function test_each_route_renders_its_own_seo_entry_not_the_default(): void
+    {
+        $default = config('seo.default');
+
+        foreach (['home', 'internship-program', 'student-certification', 'about'] as $route) {
+            $seo = config("seo.pages.{$route}");
+
+            $this->get(route($route))
+                ->assertOk()
+                ->assertSee($seo['title'], false)
+                ->assertSee($seo['description'], false)
+                ->assertDontSee($default['description'], false);
+        }
+    }
 }

@@ -15,8 +15,6 @@ export default function PractitionerTeaching({ majorStats = [], aboutDescription
   return (
     <>
       <Seo
-        title="Kemitraan dan Pembelajaran Berbasis Proyek"
-        description="Jelajahi program Kemitraan dan Pembelajaran Berbasis Proyek Universitas Bakrie yang menghadirkan pengalaman dan perspektif profesional industri ke dalam kelas."
         image={bannerImage}
       />
 

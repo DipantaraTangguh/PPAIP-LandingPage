@@ -48,8 +48,6 @@ export default function AboutUs({
     return (
         <>
             <Seo
-                title="Tentang Kami"
-                description="Kenali visi, misi, tim, dan program kerja UPT PPAIP Universitas Bakrie dalam menghubungkan pembelajaran dengan dunia industri."
                 image={groupPhoto?.src || "/assets/bakrie-banner.jpg"}
             />
 

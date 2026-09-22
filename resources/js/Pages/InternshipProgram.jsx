@@ -20,8 +20,6 @@ export default function InternshipProgramPage({ years = [], internshipData = {},
   return (
     <>
       <Seo
-        title="Internship Program"
-        description="Lihat sebaran program magang mahasiswa Universitas Bakrie di perusahaan KUB, Non-KUB, dan BUMN berdasarkan tahun dan program studi."
         image={bannerImage}
       />
 
