@@ -681,6 +681,23 @@ class CmsContentSeeder extends Seeder
             ],
         ]);
 
+        // Where each study program starts in the internship catalog PDF.
+        // Matched by name once, here at seed time; afterwards the page lives
+        // on the row, so renaming a program in the admin panel keeps it.
+        foreach ([
+            'Ilmu & Teknologi Pangan' => 2,
+            'Manajemen' => 123,
+            'Teknik Sipil' => 24,
+            'Akuntansi' => 213,
+            'Ilmu Komunikasi' => 248,
+            'Teknik Lingkungan' => 13,
+            'Sistem Informasi' => 65,
+        ] as $major => $startPage) {
+            DB::table('internship_major_stats')
+                ->where('name', $major)
+                ->update(['catalog_start_page' => $startPage]);
+        }
+
         // Table: practitioner_teaching_majors
         DB::table('practitioner_teaching_majors')->truncate();
         DB::table('practitioner_teaching_majors')->insert([
