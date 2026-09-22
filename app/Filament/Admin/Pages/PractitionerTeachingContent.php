@@ -2,10 +2,10 @@
 
 namespace App\Filament\Admin\Pages;
 
+use App\Filament\Support\ImageUpload;
 use App\Models\PageContent;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -45,18 +45,8 @@ class PractitionerTeachingContent extends Page
             ->components([
                 Section::make('Banner Halaman')
                     ->schema([
-                        FileUpload::make('banner_image')
+                        ImageUpload::make('banner_image', 'banners', 1920, 1080, 8192)
                             ->label('Gambar Banner')
-                            ->image()
-                            ->disk('public')
-                            ->directory('banners')
-                            ->imageEditor()
-                            ->automaticallyResizeImagesMode('contain')
-                            ->automaticallyResizeImagesToWidth('1920')
-                            ->automaticallyResizeImagesToHeight('1080')
-                            ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                            ->maxSize(8192)
                             ->helperText('Banner di bagian atas halaman Kemitraan dan Pembelajaran Berbasis Proyek. Kosongkan untuk memakai gambar bawaan.')
                             ->columnSpanFull(),
                     ]),

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources\IndustryChallengeClasses\Schemas;
 
+use App\Filament\Support\ImageUpload;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -15,21 +15,11 @@ class IndustryChallengeClassForm
     {
         return $schema
             ->components([
-                FileUpload::make('images')
+                ImageUpload::make('images', 'industry-challenge-classes', 1920, 1920, 8192)
                     ->label('Foto Event')
-                    ->image()
                     ->multiple()
                     ->reorderable()
-                    ->disk('public')
-                    ->directory('industry-challenge-classes')
-                    ->imageEditor()
-                    ->automaticallyResizeImagesMode('contain')
-                    ->automaticallyResizeImagesToWidth('1920')
-                    ->automaticallyResizeImagesToHeight('1920')
-                    ->automaticallyUpscaleImagesWhenResizing(false)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->maxFiles(30)
-                    ->maxSize(8192)
                     ->columnSpanFull(),
                 TextInput::make('title')
                     ->label('Judul Kelas')
@@ -49,19 +39,9 @@ class IndustryChallengeClassForm
                             ->label('Nama Perusahaan')
                             ->required()
                             ->maxLength(255),
-                        FileUpload::make('company_logo')
+                        ImageUpload::make('company_logo', 'industry-challenge-classes/logos', 800, 400, 2048)
                             ->label('Logo Perusahaan')
                             ->required()
-                            ->image()
-                            ->disk('public')
-                            ->directory('industry-challenge-classes/logos')
-                            ->imageEditor()
-                            ->automaticallyResizeImagesMode('contain')
-                            ->automaticallyResizeImagesToWidth('800')
-                            ->automaticallyResizeImagesToHeight('400')
-                            ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                            ->maxSize(2048)
                             ->helperText('Ukuran ideal 200x80px dengan format PNG transparan.'),
                     ])
                     ->columns(2)

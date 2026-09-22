@@ -2,10 +2,10 @@
 
 namespace App\Filament\Admin\Pages;
 
+use App\Filament\Support\ImageUpload;
 use App\Models\PageContent;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -62,30 +62,14 @@ class AboutUsContent extends Page
                     ]),
                 Section::make('Foto Tim (Group Photo)')
                     ->schema([
-                        FileUpload::make('group_photo_src')
+                        ImageUpload::make('group_photo_src', 'tentang-kami', 1920, 1080, 8192)
                             ->label('Foto Utama')
-                            ->image()
-                            ->disk('public')
-                            ->directory('tentang-kami')
-                            ->imageEditor()
-                            ->automaticallyResizeImagesMode('contain')
-                            ->automaticallyResizeImagesToWidth('1920')
-                            ->automaticallyResizeImagesToHeight('1080')
-                            ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                            ->maxSize(8192)
                             ->columnSpanFull(),
-                        FileUpload::make('group_photo_fallback')
+                        ImageUpload::make('group_photo_fallback', 'tentang-kami', 1920, 1080, 8192)
                             ->label('Foto Fallback (opsional)')
-                            ->image()
-                            ->disk('public')
-                            ->directory('tentang-kami')
-                            ->automaticallyResizeImagesMode('contain')
-                            ->automaticallyResizeImagesToWidth('1920')
-                            ->automaticallyResizeImagesToHeight('1080')
-                            ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                            ->maxSize(8192)
+                            // Unlike every other upload, this one has never
+                            // offered the editor. Kept off to preserve that.
+                            ->imageEditor(false)
                             ->columnSpanFull(),
                         TextInput::make('group_photo_caption')
                             ->label('Caption Foto')

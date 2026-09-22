@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources\KubTalks\Schemas;
 
+use App\Filament\Support\ImageUpload;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -15,21 +15,11 @@ class KubTalkForm
     {
         return $schema
             ->components([
-                FileUpload::make('images')
+                ImageUpload::make('images', 'kub-talks', 1920, 1920, 8192)
                     ->label('Foto Event')
-                    ->image()
                     ->multiple()
                     ->reorderable()
-                    ->disk('public')
-                    ->directory('kub-talks')
-                    ->imageEditor()
-                    ->automaticallyResizeImagesMode('contain')
-                    ->automaticallyResizeImagesToWidth('1920')
-                    ->automaticallyResizeImagesToHeight('1920')
-                    ->automaticallyUpscaleImagesWhenResizing(false)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->maxFiles(30)
-                    ->maxSize(8192)
                     ->columnSpanFull(),
                 TextInput::make('title')->required()->maxLength(255)->columnSpanFull(),
                 Textarea::make('description')->rows(4)->maxLength(5000)->columnSpanFull(),
@@ -42,19 +32,9 @@ class KubTalkForm
                             ->required()
                             ->maxLength(255)
                             ->placeholder('contoh: PT Telkom Indonesia'),
-                        FileUpload::make('company_logo')
+                        ImageUpload::make('company_logo', 'kub-talks/logos', 800, 400, 2048)
                             ->label('Logo Perusahaan')
                             ->required()
-                            ->image()
-                            ->disk('public')
-                            ->directory('kub-talks/logos')
-                            ->imageEditor()
-                            ->automaticallyResizeImagesMode('contain')
-                            ->automaticallyResizeImagesToWidth('800')
-                            ->automaticallyResizeImagesToHeight('400')
-                            ->automaticallyUpscaleImagesWhenResizing(false)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                            ->maxSize(2048)
                             ->helperText('Wajib diisi. Ukuran ideal: 200x80px, format PNG transparan.'),
                     ])
                     ->columns(2)

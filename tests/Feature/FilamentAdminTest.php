@@ -107,6 +107,9 @@ class FilamentAdminTest extends TestCase
             '/admin/certification-majors',
             '/admin/about-us-content',
             '/admin/work-programs',
+            '/admin/internship-content',
+            '/admin/programs/create',
+            '/admin/team-members/create',
         ] as $path) {
             $this->actingAs($admin)
                 ->get($path)
