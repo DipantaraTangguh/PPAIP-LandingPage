@@ -108,6 +108,7 @@ class FilamentAdminTest extends TestCase
             '/admin/about-us-content',
             '/admin/work-programs',
             '/admin/internship-content',
+            '/admin/welcome-content',
             '/admin/programs/create',
             '/admin/team-members/create',
         ] as $path) {

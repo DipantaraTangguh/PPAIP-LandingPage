@@ -15,7 +15,7 @@ use Filament\Support\Icons\Heroicon;
 
 class KubTalkContent extends Page
 {
-    protected string $view = 'filament.admin.pages.kub-talk-content';
+    protected string $view = 'filament.admin.pages.simple-form';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 

@@ -14,7 +14,7 @@ use Filament\Support\Icons\Heroicon;
 
 class IndustryChallengeClassContent extends Page
 {
-    protected string $view = 'filament.admin.pages.industry-challenge-class-content';
+    protected string $view = 'filament.admin.pages.simple-form';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
