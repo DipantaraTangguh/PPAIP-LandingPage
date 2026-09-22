@@ -36,7 +36,7 @@ class InternshipYearForm
                         Repeater::make('majorStats')
                             ->relationship('majorStats')
                             ->label('Statistik Prodi')
-                            ->columns(5)
+                            ->columns(6)
                             ->orderColumn('sort_order')
                             ->reorderable()
                             ->defaultItems(0)
@@ -45,6 +45,11 @@ class InternshipYearForm
                                 TextInput::make('kub')->label('KUB')->integer()->minValue(0)->default(0)->required(),
                                 TextInput::make('non_kub')->label('Non-KUB')->integer()->minValue(0)->default(0)->required(),
                                 TextInput::make('bumn')->label('BUMN')->integer()->minValue(0)->default(0)->required(),
+                                TextInput::make('catalog_start_page')
+                                    ->label('Halaman Katalog')
+                                    ->integer()
+                                    ->minValue(1)
+                                    ->helperText('Halaman awal prodi ini di PDF katalog magang. Kosongkan kalau prodi belum masuk katalog.'),
                             ]),
                     ]),
             ]);

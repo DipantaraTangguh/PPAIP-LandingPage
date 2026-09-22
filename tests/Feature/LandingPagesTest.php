@@ -109,6 +109,7 @@ class LandingPagesTest extends TestCase
             'kub' => 10,
             'non_kub' => 6,
             'bumn' => 4,
+            'catalog_start_page' => 123,
             'sort_order' => 1,
         ]);
         $year->majorStats()->create([
@@ -133,6 +134,34 @@ class LandingPagesTest extends TestCase
                 ->where('internshipData.2025.prodi.1.name', 'Teknik Informatika')
                 ->where('internshipData.2025.prodi.1.catalogStartPage', null)
                 ->where('bannerImage', $this->publicAsset('banners/internship.jpg'))
+            );
+    }
+
+    public function test_renaming_a_study_program_keeps_its_catalog_page(): void
+    {
+        $year = InternshipYear::query()->create([
+            'year' => '2025',
+            'summary_kub' => 0,
+            'summary_non_kub' => 0,
+            'summary_bumn' => 0,
+            'sort_order' => 1,
+        ]);
+        $stat = $year->majorStats()->create([
+            'name' => 'Manajemen',
+            'kub' => 1,
+            'non_kub' => 1,
+            'bumn' => 1,
+            'catalog_start_page' => 123,
+            'sort_order' => 1,
+        ]);
+
+        $stat->update(['name' => 'Manajemen Bisnis']);
+
+        $this->get('/internship-program')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('internshipData.2025.prodi.0.name', 'Manajemen Bisnis')
+                ->where('internshipData.2025.prodi.0.catalogStartPage', 123)
             );
     }
 
