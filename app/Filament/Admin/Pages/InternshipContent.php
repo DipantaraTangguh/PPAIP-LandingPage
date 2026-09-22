@@ -14,7 +14,7 @@ use Filament\Support\Icons\Heroicon;
 
 class InternshipContent extends Page
 {
-    protected string $view = 'filament.admin.pages.internship-content';
+    protected string $view = 'filament.admin.pages.simple-form';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 

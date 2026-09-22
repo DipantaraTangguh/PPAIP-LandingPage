@@ -16,7 +16,7 @@ use Filament\Support\Icons\Heroicon;
 
 class AboutUsContent extends Page
 {
-    protected string $view = 'filament.admin.pages.about-us-content';
+    protected string $view = 'filament.admin.pages.simple-form';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 

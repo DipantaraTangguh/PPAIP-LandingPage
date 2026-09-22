@@ -15,7 +15,7 @@ use Filament\Support\Icons\Heroicon;
 
 class StudentCertificationContent extends Page
 {
-    protected string $view = 'filament.admin.pages.student-certification-content';
+    protected string $view = 'filament.admin.pages.simple-form';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
