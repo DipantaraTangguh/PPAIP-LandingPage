@@ -10,6 +10,8 @@ class CmsContentSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(SeedAssetsSeeder::class);
+
         Schema::disableForeignKeyConstraints();
 
         // Table: page_contents
