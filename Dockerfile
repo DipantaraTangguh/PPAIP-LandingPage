@@ -37,6 +37,9 @@ RUN mkdir -p storage/app/public storage/framework/cache/data storage/framework/s
         storage/framework/views storage/logs bootstrap/cache /config/psysh \
     && composer dump-autoload --optimize --no-dev --no-interaction \
     && php artisan storage:link \
+    # Bake seed-assets into the image so images are available from first boot on Railway.
+    # The seeder still runs at startup to populate DB rows, but the files are already here.
+    && cp -r database/seed-assets/. storage/app/public/ \
     && chown -R www-data:www-data storage bootstrap/cache database /config/caddy /config/psysh /data/caddy \
     && chmod +x docker/entrypoint.sh
 
