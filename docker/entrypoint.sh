@@ -1,6 +1,23 @@
 #!/bin/sh
 set -e
 
+# ---- Railway: set listen port dynamically ----
+# Railway injects $PORT at runtime. FrankenPHP reads SERVER_NAME to know where to bind.
+# Falls back to :8080 for local docker-compose usage.
+export SERVER_NAME=":${PORT:-8080}"
+
+# ---- SQLite: create the database file if it does not exist ----
+# When DB_CONNECTION=sqlite (default), Laravel expects the file to already exist.
+# We create it here so "php artisan migrate" won't throw SQLiteDatabaseDoesNotExistException.
+if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
+    DB_FILE="${DB_DATABASE:-/app/database/database.sqlite}"
+    if [ ! -f "$DB_FILE" ]; then
+        echo "Creating SQLite database at $DB_FILE"
+        mkdir -p "$(dirname "$DB_FILE")"
+        touch "$DB_FILE"
+    fi
+fi
+
 if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
     php artisan migrate --force
 fi
