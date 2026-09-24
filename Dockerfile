@@ -15,13 +15,12 @@ RUN npm run build
 # ---- Application (FrankenPHP) ----
 FROM dunglas/frankenphp:1-php8.4 AS app
 
-RUN install-php-extensions intl zip pdo_mysql opcache \
+RUN install-php-extensions intl zip pdo_mysql pdo_sqlite opcache \
     && cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-ENV SERVER_NAME=:8080 \
-    APP_ENV=production \
+ENV APP_ENV=production \
     APP_DEBUG=false \
     LOG_CHANNEL=stderr \
     COMPOSER_ALLOW_SUPERUSER=1
@@ -38,7 +37,7 @@ RUN mkdir -p storage/app/public storage/framework/cache/data storage/framework/s
         storage/framework/views storage/logs bootstrap/cache /config/psysh \
     && composer dump-autoload --optimize --no-dev --no-interaction \
     && php artisan storage:link \
-    && chown -R www-data:www-data storage bootstrap/cache /config/caddy /config/psysh /data/caddy \
+    && chown -R www-data:www-data storage bootstrap/cache database /config/caddy /config/psysh /data/caddy \
     && chmod +x docker/entrypoint.sh
 
 USER www-data
