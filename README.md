@@ -68,6 +68,43 @@ composer dev
 
 Public site ada di `http://127.0.0.1:8000`. Admin panel ada di `http://127.0.0.1:8000/admin`.
 
+## Docker
+
+Alternatif tanpa install PHP/MySQL lokal: cukup Docker. Stack-nya FrankenPHP (PHP 8.4) + MySQL 8.4, dengan asset Vite di-build di dalam image.
+
+Syaratnya `.env` sudah ada dan `APP_KEY` terisi (`cp .env.example .env` lalu `php artisan key:generate`, atau isi manual). Isi juga `ADMIN_EMAIL`/`ADMIN_PASSWORD` kalau ingin akun admin dibuat otomatis.
+
+```bash
+docker compose up -d --build
+```
+
+Aplikasi jalan di `http://localhost:8088` (admin di `/admin`). Saat container start:
+
+- Migration dijalankan otomatis.
+- Seeder CMS + akun admin hanya jalan kalau database masih kosong, jadi konten yang diedit lewat admin tidak tertimpa saat restart.
+- File upload disimpan di volume `storage-public`, database di volume `mysql-data`.
+
+Variabel opsional di `.env` (dibaca oleh `docker-compose.yml`):
+
+```dotenv
+DOCKER_APP_PORT=8088
+DOCKER_APP_URL=http://localhost:8088   # samakan dengan port di atas
+DOCKER_DB_PASSWORD=ppaip
+DOCKER_DB_ROOT_PASSWORD=root
+```
+
+Perintah yang sering dipakai:
+
+```bash
+docker compose logs -f app                        # lihat log
+docker compose exec app php artisan <command>     # jalankan artisan
+docker compose up -d --build                      # rebuild setelah ubah code
+docker compose down                               # stop (data tetap ada)
+docker compose down -v                            # stop + HAPUS database & upload
+```
+
+Setup Docker ini menjalankan build production (tanpa hot reload). Untuk development harian tetap pakai `composer dev`.
+
 ## Database & Seeders
 
 Seeder utama ada di `database/seeders/DatabaseSeeder.php`. Seeder ini menjalankan CMS seed content dan membuat admin pertama jika credential admin sudah disiapkan di `.env`.
